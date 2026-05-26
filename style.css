@@ -4,6 +4,10 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
   color: #172033;
@@ -13,28 +17,44 @@ body {
 
 .site-header {
   width: 100%;
-  padding: 22px 8%;
+  padding: 20px 8%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
   border-bottom: 1px solid #e7eaf0;
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 20;
 }
 
 .logo {
-  font-weight: 700;
+  font-weight: 800;
   font-size: 20px;
   color: #0b1f3a;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background: linear-gradient(135deg, #0b5fff, #8b5cf6, #14b8a6);
+  font-weight: 800;
 }
 
 nav a {
-  margin-left: 28px;
+  margin-left: 26px;
   text-decoration: none;
   color: #344054;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 15px;
 }
 
@@ -43,39 +63,79 @@ nav a:hover {
 }
 
 .hero {
-  min-height: 78vh;
+  min-height: 82vh;
   display: flex;
   align-items: center;
-  padding: 80px 8%;
+  padding: 90px 8%;
+  position: relative;
+  overflow: hidden;
   background:
-    linear-gradient(120deg, rgba(7, 22, 44, 0.95), rgba(18, 48, 82, 0.92)),
-    radial-gradient(circle at top right, #246bfe, transparent 35%);
+    radial-gradient(circle at top right, rgba(20, 184, 166, 0.35), transparent 30%),
+    radial-gradient(circle at bottom left, rgba(139, 92, 246, 0.35), transparent 28%),
+    linear-gradient(120deg, #07162c, #123052 55%, #0f766e);
   color: #ffffff;
 }
 
+.hero-shape {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(10px);
+  opacity: 0.55;
+  animation: float 8s ease-in-out infinite;
+}
+
+.shape-one {
+  width: 220px;
+  height: 220px;
+  background: #0b5fff;
+  right: 12%;
+  top: 18%;
+}
+
+.shape-two {
+  width: 160px;
+  height: 160px;
+  background: #8b5cf6;
+  right: 25%;
+  bottom: 15%;
+  animation-delay: 2s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-22px); }
+}
+
 .hero-content {
-  max-width: 850px;
+  max-width: 900px;
+  position: relative;
+  z-index: 2;
 }
 
 .eyebrow {
   text-transform: uppercase;
   letter-spacing: 1.8px;
   font-size: 13px;
-  font-weight: 700;
-  color: #5da8ff;
+  font-weight: 800;
+  color: #0b5fff;
   margin-bottom: 16px;
 }
 
+.hero .eyebrow,
+.light {
+  color: #7dd3fc;
+}
+
 .hero h1 {
-  font-size: 58px;
-  line-height: 1.08;
+  font-size: 62px;
+  line-height: 1.06;
   margin-bottom: 24px;
-  max-width: 950px;
+  max-width: 980px;
 }
 
 .hero-text {
   font-size: 20px;
-  color: #dbe7f7;
+  color: #e4efff;
   max-width: 760px;
   margin-bottom: 34px;
 }
@@ -88,10 +148,15 @@ nav a:hover {
 
 .btn {
   padding: 14px 24px;
-  border-radius: 8px;
+  border-radius: 999px;
   text-decoration: none;
-  font-weight: 700;
+  font-weight: 800;
   display: inline-block;
+  transition: 0.25s ease;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
 }
 
 .primary {
@@ -100,21 +165,21 @@ nav a:hover {
 }
 
 .secondary {
-  border: 1px solid rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.55);
   color: #ffffff;
 }
 
 .section {
-  padding: 80px 8%;
+  padding: 85px 8%;
 }
 
 .section-heading {
-  max-width: 760px;
+  max-width: 780px;
   margin-bottom: 42px;
 }
 
 .section h2 {
-  font-size: 38px;
+  font-size: 40px;
   line-height: 1.2;
   color: #0b1f3a;
 }
@@ -126,11 +191,23 @@ nav a:hover {
 }
 
 .card {
-  padding: 32px;
+  padding: 34px;
   border: 1px solid #e5e8ef;
-  border-radius: 16px;
+  border-radius: 22px;
   background: #ffffff;
-  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+  transition: 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 55px rgba(15, 23, 42, 0.14);
+  border-color: #bcd7ff;
+}
+
+.icon {
+  font-size: 34px;
+  margin-bottom: 18px;
 }
 
 .card h3 {
@@ -143,12 +220,13 @@ nav a:hover {
   color: #475467;
 }
 
-.dark {
-  background: #0b1f3a;
+.gradient-section {
+  background:
+    linear-gradient(135deg, #0b1f3a, #133b7a 55%, #0f766e);
   color: #ffffff;
 }
 
-.dark h2 {
+.gradient-section h2 {
   color: #ffffff;
 }
 
@@ -159,11 +237,17 @@ nav a:hover {
 }
 
 .solution-grid div {
-  padding: 22px;
-  border-radius: 12px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.12);
-  font-weight: 700;
+  padding: 24px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.16);
+  font-weight: 800;
+  transition: 0.25s ease;
+}
+
+.solution-grid div:hover {
+  background: rgba(255,255,255,0.18);
+  transform: scale(1.03);
 }
 
 .split {
@@ -181,7 +265,9 @@ nav a:hover {
 
 .contact {
   text-align: center;
-  background: #f5f8fc;
+  background:
+    radial-gradient(circle at top, rgba(11, 95, 255, 0.12), transparent 35%),
+    #f5f8fc;
 }
 
 .contact p {
@@ -190,10 +276,14 @@ nav a:hover {
 }
 
 .email {
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 24px;
+  font-weight: 800;
   color: #0b5fff;
   text-decoration: none;
+}
+
+.email:hover {
+  text-decoration: underline;
 }
 
 footer {
@@ -214,7 +304,7 @@ footer {
   }
 
   .hero h1 {
-    font-size: 40px;
+    font-size: 42px;
   }
 
   .cards,
@@ -226,11 +316,11 @@ footer {
 
 @media (max-width: 520px) {
   .hero {
-    padding: 60px 6%;
+    padding: 65px 6%;
   }
 
   .section {
-    padding: 60px 6%;
+    padding: 65px 6%;
   }
 
   .hero h1 {
@@ -248,5 +338,9 @@ footer {
   nav a {
     display: inline-block;
     margin: 6px 8px;
+  }
+
+  .email {
+    font-size: 18px;
   }
 }
