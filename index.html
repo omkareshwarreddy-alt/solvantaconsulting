@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-brand">Solvanta<span>Consulting</span></div>
         <ul class="nav-links">
@@ -23,8 +24,10 @@
         </div>
     </nav>
 
+    <!-- MAIN APP CONTAINER -->
     <main class="app-container">
         
+        <!-- Hero Section -->
         <section id="home" class="page-section hero active">
             <div class="hero-blobs">
                 <div class="blob blob-1"></div>
@@ -39,6 +42,7 @@
             </div>
         </section>
 
+        <!-- Services Section -->
         <section id="services" class="page-section services-section">
             <div class="container">
                 <div class="section-header">
@@ -65,6 +69,7 @@
             </div>
         </section>
 
+        <!-- Tools Section -->
         <section id="tools" class="page-section tools-section">
             <div class="container">
                 <div class="section-header">
@@ -73,90 +78,26 @@
                 </div>
 
                 <div class="tools-layout">
+                    <!-- Sidebar Tabs -->
                     <div class="tools-sidebar" id="toolTabs">
-                        <button class="tool-tab active" data-target="tool-hike">Hike Calculator</button>
-                        <button class="tool-tab" data-target="tool-days">Working Days Calculator</button>
-                        <button class="tool-tab" data-target="tool-chart">Chart Generator</button>
+                        <button class="tool-tab active" data-target="tool-chart">Chart Generator</button>
                         <button class="tool-tab" data-target="tool-writing">Writing Assistant</button>
                     </div>
 
+                    <!-- Tool Contents -->
                     <div class="tools-content">
                         
-                        <div id="tool-hike" class="tool-panel active">
-                            <h3>Hike Calculator</h3>
-                            <p class="subtitle">Calculate your new compensation package and net monthly increments.</p>
-                            <div class="tool-card">
-                                <div class="input-grid">
-                                    <div class="input-group">
-                                        <label>Current Annual Salary</label>
-                                        <input type="number" id="hike-current" placeholder="e.g. 80000">
-                                    </div>
-                                    <div class="input-group">
-                                        <label>Hike Percentage (%)</label>
-                                        <input type="number" id="hike-percent" placeholder="e.g. 15">
-                                    </div>
-                                    <div class="input-group">
-                                        <label>Est. Deductions / Tax (%)</label>
-                                        <input type="number" id="hike-deduction" placeholder="e.g. 20 (Optional)">
-                                    </div>
-                                </div>
-                                <div class="btn-group">
-                                    <button class="btn-action" onclick="calcHike()">Calculate</button>
-                                    <button class="btn-clear" onclick="clearInputs('tool-hike')">Clear</button>
-                                </div>
-                                <div class="result-box" id="hike-result" style="display:none;"></div>
-                            </div>
-                        </div>
-
-                        <div id="tool-days" class="tool-panel">
-                            <h3>Working Days Calculator</h3>
-                            <p class="subtitle">Calculate exact business days between dates, excluding weekends and regional public holidays.</p>
-                            <div class="tool-card">
-                                <div class="input-grid">
-                                    <div class="input-group">
-                                        <label>Start Date</label>
-                                        <input type="date" id="wd-start">
-                                    </div>
-                                    <div class="input-group">
-                                        <label>End Date</label>
-                                        <input type="date" id="wd-end">
-                                    </div>
-                                    <div class="input-group" style="grid-column: 1 / -1;">
-                                        <label>Country (For Public Holidays)</label>
-                                        <select id="wd-country">
-                                            <option value="None">None (Weekends Only)</option>
-                                            <option value="US">United States</option>
-                                            <option value="GB">United Kingdom</option>
-                                            <option value="IN">India</option>
-                                            <option value="CA">Canada</option>
-                                            <option value="AU">Australia</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="btn-group">
-                                    <button class="btn-action" id="wd-calc-btn" onclick="calcWorkingDays()">Calculate</button>
-                                    <button class="btn-clear" onclick="clearInputs('tool-days')">Clear</button>
-                                </div>
-                                <div class="result-box" id="wd-result" style="display:none;"></div>
-                            </div>
-                        </div>
-
-                        <div id="tool-chart" class="tool-panel">
+                        <!-- Tool 1: Chart Generator -->
+                        <div id="tool-chart" class="tool-panel active">
                             <h3>Chart Generator</h3>
                             <p class="subtitle">Generate and download clean, professional charts from raw data.</p>
                             <div class="tool-card">
-                                <div class="input-group">
-                                    <label>Chart Title</label>
-                                    <input type="text" id="cg-title" placeholder="e.g. Q3 Sales Volume">
-                                </div>
+                                
+                                <h4 class="card-subheader">1. Data Inputs</h4>
                                 <div class="input-grid">
                                     <div class="input-group">
-                                        <label>Labels (comma separated)</label>
-                                        <input type="text" id="cg-labels" placeholder="Jan, Feb, Mar">
-                                    </div>
-                                    <div class="input-group">
-                                        <label>Values (comma separated)</label>
-                                        <input type="text" id="cg-values" placeholder="10, 25, 14">
+                                        <label>Chart Title</label>
+                                        <input type="text" id="cg-title" placeholder="e.g. Q3 Sales Volume">
                                     </div>
                                     <div class="input-group">
                                         <label>Chart Type</label>
@@ -167,18 +108,66 @@
                                             <option value="doughnut">Donut</option>
                                         </select>
                                     </div>
+                                    <div class="input-group">
+                                        <label>Labels (comma separated)</label>
+                                        <input type="text" id="cg-labels" placeholder="Jan, Feb, Mar, Apr">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>Values (comma separated)</label>
+                                        <input type="text" id="cg-values" placeholder="10, 25, 14, 30">
+                                    </div>
                                 </div>
-                                <div class="btn-group">
+
+                                <h4 class="card-subheader mt-15">2. Customization</h4>
+                                <div class="input-grid">
+                                    <div class="input-group">
+                                        <label>Color Palette</label>
+                                        <select id="cg-palette">
+                                            <option value="default">Solvanta Default (Cool)</option>
+                                            <option value="vibrant">Vibrant (Punchy)</option>
+                                            <option value="monochrome">Monochrome (Corporate)</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group">
+                                        <label>Legend Position</label>
+                                        <select id="cg-legend">
+                                            <option value="bottom">Bottom</option>
+                                            <option value="top">Top</option>
+                                            <option value="right">Right</option>
+                                            <option value="left">Left</option>
+                                            <option value="none">Hidden</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group">
+                                        <label>X-Axis Label (Optional)</label>
+                                        <input type="text" id="cg-xlabel" placeholder="e.g. Months">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>Y-Axis Label (Optional)</label>
+                                        <input type="text" id="cg-ylabel" placeholder="e.g. Revenue (USD)">
+                                    </div>
+                                    <div class="input-group" style="grid-column: 1 / -1;">
+                                        <label>Show Grid Lines</label>
+                                        <select id="cg-grid">
+                                            <option value="true">Yes</option>
+                                            <option value="false">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="btn-group mt-15">
                                     <button class="btn-action" onclick="generateChart()">Generate Chart</button>
                                     <button class="btn-clear" onclick="clearInputs('tool-chart')">Clear</button>
                                 </div>
-                                <div class="chart-container mt-15" style="position: relative; height:40vh; width:100%; display:none;" id="cg-canvas-container">
+                                
+                                <div class="chart-container mt-15" style="position: relative; height:50vh; width:100%; display:none; background: var(--bg-dark); padding: 20px; border-radius: 8px; border: 1px solid var(--border-light);" id="cg-canvas-container">
                                     <canvas id="myChart"></canvas>
                                     <button class="btn-action small mt-15" onclick="downloadChart()">Download PNG</button>
                                 </div>
                             </div>
                         </div>
 
+                        <!-- Tool 2: Writing Assistant -->
                         <div id="tool-writing" class="tool-panel">
                             <h3>Writing Assistant</h3>
                             <p class="subtitle">Format, clarify, and de-jargon your office communications.</p>
@@ -190,6 +179,7 @@
                                 <button class="n-tab" data-target="wa-grammar">Grammar & Clarity</button>
                             </div>
 
+                            <!-- 2A: Email Generator -->
                             <div id="wa-email" class="n-panel active">
                                 <div class="tool-card">
                                     <div class="input-group">
@@ -230,6 +220,7 @@
                                 </div>
                             </div>
 
+                            <!-- 2B: AI Writing Pattern Checker -->
                             <div id="wa-ai" class="n-panel">
                                 <p class="subtitle-small disclaimer">This tool does not prove whether text was written by AI. It only checks for common AI-style writing patterns such as repetition, generic phrasing, overly formal transitions, and low sentence variation.</p>
                                 <div class="tool-card">
@@ -245,6 +236,7 @@
                                 </div>
                             </div>
 
+                            <!-- 2C: Human Tone Rewriter -->
                             <div id="wa-tone" class="n-panel">
                                 <div class="tool-card">
                                     <div class="input-group">
@@ -262,6 +254,7 @@
                                 </div>
                             </div>
 
+                            <!-- 2D: Grammar & Clarity Checker -->
                             <div id="wa-grammar" class="n-panel">
                                 <div class="tool-card">
                                     <div class="input-group">
@@ -282,7 +275,7 @@
             </div>
         </section>
 
-<!-- About Section -->
+        <!-- About Section -->
         <section id="about" class="page-section about-section">
             <div class="container">
                 <div class="about-content">
@@ -303,6 +296,7 @@
             </div>
         </section>
 
+        <!-- Contact Section -->
         <section id="contact" class="page-section contact-section">
             <div class="container">
                 <h2>Need Help Fixing Your Workflow Chaos?</h2>
@@ -317,6 +311,7 @@
 
     </main>
 
+    <!-- Footer -->
     <footer>
         <div class="container footer-content">
             <div class="footer-brand">Solvanta<span>Consulting</span></div>
@@ -325,16 +320,15 @@
         </div>
     </footer>
 
+    <!-- Logic Script -->
     <script>
         // --- SPA Routing Logic ---
         function navigateTo(hash) {
             if (!hash) hash = '#home';
             
-            // Remove active class from all sections and nav links
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
             document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active-nav'));
 
-            // Show target section
             const targetSec = document.querySelector(hash);
             if (targetSec) {
                 targetSec.classList.add('active');
@@ -346,7 +340,6 @@
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
             
-            // Close mobile menu if open
             document.querySelector('.nav-links').classList.remove('active');
             document.getElementById('hamburger').classList.remove('active');
         }
@@ -382,12 +375,14 @@
         // --- Utility Functions ---
         function clearInputs(containerId) {
             const container = document.getElementById(containerId);
-            container.querySelectorAll('input, textarea').forEach(el => el.value = '');
+            container.querySelectorAll('input, textarea, select').forEach(el => {
+                if(el.tagName === 'SELECT') el.selectedIndex = 0;
+                else el.value = '';
+            });
             container.querySelectorAll('.result-box').forEach(el => {
                 el.style.display = 'none';
                 el.innerHTML = '';
             });
-            container.querySelectorAll('.result-inline').forEach(el => el.innerText = '');
             if(containerId === 'tool-chart') {
                 if(window.myChartInstance) window.myChartInstance.destroy();
                 document.getElementById('cg-canvas-container').style.display = 'none';
@@ -410,148 +405,32 @@
             navigator.clipboard.writeText(text).then(() => alert("Copied to clipboard!"));
         }
 
-        function formatCurrency(num) {
-            return new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(num);
-        }
-
-        // --- Tool 1: Hike Calc ---
-        function calcHike() {
-            const current = parseFloat(document.getElementById('hike-current').value);
-            const percent = parseFloat(document.getElementById('hike-percent').value);
-            const deductionPct = parseFloat(document.getElementById('hike-deduction').value) || 0;
-            const res = document.getElementById('hike-result');
-            
-            if(!current || !percent) { 
-                res.style.display='block'; 
-                res.innerHTML='<span class="error-text">Please enter valid salary and hike numbers.</span>'; 
-                return; 
-            }
-            
-            const newAnnualGross = current * (1 + percent/100);
-            const annualInc = newAnnualGross - current;
-            
-            const currentMonthlyGross = current / 12;
-            const newMonthlyGross = newAnnualGross / 12;
-            
-            const currentMonthlyNet = currentMonthlyGross * (1 - deductionPct/100);
-            const newMonthlyNet = newMonthlyGross * (1 - deductionPct/100);
-            
-            const monthlyNetInc = newMonthlyNet - currentMonthlyNet;
-
-            res.style.display = 'block';
-            res.innerHTML = `
-                <div class="result-grid">
-                    <div><strong>New Annual Gross:</strong> <br> ${formatCurrency(newAnnualGross)}</div>
-                    <div><strong>Annual Gross Increase:</strong> <br> +${formatCurrency(annualInc)}</div>
-                    <div><strong>New Monthly Gross:</strong> <br> ${formatCurrency(newMonthlyGross)}</div>
-                    <div><strong>Est. New Monthly Net:</strong> <br> <span class="highlight-text">${formatCurrency(newMonthlyNet)}</span></div>
-                    <div style="grid-column: 1 / -1; border-top: 1px solid var(--border-light); padding-top: 15px; margin-top: 5px;">
-                        <strong>Actual Monthly Take-Home Increase:</strong> <br> +${formatCurrency(monthlyNetInc)}
-                    </div>
-                </div>
-            `;
-        }
-
-        // --- Tool 2: Working Days with API ---
-        async function calcWorkingDays() {
-            const startStr = document.getElementById('wd-start').value;
-            const endStr = document.getElementById('wd-end').value;
-            const country = document.getElementById('wd-country').value;
-            const res = document.getElementById('wd-result');
-            const btn = document.getElementById('wd-calc-btn');
-            
-            if(!startStr || !endStr) {
-                res.style.display='block'; 
-                res.innerHTML='<span class="error-text">Please enter both dates.</span>';
-                return;
-            }
-            
-            const start = new Date(startStr);
-            const end = new Date(endStr);
-            if(start > end) { 
-                res.style.display='block'; 
-                res.innerHTML='<span class="error-text">End date must be after start date.</span>'; 
-                return; 
-            }
-
-            btn.innerText = "Calculating...";
-            btn.disabled = true;
-
-            let holidayDates = new Set();
-            if (country !== "None") {
-                let startYear = start.getFullYear();
-                let endYear = end.getFullYear();
-                try {
-                    for (let y = startYear; y <= endYear; y++) {
-                        const response = await fetch(`https://date.nager.at/api/v3/PublicHolidays/${y}/${country}`);
-                        if(response.ok) {
-                            const data = await response.json();
-                            data.forEach(h => holidayDates.add(h.date));
-                        }
-                    }
-                } catch(e) {
-                    console.error("Holiday API failed", e);
-                    res.innerHTML = '<span class="error-text">Could not fetch public holidays. Calculating weekends only.</span><br><br>';
-                }
-            }
-
-            let workingDays = 0;
-            let weekendDays = 0;
-            let publicHolidaysCount = 0;
-            let total = 0;
-            let current = new Date(start);
-
-            while(current <= end) {
-                total++;
-                const dayOfWeek = current.getDay();
-                const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
-                
-                const y = current.getFullYear();
-                const m = String(current.getMonth() + 1).padStart(2, '0');
-                const d = String(current.getDate()).padStart(2, '0');
-                const dateString = `${y}-${m}-${d}`;
-
-                const isHoliday = holidayDates.has(dateString);
-
-                if (isWeekend) {
-                    weekendDays++;
-                } else if (isHoliday) {
-                    publicHolidaysCount++;
-                } else {
-                    workingDays++;
-                }
-                
-                current.setDate(current.getDate() + 1);
-            }
-
-            btn.innerText = "Calculate";
-            btn.disabled = false;
-
-            res.style.display = 'block';
-            let holidayHtml = country !== "None" ? `<div><strong>Public Holidays (Weekdays):</strong> <br> ${publicHolidaysCount}</div>` : '';
-            
-            res.innerHTML += `
-                <div class="result-grid">
-                    <div><strong>Total Calendar Days:</strong> <br> ${total}</div>
-                    <div><strong>Weekend Days:</strong> <br> ${weekendDays}</div>
-                    ${holidayHtml}
-                    <div style="grid-column: 1 / -1; border-top: 1px solid var(--border-light); padding-top: 15px; margin-top: 5px;">
-                        <strong>Actual Working Days:</strong> <br> <span class="highlight-text">${workingDays}</span>
-                    </div>
-                </div>
-            `;
-        }
-
-        // --- Tool 3: Chart Generator ---
+        // --- Tool 1: Advanced Chart Generator ---
         let myChartInstance = null;
         function generateChart() {
             const title = document.getElementById('cg-title').value;
             const type = document.getElementById('cg-type').value;
             const labels = document.getElementById('cg-labels').value.split(',').map(s=>s.trim());
             const values = document.getElementById('cg-values').value.split(',').map(s=>parseFloat(s.trim()));
+            const palette = document.getElementById('cg-palette').value;
+            const legendPos = document.getElementById('cg-legend').value;
+            const xLabel = document.getElementById('cg-xlabel').value;
+            const yLabel = document.getElementById('cg-ylabel').value;
+            const showGrid = document.getElementById('cg-grid').value === 'true';
+            
             const container = document.getElementById('cg-canvas-container');
 
             if(!labels.length || isNaN(values[0])) { alert("Please enter valid comma-separated labels and numbers."); return; }
+
+            // Palette Selection
+            let bgColors = [];
+            if(palette === 'vibrant') {
+                bgColors = ['#ff006e', '#3a86ff', '#8338ec', '#ffbe0b', '#fb5607', '#06d6a0'];
+            } else if(palette === 'monochrome') {
+                bgColors = ['#475569', '#64748b', '#94a3b8', '#cbd5e1', '#e2e8f0', '#334155'];
+            } else {
+                bgColors = ['#3b82f6', '#14b8a6', '#8b5cf6', '#f43f5e', '#f59e0b', '#10b981'];
+            }
 
             container.style.display = 'block';
             const ctx = document.getElementById('myChart').getContext('2d');
@@ -561,33 +440,54 @@
             Chart.defaults.color = '#94a3b8';
             Chart.defaults.font.family = "'Inter', sans-serif";
 
+            // Legend Config
+            let legendConfig = { display: false };
+            if (legendPos !== 'none') {
+                legendConfig = { display: true, position: legendPos };
+            }
+
+            // Scales Config
+            let scalesConfig = {};
+            if (type === 'bar' || type === 'line') {
+                scalesConfig = {
+                    y: { 
+                        beginAtZero: true, 
+                        grid: { display: showGrid, color: 'rgba(255,255,255,0.05)' },
+                        title: { display: !!yLabel, text: yLabel, color: '#f8fafc' }
+                    },
+                    x: { 
+                        grid: { display: showGrid, color: 'rgba(255,255,255,0.05)' },
+                        title: { display: !!xLabel, text: xLabel, color: '#f8fafc' }
+                    }
+                };
+            }
+
             myChartInstance = new Chart(ctx, {
                 type: type,
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: title || 'Dataset',
+                        label: title || 'Data',
                         data: values,
-                        backgroundColor: ['#1C7ED6', '#20C997', '#7950F2', '#FF6B6B', '#F59F00', '#12b886'],
-                        borderColor: '#1e293b',
+                        backgroundColor: bgColors,
+                        borderColor: type === 'line' ? bgColors[0] : '#1e293b',
                         borderWidth: 2,
-                        borderRadius: type==='bar'? 4 : 0
+                        borderRadius: type === 'bar' ? 4 : 0,
+                        tension: 0.3 // Smooth lines for line chart
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { position: 'bottom' },
+                        legend: legendConfig,
                         title: { display: !!title, text: title, color: '#f8fafc', font: {size: 16} }
                     },
-                    scales: (type==='bar'||type==='line') ? {
-                        y: { beginAtZero: true, grid: {color: 'rgba(255,255,255,0.05)'} },
-                        x: { grid: {display: false} }
-                    } : {}
+                    scales: scalesConfig
                 }
             });
         }
+
         function downloadChart() {
             if(!myChartInstance) return;
             const url = document.getElementById('myChart').toDataURL('image/png');
@@ -597,7 +497,7 @@
             a.click();
         }
 
-        // --- Tool 4A: Email Gen ---
+        // --- Tool 2A: Email Gen ---
         function generateEmail() {
             const type = document.getElementById('eg-type').value;
             const rec = document.getElementById('eg-recipient').value || '[Recipient]';
@@ -624,7 +524,7 @@
             document.getElementById('eg-output').value = draft;
         }
 
-        // --- Tool 4B: AI Checker ---
+        // --- Tool 2B: AI Checker ---
         function checkAI() {
             const text = document.getElementById('ai-input').value;
             const res = document.getElementById('ai-result');
@@ -661,7 +561,7 @@
             `;
         }
 
-        // --- Tool 4C: Tone Rewriter ---
+        // --- Tool 2C: Tone Rewriter ---
         function rewriteTone() {
             let text = document.getElementById('tone-input').value;
             const resContainer = document.getElementById('tone-result-box');
@@ -692,7 +592,7 @@
             res.innerHTML = text;
         }
 
-        // --- Tool 4D: Grammar ---
+        // --- Tool 2D: Grammar ---
         function checkGrammar() {
             const text = document.getElementById('gram-input').value;
             const res = document.getElementById('gram-result');
