@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-brand">Solvanta<span>Consulting</span></div>
         <ul class="nav-links">
@@ -24,10 +23,8 @@
         </div>
     </nav>
 
-    <!-- MAIN APP CONTAINER -->
     <main class="app-container">
         
-        <!-- Hero Section -->
         <section id="home" class="page-section hero active">
             <div class="hero-blobs">
                 <div class="blob blob-1"></div>
@@ -42,7 +39,6 @@
             </div>
         </section>
 
-        <!-- Services Section -->
         <section id="services" class="page-section services-section">
             <div class="container">
                 <div class="section-header">
@@ -69,7 +65,6 @@
             </div>
         </section>
 
-        <!-- Tools Section -->
         <section id="tools" class="page-section tools-section">
             <div class="container">
                 <div class="section-header">
@@ -78,21 +73,20 @@
                 </div>
 
                 <div class="tools-layout">
-                    <!-- Sidebar Tabs -->
                     <div class="tools-sidebar" id="toolTabs">
                         <button class="tool-tab active" data-target="tool-chart">Chart Generator</button>
                         <button class="tool-tab" data-target="tool-writing">Writing Assistant</button>
+                        <button class="tool-tab" data-target="tool-cleaner">Data Cleaner</button>
+                        <button class="tool-tab" data-target="tool-arbitrator">The Arbitrator</button>
+                        <button class="tool-tab" data-target="tool-game" style="border-top: 2px solid var(--border-light); margin-top: 10px;">☕ Coffee Break</button>
                     </div>
 
-                    <!-- Tool Contents -->
                     <div class="tools-content">
                         
-                        <!-- Tool 1: Chart Generator -->
                         <div id="tool-chart" class="tool-panel active">
                             <h3>Chart Generator</h3>
                             <p class="subtitle">Generate and download clean, professional charts from raw data.</p>
                             <div class="tool-card">
-                                
                                 <h4 class="card-subheader">1. Data Inputs</h4>
                                 <div class="input-grid">
                                     <div class="input-group">
@@ -146,13 +140,6 @@
                                         <label>Y-Axis Label (Optional)</label>
                                         <input type="text" id="cg-ylabel" placeholder="e.g. Revenue (USD)">
                                     </div>
-                                    <div class="input-group" style="grid-column: 1 / -1;">
-                                        <label>Show Grid Lines</label>
-                                        <select id="cg-grid">
-                                            <option value="true">Yes</option>
-                                            <option value="false">No</option>
-                                        </select>
-                                    </div>
                                 </div>
 
                                 <div class="btn-group mt-15">
@@ -167,19 +154,15 @@
                             </div>
                         </div>
 
-                        <!-- Tool 2: Writing Assistant -->
                         <div id="tool-writing" class="tool-panel">
                             <h3>Writing Assistant</h3>
-                            <p class="subtitle">Format, clarify, and de-jargon your office communications.</p>
+                            <p class="subtitle">Format, clarify, and structure your office communications.</p>
                             
                             <div class="nested-tabs">
                                 <button class="n-tab active" data-target="wa-email">Email Generator</button>
-                                <button class="n-tab" data-target="wa-ai">AI Pattern Checker</button>
-                                <button class="n-tab" data-target="wa-tone">Human Tone Rewriter</button>
                                 <button class="n-tab" data-target="wa-grammar">Grammar & Clarity</button>
                             </div>
 
-                            <!-- 2A: Email Generator -->
                             <div id="wa-email" class="n-panel active">
                                 <div class="tool-card">
                                     <div class="input-group">
@@ -220,41 +203,6 @@
                                 </div>
                             </div>
 
-                            <!-- 2B: AI Writing Pattern Checker -->
-                            <div id="wa-ai" class="n-panel">
-                                <p class="subtitle-small disclaimer">This tool does not prove whether text was written by AI. It only checks for common AI-style writing patterns such as repetition, generic phrasing, overly formal transitions, and low sentence variation.</p>
-                                <div class="tool-card">
-                                    <div class="input-group">
-                                        <label>Paste your text here</label>
-                                        <textarea id="ai-input" rows="6" placeholder="Paste report or email here..."></textarea>
-                                    </div>
-                                    <div class="btn-group">
-                                        <button class="btn-action" onclick="checkAI()">Analyze Patterns</button>
-                                        <button class="btn-clear" onclick="clearInputs('wa-ai')">Clear</button>
-                                    </div>
-                                    <div class="result-box" id="ai-result" style="display:none;"></div>
-                                </div>
-                            </div>
-
-                            <!-- 2C: Human Tone Rewriter -->
-                            <div id="wa-tone" class="n-panel">
-                                <div class="tool-card">
-                                    <div class="input-group">
-                                        <label>Corporate/Fancy Text</label>
-                                        <textarea id="tone-input" rows="5" placeholder="e.g. It is important to note that we must leverage our robust framework..."></textarea>
-                                    </div>
-                                    <div class="btn-group">
-                                        <button class="btn-action" onclick="rewriteTone()">Simplify Text</button>
-                                        <button class="btn-clear" onclick="clearInputs('wa-tone')">Clear</button>
-                                    </div>
-                                    <div class="result-box" id="tone-result-box" style="display:none;">
-                                        <div id="tone-output-display" class="highlight-box"></div>
-                                        <button class="btn-action small mt-15" onclick="copyDivText('tone-output-display')">Copy to Clipboard</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 2D: Grammar & Clarity Checker -->
                             <div id="wa-grammar" class="n-panel">
                                 <div class="tool-card">
                                     <div class="input-group">
@@ -268,14 +216,99 @@
                                     <div class="result-box" id="gram-result" style="display:none;"></div>
                                 </div>
                             </div>
-
                         </div>
+
+                        <div id="tool-cleaner" class="tool-panel">
+                            <h3>Spreadsheet Data Cleaner</h3>
+                            <p class="subtitle">Instantly fix messy text dumps so your Excel formulas stop breaking.</p>
+                            <div class="tool-card">
+                                <div class="input-group">
+                                    <label>Raw Data (Paste from Excel/Sheets or Text)</label>
+                                    <textarea id="cl-input" rows="6" placeholder="Paste your messy data here..."></textarea>
+                                </div>
+                                <div class="cleaner-actions">
+                                    <button class="btn-action small" onclick="cleanText('trim')">Trim Spaces & Empty Lines</button>
+                                    <button class="btn-action small" onclick="cleanText('upper')">UPPERCASE</button>
+                                    <button class="btn-action small" onclick="cleanText('lower')">lowercase</button>
+                                    <button class="btn-action small" onclick="cleanText('title')">Title Case</button>
+                                    <button class="btn-action small" onclick="cleanText('transpose')">Transpose (Row ↔ Col)</button>
+                                    <button class="btn-action small" onclick="cleanText('csv')">Convert to "A", "B" List</button>
+                                </div>
+                                <div class="result-box" id="cl-result-box" style="display:none; margin-top: 15px;">
+                                    <label>Cleaned Output:</label>
+                                    <textarea id="cl-output" rows="6" readonly></textarea>
+                                    <div class="btn-group mt-15">
+                                        <button class="btn-action small" onclick="copyText('cl-output')">Copy to Clipboard</button>
+                                        <button class="btn-clear small" onclick="clearInputs('tool-cleaner')">Clear All</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="tool-arbitrator" class="tool-panel">
+                            <h3>The Arbitrator</h3>
+                            <p class="subtitle">Because rock-paper-scissors doesn't work over Zoom.</p>
+                            
+                            <div class="nested-tabs">
+                                <button class="n-tab active" data-target="arb-chit">Chit Roulette</button>
+                                <button class="n-tab" data-target="arb-dice">Dice Roll</button>
+                                <button class="n-tab" data-target="arb-coin">Coin Toss</button>
+                            </div>
+
+                            <div id="arb-chit" class="n-panel active">
+                                <div class="tool-card text-center">
+                                    <div class="input-group" style="text-align: left;">
+                                        <label>Enter Names/Items (One per line)</label>
+                                        <textarea id="arb-chit-input" rows="5" placeholder="Alice\nBob\nCharlie\nTake out the trash..."></textarea>
+                                    </div>
+                                    <button class="btn-action" onclick="pickChit()">Spin the Wheel of Fate</button>
+                                    <div class="arbitrator-result mt-15" id="arb-chit-result">?</div>
+                                </div>
+                            </div>
+
+                            <div id="arb-dice" class="n-panel">
+                                <div class="tool-card text-center">
+                                    <div class="input-group" style="max-width: 200px; margin: 0 auto 20px;">
+                                        <label>Dice Type</label>
+                                        <select id="arb-dice-type">
+                                            <option value="6">Standard (1-6)</option>
+                                            <option value="20">D20 (1-20)</option>
+                                            <option value="100">D100 (1-100)</option>
+                                        </select>
+                                    </div>
+                                    <button class="btn-action" onclick="rollDice()">Roll Dice</button>
+                                    <div class="arbitrator-result mt-15" id="arb-dice-result">🎲</div>
+                                </div>
+                            </div>
+
+                            <div id="arb-coin" class="n-panel">
+                                <div class="tool-card text-center">
+                                    <button class="btn-action" onclick="tossCoin()">Flip Coin</button>
+                                    <div class="arbitrator-result mt-15" id="arb-coin-result">🪙</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="tool-game" class="tool-panel">
+                            <h3>Coffee Break</h3>
+                            <p class="subtitle">Waiting for an export to finish? Destroy some blocks.</p>
+                            <div class="tool-card text-center">
+                                <div class="game-wrapper">
+                                    <canvas id="brickCanvas" width="600" height="400"></canvas>
+                                    <div id="gameOverlay" class="game-overlay">
+                                        <h4 id="gameMessage">Ready to play?</h4>
+                                        <p>Use Left/Right arrows or drag mouse.</p>
+                                        <button class="btn-action mt-15" onclick="startGame()">Start Game</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- About Section -->
         <section id="about" class="page-section about-section">
             <div class="container">
                 <div class="about-content">
@@ -296,7 +329,6 @@
             </div>
         </section>
 
-        <!-- Contact Section -->
         <section id="contact" class="page-section contact-section">
             <div class="container">
                 <h2>Need Help Fixing Your Workflow Chaos?</h2>
@@ -311,7 +343,6 @@
 
     </main>
 
-    <!-- Footer -->
     <footer>
         <div class="container footer-content">
             <div class="footer-brand">Solvanta<span>Consulting</span></div>
@@ -320,7 +351,6 @@
         </div>
     </footer>
 
-    <!-- Logic Script -->
     <script>
         // --- SPA Routing Logic ---
         function navigateTo(hash) {
@@ -342,6 +372,11 @@
             
             document.querySelector('.nav-links').classList.remove('active');
             document.getElementById('hamburger').classList.remove('active');
+
+            // Pause game if navigating away
+            if(hash !== '#tools') {
+                isGameRunning = false;
+            }
         }
 
         window.addEventListener('hashchange', () => navigateTo(window.location.hash));
@@ -359,7 +394,14 @@
                 document.querySelectorAll('.tool-tab').forEach(t => t.classList.remove('active'));
                 document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
                 tab.classList.add('active');
-                document.getElementById(tab.getAttribute('data-target')).classList.add('active');
+                
+                const target = tab.getAttribute('data-target');
+                document.getElementById(target).classList.add('active');
+
+                // Pause game if tab switched
+                if(target !== 'tool-game') {
+                    isGameRunning = false;
+                }
             });
         });
 
@@ -381,15 +423,10 @@
             });
             container.querySelectorAll('.result-box').forEach(el => {
                 el.style.display = 'none';
-                el.innerHTML = '';
             });
             if(containerId === 'tool-chart') {
                 if(window.myChartInstance) window.myChartInstance.destroy();
                 document.getElementById('cg-canvas-container').style.display = 'none';
-            }
-            if(containerId === 'tool-writing') {
-                document.getElementById('eg-result-box').style.display = 'none';
-                document.getElementById('tone-result-box').style.display = 'none';
             }
         }
 
@@ -400,12 +437,7 @@
             alert("Copied to clipboard!");
         }
 
-        function copyDivText(elemId) {
-            const text = document.getElementById(elemId).innerText;
-            navigator.clipboard.writeText(text).then(() => alert("Copied to clipboard!"));
-        }
-
-        // --- Tool 1: Advanced Chart Generator ---
+        // --- Tool 1: Chart Generator ---
         let myChartInstance = null;
         function generateChart() {
             const title = document.getElementById('cg-title').value;
@@ -416,13 +448,11 @@
             const legendPos = document.getElementById('cg-legend').value;
             const xLabel = document.getElementById('cg-xlabel').value;
             const yLabel = document.getElementById('cg-ylabel').value;
-            const showGrid = document.getElementById('cg-grid').value === 'true';
             
             const container = document.getElementById('cg-canvas-container');
 
             if(!labels.length || isNaN(values[0])) { alert("Please enter valid comma-separated labels and numbers."); return; }
 
-            // Palette Selection
             let bgColors = [];
             if(palette === 'vibrant') {
                 bgColors = ['#ff006e', '#3a86ff', '#8338ec', '#ffbe0b', '#fb5607', '#06d6a0'];
@@ -434,29 +464,26 @@
 
             container.style.display = 'block';
             const ctx = document.getElementById('myChart').getContext('2d');
-            
             if(myChartInstance) myChartInstance.destroy();
 
             Chart.defaults.color = '#94a3b8';
             Chart.defaults.font.family = "'Inter', sans-serif";
 
-            // Legend Config
             let legendConfig = { display: false };
             if (legendPos !== 'none') {
                 legendConfig = { display: true, position: legendPos };
             }
 
-            // Scales Config
             let scalesConfig = {};
             if (type === 'bar' || type === 'line') {
                 scalesConfig = {
                     y: { 
                         beginAtZero: true, 
-                        grid: { display: showGrid, color: 'rgba(255,255,255,0.05)' },
+                        grid: { color: 'rgba(255,255,255,0.05)' },
                         title: { display: !!yLabel, text: yLabel, color: '#f8fafc' }
                     },
                     x: { 
-                        grid: { display: showGrid, color: 'rgba(255,255,255,0.05)' },
+                        grid: { display: false },
                         title: { display: !!xLabel, text: xLabel, color: '#f8fafc' }
                     }
                 };
@@ -473,7 +500,7 @@
                         borderColor: type === 'line' ? bgColors[0] : '#1e293b',
                         borderWidth: 2,
                         borderRadius: type === 'bar' ? 4 : 0,
-                        tension: 0.3 // Smooth lines for line chart
+                        tension: 0.3
                     }]
                 },
                 options: {
@@ -497,7 +524,7 @@
             a.click();
         }
 
-        // --- Tool 2A: Email Gen ---
+        // --- Tool 2: Writing Assistant ---
         function generateEmail() {
             const type = document.getElementById('eg-type').value;
             const rec = document.getElementById('eg-recipient').value || '[Recipient]';
@@ -524,75 +551,6 @@
             document.getElementById('eg-output').value = draft;
         }
 
-        // --- Tool 2B: AI Checker ---
-        function checkAI() {
-            const text = document.getElementById('ai-input').value;
-            const res = document.getElementById('ai-result');
-            if(!text) return;
-
-            const aiWords = ["delve", "tapestry", "furthermore", "moreover", "testament", "crucial", "dynamic", "leverage", "utilize", "facilitate", "spearhead", "seamless", "robust", "synergy", "align", "paradigm", "holistic", "empower", "it is important to note", "in conclusion"];
-            
-            let flags = 0;
-            let highlightedText = text;
-            
-            aiWords.forEach(word => {
-                const regex = new RegExp(`\\b${word}\\b`, 'gi');
-                const matches = text.match(regex);
-                if(matches) {
-                    flags += matches.length;
-                    highlightedText = highlightedText.replace(regex, `<span class="flag-ai">$&</span>`);
-                }
-            });
-
-            const wordsCount = text.split(/\s+/).filter(w=>w).length;
-            let score = 0;
-            if(wordsCount > 0) {
-                score = Math.min(100, Math.round((flags / wordsCount) * 100 * 20));
-            }
-
-            res.style.display = 'block';
-            res.innerHTML = `
-                <div class="score-card">
-                    <h4>AI-style writing pattern score</h4>
-                    <div class="score-value ${score > 50 ? 'high' : 'low'}">${score}%</div>
-                    <p>Flags detected: ${flags}</p>
-                </div>
-                <div class="highlight-box mt-15">${highlightedText}</div>
-            `;
-        }
-
-        // --- Tool 2C: Tone Rewriter ---
-        function rewriteTone() {
-            let text = document.getElementById('tone-input').value;
-            const resContainer = document.getElementById('tone-result-box');
-            const res = document.getElementById('tone-output-display');
-            if(!text) return;
-
-            const replacements = [
-                { regex: /It is important to note that/gi, rep: "Note:" },
-                { regex: /Furthermore/gi, rep: "Also" },
-                { regex: /Moreover/gi, rep: "Besides" },
-                { regex: /leverage/gi, rep: "use" },
-                { regex: /utilize/gi, rep: "use" },
-                { regex: /facilitate/gi, rep: "help with" },
-                { regex: /enhance operational efficiency/gi, rep: "make things run smoother" },
-                { regex: /robust framework/gi, rep: "strong system" },
-                { regex: /seamless integration/gi, rep: "smooth setup" },
-                { regex: /drive impactful outcomes/gi, rep: "get good results" },
-                { regex: /in order to/gi, rep: "to" },
-                { regex: /due to the fact that/gi, rep: "because" },
-                { regex: /spearhead/gi, rep: "lead" }
-            ];
-
-            replacements.forEach(r => {
-                text = text.replace(r.regex, `<span class="flag-fix">${r.rep}</span>`);
-            });
-
-            resContainer.style.display = 'block';
-            res.innerHTML = text;
-        }
-
-        // --- Tool 2D: Grammar ---
         function checkGrammar() {
             const text = document.getElementById('gram-input').value;
             const res = document.getElementById('gram-result');
@@ -626,6 +584,286 @@
                 </ul>
             `;
         }
+
+        // --- Tool 3: Spreadsheet Cleaner ---
+        function cleanText(action) {
+            let text = document.getElementById('cl-input').value;
+            if(!text) return;
+            let result = "";
+
+            if(action === 'trim') {
+                result = text.split('\n')
+                             .map(line => line.replace(/\s+/g, ' ').trim())
+                             .filter(line => line.length > 0)
+                             .join('\n');
+            } 
+            else if(action === 'upper') {
+                result = text.toUpperCase();
+            } 
+            else if(action === 'lower') {
+                result = text.toLowerCase();
+            } 
+            else if(action === 'title') {
+                result = text.toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+            } 
+            else if(action === 'transpose') {
+                // If it has tabs, convert row to col. If newlines, convert col to row (comma separated).
+                if(text.includes('\t')) {
+                    result = text.split('\t').join('\n');
+                } else {
+                    result = text.split('\n').filter(l=>l.trim()).join('\t');
+                }
+            } 
+            else if(action === 'csv') {
+                // Takes a column and formats for SQL / Code: "Item 1", "Item 2"
+                let lines = text.split('\n').map(l=>l.trim()).filter(l=>l.length>0);
+                result = lines.map(l => `"${l}"`).join(', ');
+            }
+
+            document.getElementById('cl-result-box').style.display = 'block';
+            document.getElementById('cl-output').value = result;
+        }
+
+        // --- Tool 4: The Arbitrator ---
+        function tossCoin() {
+            const res = document.getElementById('arb-coin-result');
+            res.classList.add('anim-flip');
+            res.innerText = "⏳";
+            setTimeout(() => {
+                res.classList.remove('anim-flip');
+                res.innerText = Math.random() < 0.5 ? "Heads" : "Tails";
+            }, 600);
+        }
+
+        function rollDice() {
+            const max = parseInt(document.getElementById('arb-dice-type').value);
+            const res = document.getElementById('arb-dice-result');
+            res.classList.add('anim-shake');
+            res.innerText = "🎲";
+            setTimeout(() => {
+                res.classList.remove('anim-shake');
+                res.innerText = Math.floor(Math.random() * max) + 1;
+            }, 500);
+        }
+
+        function pickChit() {
+            const input = document.getElementById('arb-chit-input').value;
+            const res = document.getElementById('arb-chit-result');
+            const items = input.split('\n').map(i=>i.trim()).filter(i=>i.length>0);
+            
+            if(items.length < 2) {
+                res.innerText = "Enter at least 2 items.";
+                return;
+            }
+
+            let counter = 0;
+            const maxSpins = 20;
+            res.classList.add('highlight-text');
+
+            const interval = setInterval(() => {
+                res.innerText = items[Math.floor(Math.random() * items.length)];
+                counter++;
+                if(counter >= maxSpins) {
+                    clearInterval(interval);
+                    const winner = items[Math.floor(Math.random() * items.length)];
+                    res.innerHTML = `👉 <strong>${winner}</strong> 👈`;
+                }
+            }, 50);
+        }
+
+        // --- Tool 5: Coffee Break (Brick Breaker) ---
+        const canvas = document.getElementById("brickCanvas");
+        const ctx = canvas.getContext("2d");
+        
+        let ballRadius = 8;
+        let x, y, dx, dy;
+        let paddleHeight = 12;
+        let paddleWidth = 85;
+        let paddleX;
+        let rightPressed = false;
+        let leftPressed = false;
+        
+        let brickRowCount = 5;
+        let brickColumnCount = 7;
+        let brickWidth = 70;
+        let brickHeight = 20;
+        let brickPadding = 10;
+        let brickOffsetTop = 40;
+        let brickOffsetLeft = 25;
+        
+        let score = 0;
+        let lives = 3;
+        let bricks = [];
+        let isGameRunning = false;
+        let animationId;
+
+        // Colors from palette
+        const cPaddle = "#3b82f6";
+        const cBall = "#f43f5e";
+        const cBrick1 = "#14b8a6";
+        const cBrick2 = "#8b5cf6";
+        const cBrick3 = "#f59e0b";
+
+        function initBricks() {
+            bricks = [];
+            for(let c=0; c<brickColumnCount; c++) {
+                bricks[c] = [];
+                for(let r=0; r<brickRowCount; r++) {
+                    bricks[c][r] = { x: 0, y: 0, status: 1 };
+                }
+            }
+        }
+
+        function resetPositions() {
+            x = canvas.width/2;
+            y = canvas.height-30;
+            dx = 3;
+            dy = -3;
+            paddleX = (canvas.width-paddleWidth)/2;
+        }
+
+        document.addEventListener("keydown", keyDownHandler, false);
+        document.addEventListener("keyup", keyUpHandler, false);
+        canvas.addEventListener("mousemove", mouseMoveHandler, false);
+
+        function keyDownHandler(e) {
+            if(e.key == "Right" || e.key == "ArrowRight") rightPressed = true;
+            else if(e.key == "Left" || e.key == "ArrowLeft") leftPressed = true;
+        }
+        function keyUpHandler(e) {
+            if(e.key == "Right" || e.key == "ArrowRight") rightPressed = false;
+            else if(e.key == "Left" || e.key == "ArrowLeft") leftPressed = false;
+        }
+        function mouseMoveHandler(e) {
+            let relativeX = e.clientX - canvas.getBoundingClientRect().left;
+            if(relativeX > 0 && relativeX < canvas.width) {
+                paddleX = relativeX - paddleWidth/2;
+            }
+        }
+
+        function collisionDetection() {
+            for(let c=0; c<brickColumnCount; c++) {
+                for(let r=0; r<brickRowCount; r++) {
+                    let b = bricks[c][r];
+                    if(b.status == 1) {
+                        if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
+                            dy = -dy;
+                            b.status = 0;
+                            score++;
+                            if(score == brickRowCount*brickColumnCount) {
+                                gameOver("You Win! Operations Saved!");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+            ctx.fillStyle = cBall;
+            ctx.fill();
+            ctx.closePath();
+        }
+        function drawPaddle() {
+            ctx.beginPath();
+            ctx.rect(paddleX, canvas.height-paddleHeight-5, paddleWidth, paddleHeight);
+            ctx.fillStyle = cPaddle;
+            ctx.fill();
+            ctx.closePath();
+        }
+        function drawBricks() {
+            for(let c=0; c<brickColumnCount; c++) {
+                for(let r=0; r<brickRowCount; r++) {
+                    if(bricks[c][r].status == 1) {
+                        let brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
+                        let brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
+                        bricks[c][r].x = brickX;
+                        bricks[c][r].y = brickY;
+                        ctx.beginPath();
+                        ctx.rect(brickX, brickY, brickWidth, brickHeight);
+                        // Alternate colors based on row
+                        ctx.fillStyle = r % 3 === 0 ? cBrick1 : (r % 3 === 1 ? cBrick2 : cBrick3);
+                        ctx.fill();
+                        ctx.closePath();
+                    }
+                }
+            }
+        }
+        function drawScore() {
+            ctx.font = "14px Inter";
+            ctx.fillStyle = "#94a3b8";
+            ctx.fillText("Score: "+score, 8, 20);
+        }
+        function drawLives() {
+            ctx.font = "14px Inter";
+            ctx.fillStyle = "#94a3b8";
+            ctx.fillText("Lives: "+lives, canvas.width-65, 20);
+        }
+
+        function draw() {
+            if(!isGameRunning) return;
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBricks();
+            drawBall();
+            drawPaddle();
+            drawScore();
+            drawLives();
+            collisionDetection();
+
+            if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) dx = -dx;
+            if(y + dy < ballRadius) dy = -dy;
+            else if(y + dy > canvas.height-ballRadius-5) {
+                if(x > paddleX && x < paddleX + paddleWidth) {
+                    dy = -dy;
+                    // Add slight angle variance based on where it hit paddle
+                    dx = dx + ((x - (paddleX + paddleWidth/2)) * 0.05);
+                } else {
+                    lives--;
+                    if(!lives) {
+                        gameOver("Game Over.");
+                        return;
+                    } else {
+                        resetPositions();
+                    }
+                }
+            }
+
+            if(rightPressed && paddleX < canvas.width-paddleWidth) paddleX += 6;
+            else if(leftPressed && paddleX > 0) paddleX -= 6;
+
+            x += dx;
+            y += dy;
+            animationId = requestAnimationFrame(draw);
+        }
+
+        function startGame() {
+            document.getElementById('gameOverlay').style.display = 'none';
+            initBricks();
+            resetPositions();
+            score = 0;
+            lives = 3;
+            isGameRunning = true;
+            cancelAnimationFrame(animationId);
+            draw();
+        }
+
+        function gameOver(msg) {
+            isGameRunning = false;
+            cancelAnimationFrame(animationId);
+            const overlay = document.getElementById('gameOverlay');
+            overlay.style.display = 'flex';
+            document.getElementById('gameMessage').innerText = msg;
+        }
+
+        // Draw initial static state
+        initBricks();
+        resetPositions();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawBricks();
+        drawPaddle();
     </script>
 </body>
 </html>
