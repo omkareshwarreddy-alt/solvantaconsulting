@@ -63,6 +63,7 @@ h1, h2, h3, h4 {
     color: #f8fafc;
 }
 .mt-15 { margin-top: 15px; }
+.mb-10 { margin-bottom: 10px; }
 .error-text { color: var(--coral); font-size: 0.9rem;}
 .highlight-text { color: var(--teal); font-weight: bold; font-size: 1.2rem;}
 
@@ -150,16 +151,16 @@ h1, h2, h3, h4 {
 
 /* --- SPA View Logic --- */
 .page-section {
-    display: none; /* Hidden by default */
-    padding: 120px 0 80px; /* Offset for fixed navbar */
+    display: none;
+    padding: 120px 0 80px; 
     animation: fadeSlideUp 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
     flex: 1;
 }
 .page-section.active {
-    display: block; /* Shown when active */
+    display: block; 
 }
 #home.active {
-    display: flex; /* Hero requires flex */
+    display: flex; 
 }
 
 @keyframes fadeSlideUp {
@@ -394,6 +395,13 @@ h1, h2, h3, h4 {
     border-radius: var(--radius);
     border: 1px solid var(--border-light);
 }
+.card-subheader {
+    font-size: 1.1rem;
+    color: var(--electric-blue);
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: 5px;
+}
 .input-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -463,11 +471,6 @@ input:focus, select:focus, textarea:focus {
     border-left: 4px solid var(--teal);
     border-radius: 0 var(--radius) var(--radius) 0;
 }
-.result-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
 
 /* Nested Tabs (Writing Assistant) */
 .nested-tabs {
@@ -513,8 +516,8 @@ input:focus, select:focus, textarea:focus {
 .analysis-list li { margin-bottom: 10px; padding: 12px; background: rgba(255,255,255,0.02); border-radius: 6px; border: 1px solid var(--border-light);}
 
 /* --- About --- */
-.about-content { max-width: 800px; margin: 0 auto; text-align: center; }
-.about-content h2 { margin-bottom: 25px; }
+.about-content { max-width: 800px; margin: 0 auto; text-align: left; }
+.about-content h2 { margin-bottom: 25px; text-align: center;}
 .about-content p { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 20px; }
 
 /* --- Contact --- */
@@ -545,7 +548,7 @@ footer {
     padding: 40px 0;
     text-align: center;
     border-top: 1px solid var(--border-light);
-    margin-top: auto; /* Push to bottom if content is short */
+    margin-top: auto;
 }
 .footer-brand {
     font-family: var(--font-heading);
@@ -585,5 +588,5 @@ footer {
     .hamburger.active span:nth-child(2) { opacity: 0; }
     .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
     
-    .input-grid, .result-grid { grid-template-columns: 1fr; }
+    .input-grid { grid-template-columns: 1fr; }
 }
