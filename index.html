@@ -1,226 +1,714 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Solvanta Consulting</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solvanta Consulting | Practical Office Tools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <nav class="navbar">
+        <div class="nav-brand">Solvanta<span>Consulting</span></div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#tools">Tools</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact" class="nav-cta">Contact</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
 
-<header class="site-header">
-  <div class="logo">
-    <span class="logo-mark">S</span>
-    <span>Solvanta Consulting</span>
-  </div>
+    <section id="home" class="hero">
+        <div class="hero-blobs">
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+            <div class="blob blob-3"></div>
+        </div>
+        <div class="hero-content">
+            <h1>Your operations are not broken.</h1>
+            <h2>They’re just being held together by spreadsheets, screenshots, and blind optimism.</h2>
+            <p>I help teams deal with messy operations, spreadsheets, reports, emails, trackers, and workflow chaos.</p>
+            <a href="#tools" class="btn-primary">Explore Free Tools</a>
+        </div>
+    </section>
 
-  <nav>
-    <a href="#services">Services</a>
-    <a href="#solutions">Solutions</a>
-    <a href="#impact">Impact</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
+    <section id="services" class="services-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>What We Do</h2>
+                <p>Because "just follow up manually" is not a process.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon purple">📊</div>
+                    <h3>Dashboards People Actually Open</h3>
+                    <p>Operational dashboards that make sense, highlight the problem, and don't require an advanced degree to read.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon coral">📝</div>
+                    <h3>Reports That Don't Hurt</h3>
+                    <p>Reporting templates and workflow trackers designed to get you out of the office on time.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon teal">🤖</div>
+                    <h3>AI Without the Sci-Fi Nonsense</h3>
+                    <p>Practical AI enablement, lightweight automation, and knowledge systems for everyday office tasks.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section class="hero">
-  <div class="orb orb-one"></div>
-  <div class="orb orb-two"></div>
-  <div class="orb orb-three"></div>
+    <section id="tools" class="tools-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Tools That Make Work Slightly Less Annoying</h2>
+                <p class="privacy-note">All tools run in your browser. Nothing is stored, uploaded, or sent anywhere.</p>
+            </div>
 
-  <div class="hero-content">
-    <p class="eyebrow">Operational Intelligence • Automation • AI Enablement</p>
+            <div class="tools-layout">
+                <div class="tools-sidebar" id="toolTabs">
+                    <button class="tool-tab active" data-target="tool-hike">Hike Calculator</button>
+                    <button class="tool-tab" data-target="tool-percent">Percentage Calculator</button>
+                    <button class="tool-tab" data-target="tool-target">Target Gap Calculator</button>
+                    <button class="tool-tab" data-target="tool-days">Working Days Calculator</button>
+                    <button class="tool-tab" data-target="tool-chart">Chart Generator</button>
+                    <button class="tool-tab" data-target="tool-writing">Writing Assistant</button>
+                </div>
 
-    <h1>Helping teams work smarter through data, automation, and intelligent systems.</h1>
+                <div class="tools-content">
+                    
+                    <div id="tool-hike" class="tool-panel active">
+                        <h3>Hike Calculator</h3>
+                        <p class="subtitle">Because appraisal maths should not feel like tax season.</p>
+                        <div class="tool-card">
+                            <div class="input-group">
+                                <label>Current Annual Salary</label>
+                                <input type="number" id="hike-current" placeholder="e.g. 50000">
+                            </div>
+                            <div class="input-group">
+                                <label>Hike Percentage (%)</label>
+                                <input type="number" id="hike-percent" placeholder="e.g. 15">
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn-action" onclick="calcHike()">Calculate</button>
+                                <button class="btn-clear" onclick="clearInputs('tool-hike')">Clear</button>
+                            </div>
+                            <div class="result-box" id="hike-result" style="display:none;"></div>
+                        </div>
+                    </div>
 
-    <p class="hero-text">
-      Solvanta Consulting helps organizations improve visibility, reporting,
-      process efficiency, and decision-making through modern dashboards,
-      automation workflows, and AI-enabled operational solutions.
-    </p>
+                    <div id="tool-percent" class="tool-panel">
+                        <h3>Percentage Calculator</h3>
+                        <p class="subtitle">Because "roughly around 70-ish percent" is not a metric.</p>
+                        <div class="tool-card">
+                            <div class="calc-row">
+                                <span>What is</span>
+                                <input type="number" id="pct-a1" class="small-input">
+                                <span>% of</span>
+                                <input type="number" id="pct-b1" class="small-input">
+                                <button class="btn-action small" onclick="calcPct1()">=</button>
+                                <span class="result-inline" id="pct-res1"></span>
+                            </div>
+                            <div class="calc-row">
+                                <input type="number" id="pct-a2" class="small-input">
+                                <span>is what % of</span>
+                                <input type="number" id="pct-b2" class="small-input">
+                                <button class="btn-action small" onclick="calcPct2()">=</button>
+                                <span class="result-inline" id="pct-res2"></span>
+                            </div>
+                            <div class="calc-row">
+                                <span>% change from</span>
+                                <input type="number" id="pct-a3" class="small-input">
+                                <span>to</span>
+                                <input type="number" id="pct-b3" class="small-input">
+                                <button class="btn-action small" onclick="calcPct3()">=</button>
+                                <span class="result-inline" id="pct-res3"></span>
+                            </div>
+                            <div class="btn-group mt-15">
+                                <button class="btn-clear" onclick="clearInputs('tool-percent')">Clear All</button>
+                            </div>
+                        </div>
+                    </div>
 
-    <div class="hero-buttons">
-      <a href="#services" class="btn primary">Explore Services</a>
-      <a href="#contact" class="btn secondary">Start a Conversation</a>
-    </div>
+                    <div id="tool-target" class="tool-panel">
+                        <h3>Target Gap Calculator</h3>
+                        <p class="subtitle">Find out exactly how dramatic the month-end panic should be.</p>
+                        <div class="tool-card">
+                            <div class="input-grid">
+                                <div class="input-group">
+                                    <label>Total Target</label>
+                                    <input type="number" id="tgt-target" placeholder="1000">
+                                </div>
+                                <div class="input-group">
+                                    <label>Current Achieved</label>
+                                    <input type="number" id="tgt-current" placeholder="450">
+                                </div>
+                                <div class="input-group">
+                                    <label>Days Remaining</label>
+                                    <input type="number" id="tgt-days" placeholder="12">
+                                </div>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn-action" onclick="calcTarget()">Calculate</button>
+                                <button class="btn-clear" onclick="clearInputs('tool-target')">Clear</button>
+                            </div>
+                            <div class="result-box" id="tgt-result" style="display:none;"></div>
+                        </div>
+                    </div>
 
-    <div class="hero-stats">
-      <div>
-        <strong>01</strong>
-        <span>Operational visibility</span>
-      </div>
-      <div>
-        <strong>02</strong>
-        <span>Workflow automation</span>
-      </div>
-      <div>
-        <strong>03</strong>
-        <span>AI-enabled reporting</span>
-      </div>
-    </div>
-  </div>
-</section>
+                    <div id="tool-days" class="tool-panel">
+                        <h3>Working Days Calculator</h3>
+                        <p class="subtitle">Counts the days. Judges procrastination silently.</p>
+                        <div class="tool-card">
+                            <div class="input-grid">
+                                <div class="input-group">
+                                    <label>Start Date</label>
+                                    <input type="date" id="wd-start">
+                                </div>
+                                <div class="input-group">
+                                    <label>End Date</label>
+                                    <input type="date" id="wd-end">
+                                </div>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn-action" onclick="calcWorkingDays()">Calculate</button>
+                                <button class="btn-clear" onclick="clearInputs('tool-days')">Clear</button>
+                            </div>
+                            <div class="result-box" id="wd-result" style="display:none;"></div>
+                        </div>
+                    </div>
 
-<section id="services" class="section">
-  <div class="section-heading">
-    <p class="eyebrow">What We Do</p>
-    <h2>Practical solutions designed for modern operational teams</h2>
-    <p>
-      We help teams move from manual reporting and scattered information
-      to structured, intelligent, and easy-to-use operational systems.
-    </p>
-  </div>
+                    <div id="tool-chart" class="tool-panel">
+                        <h3>Chart Generator</h3>
+                        <p class="subtitle">Turn numbers into something leadership might actually look at.</p>
+                        <div class="tool-card">
+                            <div class="input-group">
+                                <label>Chart Title</label>
+                                <input type="text" id="cg-title" placeholder="e.g. Q3 Coffee Consumption">
+                            </div>
+                            <div class="input-grid">
+                                <div class="input-group">
+                                    <label>Labels (comma separated)</label>
+                                    <input type="text" id="cg-labels" placeholder="Jan, Feb, Mar">
+                                </div>
+                                <div class="input-group">
+                                    <label>Values (comma separated)</label>
+                                    <input type="text" id="cg-values" placeholder="10, 25, 14">
+                                </div>
+                                <div class="input-group">
+                                    <label>Chart Type</label>
+                                    <select id="cg-type">
+                                        <option value="bar">Bar</option>
+                                        <option value="line">Line</option>
+                                        <option value="pie">Pie</option>
+                                        <option value="doughnut">Donut</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn-action" onclick="generateChart()">Generate Chart</button>
+                                <button class="btn-clear" onclick="clearInputs('tool-chart')">Clear</button>
+                            </div>
+                            <div class="chart-container mt-15" style="position: relative; height:40vh; width:100%; display:none;" id="cg-canvas-container">
+                                <canvas id="myChart"></canvas>
+                                <button class="btn-action small mt-15" onclick="downloadChart()">Download PNG</button>
+                            </div>
+                        </div>
+                    </div>
 
-  <div class="cards">
-    <div class="card">
-      <div class="icon">📊</div>
-      <h3>Dashboard Development</h3>
-      <p>
-        Executive dashboards, KPI monitoring, performance reporting,
-        and visual management systems.
-      </p>
-      <span class="card-link">Visibility →</span>
-    </div>
+                    <div id="tool-writing" class="tool-panel">
+                        <h3>Writing Assistant</h3>
+                        <p class="subtitle">Because words are hard after 3 PM.</p>
+                        
+                        <div class="nested-tabs">
+                            <button class="n-tab active" data-target="wa-email">Email Generator</button>
+                            <button class="n-tab" data-target="wa-ai">AI Pattern Checker</button>
+                            <button class="n-tab" data-target="wa-tone">Human Tone Rewriter</button>
+                            <button class="n-tab" data-target="wa-grammar">Grammar & Clarity</button>
+                        </div>
 
-    <div class="card">
-      <div class="icon">⚙️</div>
-      <h3>Workflow Automation</h3>
-      <p>
-        Automated reminders, task tracking, performance updates,
-        reporting workflows, and process alerts.
-      </p>
-      <span class="card-link">Efficiency →</span>
-    </div>
+                        <div id="wa-email" class="n-panel active">
+                            <p class="subtitle-small">Turns messy notes into emails that sound like you had a plan.</p>
+                            <div class="tool-card">
+                                <div class="input-group">
+                                    <label>Email Type</label>
+                                    <select id="eg-type">
+                                        <option value="analysis">Analysis summary email</option>
+                                        <option value="followup">Follow-up email</option>
+                                        <option value="escalation">Issue escalation email</option>
+                                        <option value="meeting">Meeting summary email</option>
+                                        <option value="update">Data update email</option>
+                                    </select>
+                                </div>
+                                <div class="input-grid">
+                                    <div class="input-group">
+                                        <label>Recipient Name</label>
+                                        <input type="text" id="eg-recipient" placeholder="Team, John, etc.">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>Sender Name</label>
+                                        <input type="text" id="eg-sender" placeholder="Your name">
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <label>Context / Main Topic</label>
+                                    <input type="text" id="eg-context" placeholder="What is this about?">
+                                </div>
+                                <div class="input-group">
+                                    <label>Key Points (bullet notes)</label>
+                                    <textarea id="eg-points" rows="3" placeholder="Point 1... Point 2..."></textarea>
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn-action" onclick="generateEmail()">Generate Draft</button>
+                                </div>
+                                <div class="result-box" id="eg-result-box" style="display:none;">
+                                    <textarea id="eg-output" rows="8" readonly></textarea>
+                                    <button class="btn-action small mt-15" onclick="copyText('eg-output')">Copy to Clipboard</button>
+                                </div>
+                            </div>
+                        </div>
 
-    <div class="card">
-      <div class="icon">🤖</div>
-      <h3>AI Enablement</h3>
-      <p>
-        AI-assisted reporting, prompt frameworks, workflow design,
-        training material, and productivity use cases.
-      </p>
-      <span class="card-link">Intelligence →</span>
-    </div>
+                        <div id="wa-ai" class="n-panel">
+                            <p class="subtitle-small disclaimer">This tool does not prove whether text was written by AI. It only checks for common AI-style writing patterns such as repetition, generic phrasing, overly formal transitions, and low sentence variation.</p>
+                            <div class="tool-card">
+                                <div class="input-group">
+                                    <label>Paste your text here</label>
+                                    <textarea id="ai-input" rows="6" placeholder="Paste report or email here..."></textarea>
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn-action" onclick="checkAI()">Analyze Patterns</button>
+                                    <button class="btn-clear" onclick="clearInputs('wa-ai')">Clear</button>
+                                </div>
+                                <div class="result-box" id="ai-result" style="display:none;"></div>
+                            </div>
+                        </div>
 
-    <div class="card">
-      <div class="icon">🧭</div>
-      <h3>Knowledge Systems</h3>
-      <p>
-        Internal knowledge hubs, SOP portals, training libraries,
-        process guides, and team resource centres.
-      </p>
-      <span class="card-link">Clarity →</span>
-    </div>
+                        <div id="wa-tone" class="n-panel">
+                            <p class="subtitle-small">Translates corporate jargon back into English.</p>
+                            <div class="tool-card">
+                                <div class="input-group">
+                                    <label>Corporate/Fancy Text</label>
+                                    <textarea id="tone-input" rows="5" placeholder="e.g. It is important to note that we must leverage our robust framework..."></textarea>
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn-action" onclick="rewriteTone()">De-Corporate-ify</button>
+                                    <button class="btn-clear" onclick="clearInputs('wa-tone')">Clear</button>
+                                </div>
+                                <div class="result-box" id="tone-result-box" style="display:none;">
+                                    <div id="tone-output-display" class="highlight-box"></div>
+                                    <button class="btn-action small mt-15" onclick="copyDivText('tone-output-display')">Copy to Clipboard</button>
+                                </div>
+                            </div>
+                        </div>
 
-    <div class="card">
-      <div class="icon">🔎</div>
-      <h3>Process Intelligence</h3>
-      <p>
-        Process mapping, improvement opportunities, operational controls,
-        and structured reporting frameworks.
-      </p>
-      <span class="card-link">Control →</span>
-    </div>
+                        <div id="wa-grammar" class="n-panel">
+                            <p class="subtitle-small">Like a tiny office editor, but without asking you to upgrade every 4 minutes.</p>
+                            <div class="tool-card">
+                                <div class="input-group">
+                                    <label>Draft Text</label>
+                                    <textarea id="gram-input" rows="5" placeholder="Paste your text..."></textarea>
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn-action" onclick="checkGrammar()">Check Clarity</button>
+                                    <button class="btn-clear" onclick="clearInputs('wa-grammar')">Clear</button>
+                                </div>
+                                <div class="result-box" id="gram-result" style="display:none;"></div>
+                            </div>
+                        </div>
 
-    <div class="card">
-      <div class="icon">📈</div>
-      <h3>Performance Tracking</h3>
-      <p>
-        Target tracking, progress monitoring, team summaries,
-        leadership reporting, and performance insights.
-      </p>
-      <span class="card-link">Growth →</span>
-    </div>
-  </div>
-</section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section id="solutions" class="section gradient-section">
-  <div class="section-heading">
-    <p class="eyebrow light">Solutions</p>
-    <h2>Built around visibility, structure, and better decisions</h2>
-  </div>
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-content">
+                <h2>About Solvanta Consulting</h2>
+                <p>We believe that business operations shouldn't be a source of daily trauma. Solvanta Consulting is a private workspace dedicated to creating practical office tools, sane operational dashboards, and writing support systems that cut through the noise.</p>
+                <p>Stop pretending that a 40-tab spreadsheet is a "database" and that manually sending 50 emails is a "strategy." We build tools that make work slightly less annoying.</p>
+            </div>
+        </div>
+    </section>
 
-  <div class="solution-grid">
-    <div>Operational Reporting Portals</div>
-    <div>Quality & Compliance Dashboards</div>
-    <div>Target & Performance Trackers</div>
-    <div>AI Productivity Workflows</div>
-    <div>Internal Knowledge Bases</div>
-    <div>Leadership Summary Dashboards</div>
-    <div>Process Automation Tools</div>
-    <div>Training & Enablement Hubs</div>
-  </div>
-</section>
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2>Need Help Fixing Your Workflow Chaos?</h2>
+            <p>If you're tired of running your department on blind optimism, let's talk.</p>
+            <div class="contact-card">
+                <div class="contact-icon">✉️</div>
+                <h3>Email Us</h3>
+                <a href="mailto:helpdesk@solvantaconsulting.com" class="email-link">helpdesk@solvantaconsulting.com</a>
+            </div>
+        </div>
+    </section>
 
-<section id="impact" class="section impact">
-  <div class="section-heading center">
-    <p class="eyebrow">How We Help</p>
-    <h2>From scattered operations to intelligent systems</h2>
-  </div>
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-brand">Solvanta<span>Consulting</span></div>
+            <p class="footer-privacy">All tools on this site run purely in your browser. Nothing is stored, uploaded, or sent to external servers.</p>
+            <p class="copyright">&copy; 2026 Solvanta Consulting. All rights reserved.</p>
+        </div>
+    </footer>
 
-  <div class="timeline">
-    <div class="timeline-item">
-      <span>1</span>
-      <h3>Understand the workflow</h3>
-      <p>Map how the current process, reporting, and information flow actually works.</p>
-    </div>
+    <script>
+        // --- Navigation Mobile & Scrolling ---
+        document.getElementById('hamburger').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+            this.classList.toggle('active');
+        });
 
-    <div class="timeline-item">
-      <span>2</span>
-      <h3>Structure the data</h3>
-      <p>Organize the information into usable formats for reporting, tracking, and automation.</p>
-    </div>
+        // --- Tabs Logic ---
+        document.querySelectorAll('.tool-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tool-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tab.getAttribute('data-target')).classList.add('active');
+            });
+        });
 
-    <div class="timeline-item">
-      <span>3</span>
-      <h3>Build the system</h3>
-      <p>Create dashboards, portals, trackers, or workflow tools that make operations easier to manage.</p>
-    </div>
+        document.querySelectorAll('.n-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.n-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.n-panel').forEach(p => p.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tab.getAttribute('data-target')).classList.add('active');
+            });
+        });
 
-    <div class="timeline-item">
-      <span>4</span>
-      <h3>Improve continuously</h3>
-      <p>Refine the system with feedback, automation, AI support, and better decision logic.</p>
-    </div>
-  </div>
-</section>
+        // --- Utility Functions ---
+        function clearInputs(containerId) {
+            const container = document.getElementById(containerId);
+            container.querySelectorAll('input, textarea').forEach(el => el.value = '');
+            container.querySelectorAll('.result-box').forEach(el => {
+                el.style.display = 'none';
+                el.innerHTML = '';
+            });
+            container.querySelectorAll('.result-inline').forEach(el => el.innerText = '');
+            if(containerId === 'tool-chart') {
+                if(window.myChartInstance) window.myChartInstance.destroy();
+                document.getElementById('cg-canvas-container').style.display = 'none';
+            }
+            if(containerId === 'tool-writing') {
+                document.getElementById('eg-result-box').style.display = 'none';
+                document.getElementById('tone-result-box').style.display = 'none';
+            }
+        }
 
-<section id="about" class="section split">
-  <div>
-    <p class="eyebrow">About</p>
-    <h2>Designed for teams that need clarity, speed, and control.</h2>
-  </div>
+        function copyText(elemId) {
+            const txt = document.getElementById(elemId);
+            txt.select();
+            document.execCommand("copy");
+            alert("Copied to clipboard!");
+        }
 
-  <div>
-    <p>
-      Solvanta Consulting focuses on practical, business-ready systems that
-      improve operational visibility, reporting accuracy, process efficiency,
-      and leadership decision-making.
-    </p>
+        function copyDivText(elemId) {
+            const text = document.getElementById(elemId).innerText;
+            navigator.clipboard.writeText(text).then(() => alert("Copied to clipboard!"));
+        }
 
-    <p>
-      Our approach combines dashboard design, operational thinking, workflow
-      automation, AI enablement, and clear documentation to help teams work
-      with more structure and confidence.
-    </p>
-  </div>
-</section>
+        function formatCurrency(num) {
+            return new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 }).format(num);
+        }
 
-<section id="contact" class="section contact">
-  <div class="contact-card">
-    <p class="eyebrow">Contact</p>
-    <h2>Let’s build smarter operational systems.</h2>
-    <p>For enquiries, collaborations, or project discussions:</p>
+        // --- Tool 1: Hike Calc ---
+        function calcHike() {
+            const current = parseFloat(document.getElementById('hike-current').value);
+            const percent = parseFloat(document.getElementById('hike-percent').value);
+            const res = document.getElementById('hike-result');
+            
+            if(!current || !percent) { res.style.display='block'; res.innerHTML='<span class="error">Please enter valid numbers.</span>'; return; }
+            
+            const newAnnual = current * (1 + percent/100);
+            const annualInc = newAnnual - current;
+            const newMonthly = newAnnual / 12;
+            const monthlyInc = annualInc / 12;
 
-    <a href="mailto:helpdesk@solvantaconsulting.com" class="email">
-      helpdesk@solvantaconsulting.com
-    </a>
-  </div>
-</section>
+            res.style.display = 'block';
+            res.innerHTML = `
+                <div class="result-grid">
+                    <div><strong>New Annual Salary:</strong> <br> ${formatCurrency(newAnnual)}</div>
+                    <div><strong>Annual Increase:</strong> <br> +${formatCurrency(annualInc)}</div>
+                    <div><strong>New Monthly Salary:</strong> <br> ${formatCurrency(newMonthly)}</div>
+                    <div><strong>Monthly Increase:</strong> <br> +${formatCurrency(monthlyInc)}</div>
+                </div>
+            `;
+        }
 
-<footer>
-  <p>© 2026 Solvanta Consulting. All rights reserved.</p>
-</footer>
+        // --- Tool 2: Percent Calc ---
+        function calcPct1() {
+            const a = parseFloat(document.getElementById('pct-a1').value);
+            const b = parseFloat(document.getElementById('pct-b1').value);
+            if(a && b) document.getElementById('pct-res1').innerText = ((a/100)*b).toFixed(2);
+        }
+        function calcPct2() {
+            const a = parseFloat(document.getElementById('pct-a2').value);
+            const b = parseFloat(document.getElementById('pct-b2').value);
+            if(a && b) document.getElementById('pct-res2').innerText = ((a/b)*100).toFixed(2) + '%';
+        }
+        function calcPct3() {
+            const a = parseFloat(document.getElementById('pct-a3').value);
+            const b = parseFloat(document.getElementById('pct-b3').value);
+            if(a && b) {
+                const pct = ((b-a)/a)*100;
+                document.getElementById('pct-res3').innerText = (pct > 0 ? '+' : '') + pct.toFixed(2) + '%';
+            }
+        }
 
+        // --- Tool 3: Target Gap ---
+        function calcTarget() {
+            const target = parseFloat(document.getElementById('tgt-target').value);
+            const current = parseFloat(document.getElementById('tgt-current').value);
+            const days = parseFloat(document.getElementById('tgt-days').value);
+            const res = document.getElementById('tgt-result');
+
+            if(isNaN(target) || isNaN(current)) return;
+
+            const gap = target - current;
+            const pct = ((current/target)*100).toFixed(1);
+            
+            let reqStr = "N/A (No days entered)";
+            if(days && days > 0) {
+                reqStr = (gap > 0) ? (gap / days).toFixed(2) + " per day" : "Target Achieved!";
+            }
+
+            res.style.display = 'block';
+            res.innerHTML = `
+                <div class="result-grid">
+                    <div><strong>Remaining Gap:</strong> <br> ${formatCurrency(gap > 0 ? gap : 0)}</div>
+                    <div><strong>Achievement:</strong> <br> ${pct}%</div>
+                    <div style="grid-column: span 2;"><strong>Required Rate:</strong> <br> ${reqStr}</div>
+                </div>
+            `;
+        }
+
+        // --- Tool 4: Working Days ---
+        function calcWorkingDays() {
+            const startStr = document.getElementById('wd-start').value;
+            const endStr = document.getElementById('wd-end').value;
+            const res = document.getElementById('wd-result');
+            
+            if(!startStr || !endStr) return;
+            
+            const start = new Date(startStr);
+            const end = new Date(endStr);
+            if(start > end) { res.style.display='block'; res.innerHTML='End date must be after start date.'; return; }
+
+            let workingDays = 0;
+            let weekendDays = 0;
+            let current = new Date(start);
+            let total = 0;
+
+            while(current <= end) {
+                total++;
+                const day = current.getDay();
+                if(day === 0 || day === 6) weekendDays++;
+                else workingDays++;
+                current.setDate(current.getDate() + 1);
+            }
+
+            res.style.display = 'block';
+            res.innerHTML = `
+                <div class="result-grid">
+                    <div><strong>Total Calendar Days:</strong> <br> ${total}</div>
+                    <div><strong>Working Days:</strong> <br> <span class="highlight-text">${workingDays}</span></div>
+                    <div><strong>Weekend Days:</strong> <br> ${weekendDays}</div>
+                </div>
+            `;
+        }
+
+        // --- Tool 5: Chart Generator ---
+        let myChartInstance = null;
+        function generateChart() {
+            const title = document.getElementById('cg-title').value;
+            const type = document.getElementById('cg-type').value;
+            const labels = document.getElementById('cg-labels').value.split(',').map(s=>s.trim());
+            const values = document.getElementById('cg-values').value.split(',').map(s=>parseFloat(s.trim()));
+            const container = document.getElementById('cg-canvas-container');
+
+            if(!labels.length || isNaN(values[0])) { alert("Please enter valid comma-separated labels and numbers."); return; }
+
+            container.style.display = 'block';
+            const ctx = document.getElementById('myChart').getContext('2d');
+            
+            if(myChartInstance) myChartInstance.destroy();
+
+            Chart.defaults.color = '#a0aabf';
+            Chart.defaults.font.family = "'Inter', sans-serif";
+
+            myChartInstance = new Chart(ctx, {
+                type: type,
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: title || 'Dataset',
+                        data: values,
+                        backgroundColor: ['#1C7ED6', '#20C997', '#7950F2', '#FF6B6B', '#F59F00', '#12b886'],
+                        borderColor: '#0B132B',
+                        borderWidth: 2,
+                        borderRadius: type==='bar'? 4 : 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        title: { display: !!title, text: title, color: '#ffffff', font: {size: 16} }
+                    },
+                    scales: (type==='bar'||type==='line') ? {
+                        y: { beginAtZero: true, grid: {color: 'rgba(255,255,255,0.1)'} },
+                        x: { grid: {display: false} }
+                    } : {}
+                }
+            });
+        }
+        function downloadChart() {
+            if(!myChartInstance) return;
+            const url = document.getElementById('myChart').toDataURL('image/png');
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'solvanta_chart.png';
+            a.click();
+        }
+
+        // --- Tool 6A: Email Gen ---
+        function generateEmail() {
+            const type = document.getElementById('eg-type').value;
+            const rec = document.getElementById('eg-recipient').value || '[Recipient]';
+            const sen = document.getElementById('eg-sender').value || '[Your Name]';
+            const ctx = document.getElementById('eg-context').value || '[Topic Context]';
+            const pts = document.getElementById('eg-points').value || '[Your Points Here]';
+            
+            let draft = "";
+            const formattedPts = pts.split('\n').filter(p=>p.trim()).map(p=>`- ${p.trim()}`).join('\n');
+
+            if(type === 'analysis') {
+                draft = `Hi ${rec},\n\nHere is a quick summary regarding ${ctx}.\n\nKey takeaways:\n${formattedPts}\n\nLet me know if you need any clarification.\n\nBest,\n${sen}`;
+            } else if(type === 'followup') {
+                draft = `Hi ${rec},\n\nFollowing up on our previous discussion about ${ctx}.\n\nCould we get an update on the following items?\n${formattedPts}\n\nLooking forward to hearing from you.\n\nThanks,\n${sen}`;
+            } else if(type === 'escalation') {
+                draft = `Hi ${rec},\n\nI need to bring an issue to your attention regarding ${ctx}.\n\nCurrent situation:\n${formattedPts}\n\nPlease let me know how you'd like to proceed or if we can jump on a quick call to resolve this.\n\nBest,\n${sen}`;
+            } else if(type === 'meeting') {
+                draft = `Hi ${rec},\n\nThanks for the time today. Here is a summary of what we discussed regarding ${ctx}.\n\nAction Items & Notes:\n${formattedPts}\n\nLet me know if I missed anything.\n\nRegards,\n${sen}`;
+            } else if(type === 'update') {
+                draft = `Hi ${rec},\n\nPlease find the latest data/update for ${ctx}.\n\nHighlights:\n${formattedPts}\n\nAll details are attached/linked. Let me know if you have questions.\n\nBest,\n${sen}`;
+            }
+
+            document.getElementById('eg-result-box').style.display = 'block';
+            document.getElementById('eg-output').value = draft;
+        }
+
+        // --- Tool 6B: AI Checker ---
+        function checkAI() {
+            const text = document.getElementById('ai-input').value;
+            const res = document.getElementById('ai-result');
+            if(!text) return;
+
+            const aiWords = ["delve", "tapestry", "furthermore", "moreover", "testament", "crucial", "dynamic", "leverage", "utilize", "facilitate", "spearhead", "seamless", "robust", "synergy", "align", "paradigm", "holistic", "empower", "it is important to note", "in conclusion"];
+            
+            let flags = 0;
+            let highlightedText = text;
+            
+            aiWords.forEach(word => {
+                const regex = new RegExp(`\\b${word}\\b`, 'gi');
+                const matches = text.match(regex);
+                if(matches) {
+                    flags += matches.length;
+                    highlightedText = highlightedText.replace(regex, `<span class="flag-ai">$&</span>`);
+                }
+            });
+
+            const wordsCount = text.split(/\s+/).filter(w=>w).length;
+            let score = 0;
+            if(wordsCount > 0) {
+                // Heuristic: if 5% of words are "AI-like", score is very high. Multiply by 20 to scale.
+                score = Math.min(100, Math.round((flags / wordsCount) * 100 * 20));
+            }
+
+            res.style.display = 'block';
+            res.innerHTML = `
+                <div class="score-card">
+                    <h4>AI-style writing pattern score</h4>
+                    <div class="score-value ${score > 50 ? 'high' : 'low'}">${score}%</div>
+                    <p>Flags detected: ${flags}</p>
+                </div>
+                <div class="highlight-box mt-15">${highlightedText}</div>
+            `;
+        }
+
+        // --- Tool 6C: Tone Rewriter ---
+        function rewriteTone() {
+            let text = document.getElementById('tone-input').value;
+            const resContainer = document.getElementById('tone-result-box');
+            const res = document.getElementById('tone-output-display');
+            if(!text) return;
+
+            const replacements = [
+                { regex: /It is important to note that/gi, rep: "Note:" },
+                { regex: /Furthermore/gi, rep: "Also" },
+                { regex: /Moreover/gi, rep: "Besides" },
+                { regex: /leverage/gi, rep: "use" },
+                { regex: /utilize/gi, rep: "use" },
+                { regex: /facilitate/gi, rep: "help with" },
+                { regex: /enhance operational efficiency/gi, rep: "make things run smoother" },
+                { regex: /robust framework/gi, rep: "strong system" },
+                { regex: /seamless integration/gi, rep: "smooth setup" },
+                { regex: /drive impactful outcomes/gi, rep: "get good results" },
+                { regex: /in order to/gi, rep: "to" },
+                { regex: /due to the fact that/gi, rep: "because" },
+                { regex: /spearhead/gi, rep: "lead" }
+            ];
+
+            replacements.forEach(r => {
+                text = text.replace(r.regex, `<span class="flag-fix">${r.rep}</span>`);
+            });
+
+            resContainer.style.display = 'block';
+            res.innerHTML = text;
+        }
+
+        // --- Tool 6D: Grammar ---
+        function checkGrammar() {
+            const text = document.getElementById('gram-input').value;
+            const res = document.getElementById('gram-result');
+            if(!text) return;
+
+            const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+            let longSentences = 0;
+            let passiveCount = 0;
+            
+            sentences.forEach(s => {
+                if(s.split(/\s+/).length > 25) longSentences++;
+            });
+
+            const passiveRegex = /\b(is|are|was|were|be|been|being)\s+[a-z]+ed\b/ig;
+            const passiveMatches = text.match(passiveRegex);
+            if(passiveMatches) passiveCount = passiveMatches.length;
+
+            const repeatedRegex = /\b(\w+)\s+\1\b/ig;
+            const repeatedMatches = text.match(repeatedRegex);
+            const repeatedCount = repeatedMatches ? repeatedMatches.length : 0;
+
+            res.style.display = 'block';
+            res.innerHTML = `
+                <ul class="analysis-list">
+                    <li><strong>Long Sentences (>25 words):</strong> ${longSentences} 
+                        ${longSentences > 0 ? '<span class="error-text">(Try breaking these up)</span>' : '✅'}</li>
+                    <li><strong>Passive Voice Fragments:</strong> ${passiveCount}
+                        ${passiveCount > 0 ? '<span class="error-text">(Use active voice where possible)</span>' : '✅'}</li>
+                    <li><strong>Consecutive Repeated Words:</strong> ${repeatedCount}
+                        ${repeatedCount > 0 ? '<span class="error-text">(Check for typos)</span>' : '✅'}</li>
+                </ul>
+            `;
+        }
+    </script>
 </body>
 </html>
