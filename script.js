@@ -1,14 +1,18 @@
 /* Solvanta Consulting
-   Browser-only interaction layer.
-   No backend. No storage. No mysterious data goblin.
+   Minimal rotary site interactions.
+   Browser-only. No backend. No storage. No mysterious data goblin.
 */
 
 document.addEventListener("DOMContentLoaded", () => {
   initRotaryNavigation();
+  initJumpButtons();
+
   initCareerTabs();
   initResumeMaker();
   initCoverLetterMaker();
+
   initDeviceCheck();
+
   initPracticeTabs();
   initTypingTest();
   initReactionTest();
@@ -21,44 +25,57 @@ document.addEventListener("DOMContentLoaded", () => {
 ----------------------------- */
 
 function initRotaryNavigation() {
-  const rotaryWrap = document.getElementById("rotaryWrap");
-  const homeButton = document.getElementById("homeButton");
-  const dialItems = document.querySelectorAll(".dial-item");
+  const rotaryDial = document.getElementById("rotaryDial");
+  const dialHome = document.getElementById("dialHome");
+  const dialButtons = document.querySelectorAll(".dial-hole");
   const views = document.querySelectorAll(".view");
 
-  if (!rotaryWrap || !homeButton || !dialItems.length || !views.length) return;
+  if (!rotaryDial || !dialHome || !dialButtons.length || !views.length) return;
 
   function openSection(sectionName) {
-    const targetView = document.getElementById(`view-${sectionName}`);
-    if (!targetView) return;
+    const target = document.getElementById(`view-${sectionName}`);
+    if (!target) return;
 
     views.forEach((view) => {
       view.classList.remove("active-view");
     });
 
-    targetView.classList.add("active-view");
+    target.classList.add("active-view");
 
-    dialItems.forEach((item) => {
-      item.classList.toggle("active", item.dataset.section === sectionName);
+    dialButtons.forEach((button) => {
+      button.classList.toggle("active", button.dataset.section === sectionName);
     });
 
-    rotaryWrap.classList.add("open");
+    rotaryDial.classList.add("open");
 
     if (sectionName === "home") {
       setTimeout(() => {
-        rotaryWrap.classList.remove("open");
-      }, 450);
+        rotaryDial.classList.remove("open");
+      }, 420);
     }
   }
 
-  homeButton.addEventListener("click", () => {
-    openSection("home");
+  dialHome.addEventListener("click", () => openSection("home"));
+
+  dialButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      openSection(button.dataset.section);
+    });
   });
 
-  dialItems.forEach((item) => {
-    item.addEventListener("click", () => {
-      const section = item.dataset.section;
-      openSection(section);
+  window.solvantaOpenSection = openSection;
+}
+
+function initJumpButtons() {
+  const jumpButtons = document.querySelectorAll("[data-jump]");
+
+  jumpButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const target = button.dataset.jump;
+
+      if (window.solvantaOpenSection) {
+        window.solvantaOpenSection(target);
+      }
     });
   });
 }
@@ -75,13 +92,13 @@ function initCareerTabs() {
 
   tabs.forEach((tab) => {
     tab.addEventListener("click", () => {
-      const tool = tab.dataset.tool;
+      const selectedTool = tab.dataset.tool;
 
       tabs.forEach((item) => item.classList.remove("active"));
       tab.classList.add("active");
 
       toolViews.forEach((view) => {
-        view.classList.toggle("active-tool", view.id === `tool-${tool}`);
+        view.classList.toggle("active-tool", view.id === `tool-${selectedTool}`);
       });
     });
   });
@@ -119,24 +136,9 @@ function initResumeMaker() {
     return value && value.trim() ? value.trim() : fallback;
   }
 
-  function linesToHtml(value, fallback) {
-    const cleaned = cleanText(value, fallback);
-
-    return cleaned
-      .split("\n")
-      .map((line) => line.trim())
-      .filter(Boolean)
-      .map((line) => {
-        if (line.startsWith("-")) {
-          return `<li>${escapeHtml(line.replace(/^-/, "").trim())}</li>`;
-        }
-        return `<p>${escapeHtml(line)}</p>`;
-      })
-      .join("");
-  }
-
   function updatePreview() {
     preview.name.textContent = cleanText(fields.name.value, "Your Name");
+
     preview.contact.textContent = cleanText(
       fields.contact.value,
       "Email · Phone · City · LinkedIn"
@@ -152,16 +154,10 @@ function initResumeMaker() {
       "Your skills will appear here."
     );
 
-    const expHtml = linesToHtml(
+    preview.experience.innerHTML = formatExperience(
       fields.experience.value,
       "Your experience will appear here."
     );
-
-    if (expHtml.includes("<li>")) {
-      preview.experience.innerHTML = `<ul>${expHtml}</ul>`;
-    } else {
-      preview.experience.innerHTML = expHtml;
-    }
 
     preview.education.textContent = cleanText(
       fields.education.value,
@@ -181,10 +177,43 @@ function initResumeMaker() {
     Object.values(fields).forEach((field) => {
       field.value = "";
     });
+
     updatePreview();
   });
 
   updatePreview();
+}
+
+function formatExperience(value, fallback) {
+  const text = value && value.trim() ? value.trim() : fallback;
+  const lines = text
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+
+  if (!lines.length) return escapeHtml(fallback);
+
+  let html = "";
+  let bullets = [];
+
+  lines.forEach((line) => {
+    if (line.startsWith("-")) {
+      bullets.push(`<li>${escapeHtml(line.replace(/^-/, "").trim())}</li>`);
+    } else {
+      if (bullets.length) {
+        html += `<ul>${bullets.join("")}</ul>`;
+        bullets = [];
+      }
+
+      html += `<p>${escapeHtml(line)}</p>`;
+    }
+  });
+
+  if (bullets.length) {
+    html += `<ul>${bullets.join("")}</ul>`;
+  }
+
+  return html;
 }
 
 /* -----------------------------
@@ -238,10 +267,10 @@ function initCoverLetterMaker() {
   });
 
   copyButton?.addEventListener("click", async () => {
-    const text = buildCoverLetterText(fields);
+    const letterText = buildCoverLetterText(fields);
 
     try {
-      await navigator.clipboard.writeText(text);
+      await navigator.clipboard.writeText(letterText);
       copyButton.textContent = "Copied";
       setTimeout(() => {
         copyButton.textContent = "Copy Letter";
@@ -286,44 +315,41 @@ ${name}`;
 ----------------------------- */
 
 function initDeviceCheck() {
+  initCameraCheck();
+  initMicrophoneCheck();
+  initSpeakerCheck();
+  initBrowserCheck();
+  initInternetSpeedCheck();
+}
+
+function initCameraCheck() {
   const startCamera = document.getElementById("startCamera");
   const stopCamera = document.getElementById("stopCamera");
   const cameraPreview = document.getElementById("cameraPreview");
   const cameraStatus = document.getElementById("cameraStatus");
 
-  const startMic = document.getElementById("startMic");
-  const stopMic = document.getElementById("stopMic");
-  const micLevel = document.getElementById("micLevel");
-  const micStatus = document.getElementById("micStatus");
-
-  const playSound = document.getElementById("playSound");
-  const speakerStatus = document.getElementById("speakerStatus");
-
-  const runBrowserCheck = document.getElementById("runBrowserCheck");
-  const browserInfo = document.getElementById("browserInfo");
+  if (!startCamera || !stopCamera || !cameraPreview || !cameraStatus) return;
 
   let cameraStream = null;
-  let micStream = null;
-  let audioContext = null;
-  let micAnimationFrame = null;
 
-  startCamera?.addEventListener("click", async () => {
+  startCamera.addEventListener("click", async () => {
     if (!navigator.mediaDevices?.getUserMedia) {
-      cameraStatus.textContent = "Camera API is not supported in this browser.";
+      cameraStatus.textContent = "Camera access is not supported in this browser.";
       return;
     }
 
     try {
       cameraStream = await navigator.mediaDevices.getUserMedia({ video: true });
       cameraPreview.srcObject = cameraStream;
-      cameraStatus.textContent = "Camera detected. Looking professional is now your responsibility.";
-    } catch (error) {
       cameraStatus.textContent =
-        "Camera could not start. Permission may be blocked or no camera was found.";
+        "Camera detected. The lighting is now between you and your life choices.";
+    } catch {
+      cameraStatus.textContent =
+        "Camera could not start. Permission may be blocked, or the camera is unavailable.";
     }
   });
 
-  stopCamera?.addEventListener("click", () => {
+  stopCamera.addEventListener("click", () => {
     if (cameraStream) {
       cameraStream.getTracks().forEach((track) => track.stop());
       cameraStream = null;
@@ -331,10 +357,23 @@ function initDeviceCheck() {
       cameraStatus.textContent = "Camera stopped.";
     }
   });
+}
 
-  startMic?.addEventListener("click", async () => {
+function initMicrophoneCheck() {
+  const startMic = document.getElementById("startMic");
+  const stopMic = document.getElementById("stopMic");
+  const micLevel = document.getElementById("micLevel");
+  const micStatus = document.getElementById("micStatus");
+
+  if (!startMic || !stopMic || !micLevel || !micStatus) return;
+
+  let micStream = null;
+  let audioContext = null;
+  let animationFrame = null;
+
+  startMic.addEventListener("click", async () => {
     if (!navigator.mediaDevices?.getUserMedia) {
-      micStatus.textContent = "Microphone API is not supported in this browser.";
+      micStatus.textContent = "Microphone access is not supported in this browser.";
       return;
     }
 
@@ -349,7 +388,7 @@ function initDeviceCheck() {
       analyser.fftSize = 256;
       source.connect(analyser);
 
-      function updateMicLevel() {
+      function updateLevel() {
         analyser.getByteFrequencyData(dataArray);
 
         const average =
@@ -358,21 +397,23 @@ function initDeviceCheck() {
         const level = Math.min(100, Math.round((average / 128) * 100));
         micLevel.style.width = `${level}%`;
 
-        micAnimationFrame = requestAnimationFrame(updateMicLevel);
+        animationFrame = requestAnimationFrame(updateLevel);
       }
 
-      updateMicLevel();
-      micStatus.textContent = "Microphone detected. The tiny green bar believes in you.";
+      updateLevel();
+
+      micStatus.textContent =
+        "Microphone detected. The little bar is moving, which is more than some meetings can say.";
     } catch {
       micStatus.textContent =
-        "Microphone could not start. Permission may be blocked or no microphone was found.";
+        "Microphone could not start. Permission may be blocked, or no mic was found.";
     }
   });
 
-  stopMic?.addEventListener("click", () => {
-    if (micAnimationFrame) {
-      cancelAnimationFrame(micAnimationFrame);
-      micAnimationFrame = null;
+  stopMic.addEventListener("click", () => {
+    if (animationFrame) {
+      cancelAnimationFrame(animationFrame);
+      animationFrame = null;
     }
 
     if (micStream) {
@@ -388,8 +429,15 @@ function initDeviceCheck() {
     micLevel.style.width = "0%";
     micStatus.textContent = "Microphone stopped.";
   });
+}
 
-  playSound?.addEventListener("click", () => {
+function initSpeakerCheck() {
+  const playSound = document.getElementById("playSound");
+  const speakerStatus = document.getElementById("speakerStatus");
+
+  if (!playSound || !speakerStatus) return;
+
+  playSound.addEventListener("click", () => {
     try {
       const context = new AudioContext();
       const oscillator = context.createOscillator();
@@ -409,33 +457,124 @@ function initDeviceCheck() {
         context.close();
       }, 450);
 
-      speakerStatus.textContent = "Test sound played. If you heard it, the speaker passed.";
+      speakerStatus.textContent =
+        "Test sound played. If you heard it, your speaker has chosen peace.";
     } catch {
-      speakerStatus.textContent = "Could not play test sound in this browser.";
+      speakerStatus.textContent =
+        "Could not play the test sound. Your browser may be blocking audio.";
     }
   });
+}
 
-  runBrowserCheck?.addEventListener("click", () => {
-    const items = [];
+function initBrowserCheck() {
+  const runBrowserCheck = document.getElementById("runBrowserCheck");
+  const browserInfo = document.getElementById("browserInfo");
 
-    items.push(`Browser: ${navigator.userAgent}`);
-    items.push(`Online: ${navigator.onLine ? "Yes" : "No"}`);
-    items.push(`Screen: ${window.screen.width} × ${window.screen.height}`);
-    items.push(`Window: ${window.innerWidth} × ${window.innerHeight}`);
-    items.push(
-      `Camera/Mic support: ${
-        navigator.mediaDevices?.getUserMedia ? "Available" : "Not supported"
+  if (!runBrowserCheck || !browserInfo) return;
+
+  runBrowserCheck.addEventListener("click", () => {
+    const info = [];
+
+    info.push(`Online status: ${navigator.onLine ? "Online" : "Offline"}`);
+    info.push(`Screen size: ${window.screen.width} × ${window.screen.height}`);
+    info.push(`Browser window: ${window.innerWidth} × ${window.innerHeight}`);
+    info.push(
+      `Camera/microphone API: ${
+        navigator.mediaDevices?.getUserMedia ? "Supported" : "Not supported"
       }`
     );
+    info.push(`Clipboard API: ${navigator.clipboard ? "Supported" : "Limited"}`);
 
     if (navigator.connection) {
-      items.push(`Connection type: ${navigator.connection.effectiveType || "Unknown"}`);
+      info.push(
+        `Browser-reported network type: ${
+          navigator.connection.effectiveType || "Unknown"
+        }`
+      );
+      info.push(
+        `Estimated downlink from browser: ${
+          navigator.connection.downlink ? `${navigator.connection.downlink} Mbps` : "Not available"
+        }`
+      );
     } else {
-      items.push("Connection type: Not available in this browser");
+      info.push("Browser-reported network details: Not available");
     }
 
-    browserInfo.innerHTML = items.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+    browserInfo.innerHTML = info.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
   });
+}
+
+function initInternetSpeedCheck() {
+  const runSpeedTest = document.getElementById("runSpeedTest");
+  const speedResult = document.getElementById("speedResult");
+
+  if (!runSpeedTest || !speedResult) return;
+
+  runSpeedTest.addEventListener("click", async () => {
+    runSpeedTest.disabled = true;
+    runSpeedTest.textContent = "Checking...";
+    speedResult.innerHTML = `
+      <strong>Testing connection...</strong>
+      <span>Downloading a small test file in the browser. Please wait while the internet considers behaving.</span>
+    `;
+
+    try {
+      const testUrl =
+        "https://upload.wikimedia.org/wikipedia/commons/3/3f/Fronalpstock_big.jpg";
+      const cacheBuster = `?cacheBust=${Date.now()}`;
+      const startTime = performance.now();
+
+      const response = await fetch(testUrl + cacheBuster, { cache: "no-store" });
+
+      if (!response.ok) {
+        throw new Error("Speed test file could not be downloaded.");
+      }
+
+      const blob = await response.blob();
+      const endTime = performance.now();
+
+      const durationSeconds = Math.max((endTime - startTime) / 1000, 0.1);
+      const bitsLoaded = blob.size * 8;
+      const speedMbps = bitsLoaded / durationSeconds / 1024 / 1024;
+
+      const roundedSpeed = Math.round(speedMbps * 10) / 10;
+      const interpretation = getSpeedInterpretation(roundedSpeed);
+
+      speedResult.innerHTML = `
+        <strong>Approx download speed: ${roundedSpeed} Mbps</strong>
+        <span>${interpretation}</span>
+        <span class="small-note">This is a browser-based estimate. Good enough for a quick sanity check, not for arguing with your internet provider.</span>
+      `;
+    } catch {
+      speedResult.innerHTML = `
+        <strong>Speed check could not complete.</strong>
+        <span>Your browser or network may have blocked the test file, which is annoying but not personally surprising. Try again later or use a dedicated speed test if you need exact results.</span>
+      `;
+    } finally {
+      runSpeedTest.disabled = false;
+      runSpeedTest.textContent = "Run Speed Check";
+    }
+  });
+}
+
+function getSpeedInterpretation(speedMbps) {
+  if (speedMbps >= 50) {
+    return "Your connection looks strong enough for video calls, screen sharing, online meetings, downloads, and general work without too much drama. If the call still freezes, blame the meeting platform responsibly.";
+  }
+
+  if (speedMbps >= 20) {
+    return "Your connection looks suitable for normal office work, browsing, email, and most video calls. If five other apps are also fighting for bandwidth, things may still get spicy.";
+  }
+
+  if (speedMbps >= 8) {
+    return "Your connection should handle basic browsing and emails, but video calls or screen sharing may feel unstable if other apps are also using the internet. Proceed with cautious optimism.";
+  }
+
+  if (speedMbps >= 3) {
+    return "Your connection looks weak right now. You may face buffering, dropped audio, slow loading, or the classic meeting phrase: can you hear me now?";
+  }
+
+  return "Your connection is struggling. Basic browsing may work, but video calls, uploads, and screen sharing may behave like they have resigned emotionally.";
 }
 
 /* -----------------------------
@@ -444,21 +583,21 @@ function initDeviceCheck() {
 
 function initPracticeTabs() {
   const tabs = document.querySelectorAll("[data-practice]");
-  const views = document.querySelectorAll(".practice-view");
+  const practiceViews = document.querySelectorAll(".practice-view");
 
-  if (!tabs.length || !views.length) return;
+  if (!tabs.length || !practiceViews.length) return;
 
   tabs.forEach((tab) => {
     tab.addEventListener("click", () => {
-      const practice = tab.dataset.practice;
+      const selected = tab.dataset.practice;
 
       tabs.forEach((item) => item.classList.remove("active"));
       tab.classList.add("active");
 
-      views.forEach((view) => {
+      practiceViews.forEach((view) => {
         view.classList.toggle(
           "active-practice",
-          view.id === `practice-${practice}`
+          view.id === `practice-${selected}`
         );
       });
     });
@@ -470,30 +609,79 @@ function initPracticeTabs() {
 ----------------------------- */
 
 function initTypingTest() {
-  const startButton = document.getElementById("startTyping");
   const typingText = document.getElementById("typingText");
   const typingInput = document.getElementById("typingInput");
+  const startButton = document.getElementById("startTyping");
   const wpm = document.getElementById("typingWpm");
   const accuracy = document.getElementById("typingAccuracy");
   const mistakes = document.getElementById("typingMistakes");
 
-  if (!startButton || !typingInput || !typingText) return;
+  if (!typingText || !typingInput || !startButton || !wpm || !accuracy || !mistakes) return;
 
-  const sentences = [
-    "Dashboards are only useful when they help people understand what needs attention.",
-    "A clean report saves time, reduces confusion, and quietly makes everyone look better.",
-    "Spreadsheet chaos is temporary, but a good process can survive Monday morning.",
-    "The best tools are simple enough that people actually use them without a training manual."
+  const typingPassages = [
+    "Congratulations, you have voluntarily started a typing test. Somewhere, a spreadsheet just gained confidence. Type this carefully, because your keyboard is about to reveal whether you are a productive professional or just someone who sends emails with alarming confidence and three hidden typos.",
+
+    "A good dashboard should help people understand what changed, what matters, and what needs attention. A bad dashboard looks like someone trapped twenty charts in a room and told them to fight for leadership attention. Please type this before another pie chart applies for emotional support.",
+
+    "Most office chaos does not arrive dramatically. It sneaks in as duplicate trackers, unclear ownership, missing updates, and one file named final version two. If you are typing this calmly, congratulations. You may already be more organized than the folder structure that hurt you.",
+
+    "This typing test is not here to judge you. That would be rude. It is here to quietly measure your speed, accuracy, and ability to survive a paragraph without blaming the keyboard. If mistakes appear, please remember denial is not a valid productivity strategy.",
+
+    "Good reporting is not about adding more slides, more charts, or more words that sound important in a meeting. It is about helping people understand the situation quickly. If your report needs a treasure map, three calls, and a follow-up email to explain it, the report has chosen violence.",
+
+    "Before joining an online meeting, check your camera, microphone, speakers, and internet connection. Future you will appreciate the preparation. Present you may think this is unnecessary, but present you is also the person who once said, can everyone hear me, while clearly muted.",
+
+    "A clean process should survive a busy Monday, a missing team member, and at least three people asking for the same update in different ways. If the process collapses because one person is on leave, that is not a process. That is a group project wearing a business suit.",
+
+    "Your resume should be clear, direct, and easy to scan. It should not look like it was designed during a font emergency. Recruiters do not need a treasure hunt. They need your skills, experience, achievements, and proof that you can use bullet points without starting a graphic design incident.",
+
+    "Not every spreadsheet needs to become a dashboard, but every important decision deserves information that is clean, readable, and slightly less terrifying. If the file has twelve tabs, four colour codes, and no explanation, it is not a report. It is an escape room with formulas.",
+
+    "The best tools are simple enough that people actually use them, useful enough that they save time, and calm enough that nobody needs a training session. If a tool requires three manuals and a motivational speech, congratulations, you have invented another problem.",
+
+    "Typing fast is impressive, but typing accurately is what keeps your email from becoming a screenshot in someone else's group chat. Speed is good. Accuracy is better. Sending dear manger instead of dear manager is how office legends are born for the wrong reasons.",
+
+    "Meetings are not automatically bad. Some meetings are useful, focused, and mercifully short. Others begin with a quick sync and somehow turn into a forty-five-minute documentary about a spreadsheet nobody opened. Type this sentence for everyone who has suffered politely.",
+
+    "A useful update should answer three simple questions: what happened, why it matters, and what needs to happen next. If your update creates more questions than answers, it is not an update. It is a mysterious fog bank with bullet points.",
+
+    "Data cleanup is the part nobody celebrates but everyone needs. Trim the spaces, remove the duplicates, fix the names, and check the dates. Otherwise, your dashboard will confidently display nonsense, and nonsense with a chart is still nonsense, just wearing a tie.",
+
+    "If you are taking this typing test to prove something, wonderful. If you are taking it to avoid doing actual work, also understandable. Either way, the timer does not care about your feelings. It only cares whether your fingers can keep up with your ambition.",
+
+    "A good cover letter should sound like a real person wrote it. Not a robot. Not a motivational poster. Not a corporate brochure that learned to breathe. Keep it simple, relevant, and human. The hiring team already has enough generic enthusiasm to wallpaper a conference room.",
+
+    "Some people say multitasking is a skill. Usually, it means doing five things badly while pretending your browser tabs are a project management system. Focus is underrated. So is closing the seven duplicate files you opened while looking for the right version.",
+
+    "The phrase quick update has done more damage to calendars than anyone wants to admit. A quick update can be useful, but only if it is actually quick and actually an update. Otherwise, it becomes a meeting wearing a fake moustache.",
+
+    "A dashboard should not make people ask what am I looking at. It should guide the eye, explain the priority, and make the next step obvious. If users need a separate dashboard to understand your dashboard, congratulations, you have created a reporting multiverse.",
+
+    "This test may reveal that your typing speed is excellent, average, or powered entirely by panic. All outcomes are valid. The important thing is that you keep going, fix your mistakes, and avoid blaming autocorrect for crimes it clearly did not commit.",
+
+    "Office productivity is mostly the art of making information easier to find, easier to trust, and easier to act on. Everything else is decoration. If the team cannot find the file, understand the metric, or know who owns the action, the process is just vibes in formal clothing.",
+
+    "A well-written email should be polite, clear, and difficult to misunderstand. It should not contain six paragraphs of emotional cushioning before asking one simple question. Respect the reader. Ask the question. Add context. Escape before the email becomes a novel.",
+
+    "When a tracker has too many columns, people stop updating it. When it has too few columns, it becomes useless. The trick is finding the balance between enough information and not making every row feel like a tax declaration with deadlines.",
+
+    "If your internet fails during a meeting, everyone suddenly becomes a technology expert. Someone says switch networks. Someone says restart the browser. Someone says maybe it is your device. Nobody knows. Everyone is guessing. The Wi-Fi, meanwhile, is enjoying the drama.",
+
+    "The goal is not to make work perfect. That would be suspicious and probably require a committee. The goal is to make work clearer, calmer, and less dependent on heroic last-minute effort. If the system needs panic to function, the system needs therapy."
   ];
 
-  let currentSentence = typingText.textContent.trim();
+  let currentPassage = "";
   let startTime = null;
 
-  function resetTyping() {
-    currentSentence = sentences[Math.floor(Math.random() * sentences.length)];
-    typingText.textContent = currentSentence;
+  function startNewTest() {
+    currentPassage =
+      typingPassages[Math.floor(Math.random() * typingPassages.length)];
+
+    typingText.textContent = currentPassage;
     typingInput.value = "";
+    typingInput.disabled = false;
     typingInput.focus();
+
     startTime = Date.now();
 
     wpm.textContent = "0";
@@ -501,10 +689,8 @@ function initTypingTest() {
     mistakes.textContent = "0";
   }
 
-  function updateTypingStats() {
-    if (!startTime) {
-      startTime = Date.now();
-    }
+  function updateStats() {
+    if (!startTime) startTime = Date.now();
 
     const typed = typingInput.value;
     const elapsedMinutes = Math.max((Date.now() - startTime) / 60000, 0.01);
@@ -513,7 +699,7 @@ function initTypingTest() {
     let mistakeCount = 0;
 
     for (let i = 0; i < typed.length; i++) {
-      if (typed[i] !== currentSentence[i]) {
+      if (typed[i] !== currentPassage[i]) {
         mistakeCount++;
       }
     }
@@ -530,8 +716,8 @@ function initTypingTest() {
     mistakes.textContent = String(mistakeCount);
   }
 
-  startButton.addEventListener("click", resetTyping);
-  typingInput.addEventListener("input", updateTypingStats);
+  startButton.addEventListener("click", startNewTest);
+  typingInput.addEventListener("input", updateStats);
 }
 
 /* -----------------------------
@@ -562,7 +748,7 @@ function initReactionTest() {
     box.textContent = "Wait for it...";
     result.textContent = "Do not click yet. The website is watching.";
 
-    const delay = 1200 + Math.random() * 2800;
+    const delay = 1300 + Math.random() * 3000;
 
     timeoutId = setTimeout(() => {
       waiting = false;
@@ -644,6 +830,24 @@ function initAptitudePractice() {
       options: ["65%", "70%", "75%", "80%"],
       answer: "75%",
       explanation: "150 ÷ 200 × 100 = 75%."
+    },
+    {
+      question: "A report has 360 records. If 45 records failed quality checks, what is the failure rate?",
+      options: ["10%", "12.5%", "15%", "18%"],
+      answer: "12.5%",
+      explanation: "45 ÷ 360 × 100 = 12.5%."
+    },
+    {
+      question: "If 18 cases are completed per day, how many days are needed to complete 144 cases?",
+      options: ["6", "7", "8", "9"],
+      answer: "8",
+      explanation: "144 ÷ 18 = 8 days."
+    },
+    {
+      question: "Find the next number: 5, 10, 20, 40, ?",
+      options: ["45", "50", "80", "100"],
+      answer: "80",
+      explanation: "Each number doubles."
     }
   ];
 
@@ -651,7 +855,6 @@ function initAptitudePractice() {
 
   function loadQuestion() {
     currentQuestion = questions[Math.floor(Math.random() * questions.length)];
-
     question.textContent = currentQuestion.question;
     result.textContent = "Choose an answer.";
 
@@ -682,19 +885,21 @@ function initAptitudePractice() {
 ----------------------------- */
 
 function initChartQuiz() {
-  const answerButtons = document.querySelectorAll("[data-chart-answer]");
+  const buttons = document.querySelectorAll("[data-chart-answer]");
   const result = document.getElementById("chartQuizResult");
 
-  if (!answerButtons.length || !result) return;
+  if (!buttons.length || !result) return;
 
-  answerButtons.forEach((button) => {
+  buttons.forEach((button) => {
     button.addEventListener("click", () => {
       const answer = button.dataset.chartAnswer;
 
       if (answer === "D") {
-        result.textContent = "Correct. D is the highest. The chart has been read responsibly.";
+        result.textContent =
+          "Correct. D is the highest. The chart has been read responsibly.";
       } else {
-        result.textContent = "Not quite. D is the highest bar. The chart would like a second chance.";
+        result.textContent =
+          "Not quite. D is the highest bar. The chart would like a second chance.";
       }
     });
   });
