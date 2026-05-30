@@ -1,224 +1,567 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solvanta Consulting | The Orbit Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Solvanta Consulting</title>
+
+  <meta
+    name="description"
+    content="Solvanta Consulting is a private digital lab for dashboards, career tools, device checks, and office survival experiments."
+  />
+
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-    <div class="bg-shape shape-purple"></div>
-    <div class="bg-shape shape-orange"></div>
-    <div class="bg-shape shape-teal"></div>
+  <div class="page-shell">
 
-    <nav class="navbar glass hidden" id="top-nav">
-        <div class="nav-brand">Solvanta<span>Consulting</span></div>
-        <button class="btn-return" onclick="returnToOrbit()">
-            <span class="icon">🌌</span> Return to Orbit
+    <!-- Background decoration -->
+    <div class="bg-orb orb-purple"></div>
+    <div class="bg-orb orb-orange"></div>
+    <div class="bg-orb orb-teal"></div>
+
+    <!-- LEFT ROTARY NAVIGATION -->
+    <aside class="rotary-zone" aria-label="Solvanta navigation">
+      <div class="brand-mini">
+        <span class="brand-dot"></span>
+        <span>Solvanta Consulting</span>
+      </div>
+
+      <div class="rotary-wrap" id="rotaryWrap">
+        <button
+          class="rotary-center"
+          id="homeButton"
+          type="button"
+          aria-label="Go to Home"
+        >
+          <span class="center-title">Solvanta</span>
+          <span class="center-subtitle">Consulting</span>
         </button>
-    </nav>
 
-    <main class="app-container">
-        
-        <section id="home" class="page-section active">
-            <div class="rotary-wrapper">
-                
-                <div class="rotary-center glass-card shadow-lg">
-                    <h1>Solvanta</h1>
-                    <p>Consulting</p>
+        <button
+          class="dial-item dial-home active"
+          type="button"
+          data-section="home"
+          aria-label="Open Home"
+        >
+          <span class="dial-icon">⌂</span>
+          <span class="dial-label">Home</span>
+        </button>
+
+        <button
+          class="dial-item dial-dashboards"
+          type="button"
+          data-section="dashboards"
+          aria-label="Open Dashboards"
+        >
+          <span class="dial-icon">▦</span>
+          <span class="dial-label">Dashboards</span>
+        </button>
+
+        <button
+          class="dial-item dial-career"
+          type="button"
+          data-section="career"
+          aria-label="Open Career Tools"
+        >
+          <span class="dial-icon">✦</span>
+          <span class="dial-label">Career</span>
+        </button>
+
+        <button
+          class="dial-item dial-device"
+          type="button"
+          data-section="device"
+          aria-label="Open Device Check"
+        >
+          <span class="dial-icon">◉</span>
+          <span class="dial-label">Device</span>
+        </button>
+
+        <button
+          class="dial-item dial-practice"
+          type="button"
+          data-section="practice"
+          aria-label="Open Practice Lab"
+        >
+          <span class="dial-icon">⚡</span>
+          <span class="dial-label">Practice</span>
+        </button>
+
+        <button
+          class="dial-item dial-contact"
+          type="button"
+          data-section="contact"
+          aria-label="Open Contact"
+        >
+          <span class="dial-icon">@</span>
+          <span class="dial-label">Contact</span>
+        </button>
+
+        <div class="rotary-ring" aria-hidden="true"></div>
+      </div>
+
+      <p class="rotary-hint">
+        Hover the dial. Click a section. Pretend this was always the plan.
+      </p>
+    </aside>
+
+    <!-- RIGHT CONTENT PANEL -->
+    <main class="content-zone">
+      <section class="content-panel">
+
+        <!-- HOME -->
+        <article class="view active-view" id="view-home">
+          <div class="view-header">
+            <p class="eyebrow">Private experiment · office survival lab</p>
+            <h1>Office chaos, meet your slightly overqualified support system.</h1>
+            <p class="lead">
+              Solvanta is a small digital lab for dashboards, resumes, cover letters,
+              device checks, and tiny practice tools that make work feel slightly less
+              like a spreadsheet-shaped emergency.
+            </p>
+          </div>
+
+          <div class="hero-grid">
+            <div class="hero-card large">
+              <span class="card-tag">Current Mood</span>
+              <h2>Useful, minimal, and mildly sarcastic.</h2>
+              <p>
+                This is not a giant consulting firm, not a fake AI SaaS, and definitely
+                not a place promising to “10x operational synergy.” It is a practical
+                playground for building things that help.
+              </p>
+            </div>
+
+            <div class="hero-card stat-card">
+              <span class="stat-number">01</span>
+              <span class="stat-label">Dashboards</span>
+              <p>Ideas and layouts for turning messy reporting into something readable.</p>
+            </div>
+
+            <div class="hero-card stat-card">
+              <span class="stat-number">02</span>
+              <span class="stat-label">Career Tools</span>
+              <p>ATS-friendly resume and cover letter builders for simple, clean output.</p>
+            </div>
+
+            <div class="hero-card stat-card">
+              <span class="stat-number">03</span>
+              <span class="stat-label">Device Check</span>
+              <p>Camera, mic, speaker, browser, and screen checks before tech chooses violence.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- DASHBOARDS -->
+        <article class="view" id="view-dashboards">
+          <div class="view-header">
+            <p class="eyebrow">Dashboard experiments</p>
+            <h1>Your spreadsheet is not a dashboard. But we respect its ambition.</h1>
+            <p class="lead">
+              This space is for dashboard ideas, reporting layouts, chart experiments,
+              and practical ways to make data easier to understand before it becomes a
+              47-slide deck.
+            </p>
+          </div>
+
+          <div class="dashboard-showcase">
+            <div class="mock-dashboard">
+              <div class="mock-topbar">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+
+              <div class="mock-title-row">
+                <div>
+                  <p class="mock-label">Operations Snapshot</p>
+                  <h3>Weekly Overview</h3>
+                </div>
+                <div class="mock-pill">Draft Concept</div>
+              </div>
+
+              <div class="mock-kpis">
+                <div>
+                  <span>Volume</span>
+                  <strong>1,248</strong>
+                  <small>+12%</small>
+                </div>
+                <div>
+                  <span>Quality</span>
+                  <strong>94%</strong>
+                  <small>+3%</small>
+                </div>
+                <div>
+                  <span>Risk</span>
+                  <strong>Low</strong>
+                  <small>Stable</small>
+                </div>
+              </div>
+
+              <div class="mock-chart-row">
+                <div class="fake-bars">
+                  <span style="height: 46%"></span>
+                  <span style="height: 72%"></span>
+                  <span style="height: 55%"></span>
+                  <span style="height: 88%"></span>
+                  <span style="height: 64%"></span>
+                  <span style="height: 78%"></span>
                 </div>
 
-                <div class="rotary-track" id="rotary-track">
-                    
-                    <div class="rotary-node pos-top" onclick="navigateTo('about')" onmouseenter="pauseOrbit()" onmouseleave="resumeOrbit()">
-                        <div class="node-content glass-card counter-rotate">
-                            <div class="node-icon purple-bg">🏢</div>
-                            <h3>About Us</h3>
-                            <p class="node-preview">Who we are and why we hate messy spreadsheets.</p>
-                        </div>
-                    </div>
-
-                    <div class="rotary-node pos-right" onclick="navigateTo('lab')" onmouseenter="pauseOrbit()" onmouseleave="resumeOrbit()">
-                        <div class="node-content glass-card counter-rotate">
-                            <div class="node-icon orange-bg">🧪</div>
-                            <h3>The Lab</h3>
-                            <p class="node-preview">Where experiments live (currently under construction).</p>
-                        </div>
-                    </div>
-
-                    <div class="rotary-node pos-bottom" onclick="navigateTo('philosophy')" onmouseenter="pauseOrbit()" onmouseleave="resumeOrbit()">
-                        <div class="node-content glass-card counter-rotate">
-                            <div class="node-icon teal-bg">🧠</div>
-                            <h3>Philosophy</h3>
-                            <p class="node-preview">Because "just follow up manually" is not a process.</p>
-                        </div>
-                    </div>
-
-                    <div class="rotary-node pos-left" onclick="navigateTo('contact')" onmouseenter="pauseOrbit()" onmouseleave="resumeOrbit()">
-                        <div class="node-content glass-card counter-rotate">
-                            <div class="node-icon coral-bg">✉️</div>
-                            <h3>Contact</h3>
-                            <p class="node-preview">Send us an email. Imaginary unicorns standing by.</p>
-                        </div>
-                    </div>
-
+                <div class="fake-donut">
+                  <div class="donut-hole"></div>
                 </div>
-            </div>
-            
-            <div class="rotary-instructions">
-                Hover to explore. Click to enter.
-            </div>
-        </section>
+              </div>
 
-        <section id="about" class="page-section hidden content-section">
-            <div class="container">
-                <div class="content-card glass shadow-lg">
-                    <h2>About Solvanta Consulting</h2>
-                    <div class="divider"></div>
-                    <p>We believe that business operations shouldn't be a source of daily trauma.</p>
-                    <p>Solvanta Consulting is a private practice project dedicated to turning messy spreadsheets, chaotic reporting workflows, and blind optimism into clear, functional systems.</p>
-                    <p>We are not a massive enterprise firm, a Tableau replacement, or a fake AI platform. We are just a lightweight productivity lab focused on making work slightly less annoying.</p>
-                    <button class="btn btn-primary mt-20" onclick="returnToOrbit()">Back to Orbit</button>
+              <div class="mock-table">
+                <div><span>North</span><strong>42%</strong></div>
+                <div><span>South</span><strong>28%</strong></div>
+                <div><span>West</span><strong>18%</strong></div>
+              </div>
+            </div>
+
+            <div class="section-cards">
+              <div class="mini-card">
+                <h3>Reporting layouts</h3>
+                <p>Clean structures for KPI summaries, weekly updates, and trend snapshots.</p>
+              </div>
+              <div class="mini-card">
+                <h3>Dashboard thinking</h3>
+                <p>Less “look at all my charts” and more “here is what needs attention.”</p>
+              </div>
+              <div class="mini-card">
+                <h3>Coming later</h3>
+                <p>More interactive dashboard experiments once they behave like adults.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CAREER TOOLS -->
+        <article class="view" id="view-career">
+          <div class="view-header">
+            <p class="eyebrow">Career tools</p>
+            <h1>Resume and cover letter tools without the motivational fog machine.</h1>
+            <p class="lead">
+              Build a clean ATS-friendly resume or a simple professional cover letter.
+              No glitter. No overdesigned chaos. Just structured output you can copy,
+              print, or save as PDF from your browser.
+            </p>
+          </div>
+
+          <div class="tool-tabs">
+            <button class="tool-tab active" type="button" data-tool="resume">Resume Maker</button>
+            <button class="tool-tab" type="button" data-tool="cover">Cover Letter Maker</button>
+          </div>
+
+          <!-- Resume Maker -->
+          <div class="tool-view active-tool" id="tool-resume">
+            <div class="builder-grid">
+              <form class="builder-form" id="resumeForm">
+                <h2>ATS-Friendly Resume Maker</h2>
+                <p class="form-note">
+                  Fill the basics. The preview updates instantly. Use your browser’s print
+                  option to save as PDF.
+                </p>
+
+                <label>
+                  Full Name
+                  <input type="text" id="resumeName" placeholder="Example: P. Omkareshwar Reddy" />
+                </label>
+
+                <label>
+                  Contact Line
+                  <input type="text" id="resumeContact" placeholder="Email · Phone · City · LinkedIn" />
+                </label>
+
+                <label>
+                  Professional Summary
+                  <textarea id="resumeSummary" rows="4" placeholder="Short 3–4 line professional summary."></textarea>
+                </label>
+
+                <label>
+                  Skills
+                  <textarea id="resumeSkills" rows="3" placeholder="Dashboarding, Reporting, Operations, Excel, AI Tools"></textarea>
+                </label>
+
+                <label>
+                  Experience
+                  <textarea id="resumeExperience" rows="7" placeholder="Role | Company | Dates&#10;- Achievement or responsibility&#10;- Achievement or responsibility"></textarea>
+                </label>
+
+                <label>
+                  Education
+                  <textarea id="resumeEducation" rows="3" placeholder="Degree · University · Year"></textarea>
+                </label>
+
+                <div class="button-row">
+                  <button type="button" class="primary-btn" id="printResume">Print / Save PDF</button>
+                  <button type="button" class="ghost-btn" id="clearResume">Clear</button>
                 </div>
-            </div>
-        </section>
+              </form>
 
-        <section id="lab" class="page-section hidden content-section">
-            <div class="container">
-                <div class="content-card glass shadow-lg text-center">
-                    <span style="font-size: 4rem; display: block; margin-bottom: 20px;">🚧</span>
-                    <h2>The Lab is Under Construction</h2>
-                    <div class="divider" style="margin: 0 auto 20px;"></div>
-                    <p class="subtitle">We scrapped the Dashboard Maker because we're perfectionists.</p>
-                    <p>We are currently rewiring our browser-based utility tools to ensure they meet our strict standard of being incredibly useful without requiring a PhD to operate.</p>
-                    <p class="mt-20"><strong>Check back soon for new experiments.</strong></p>
-                    <button class="btn btn-secondary mt-20" onclick="returnToOrbit()">Back to Orbit</button>
+              <div class="preview-card resume-preview" id="resumePreview">
+                <h2 id="previewName">Your Name</h2>
+                <p id="previewContact">Email · Phone · City · LinkedIn</p>
+
+                <hr />
+
+                <h3>Professional Summary</h3>
+                <p id="previewSummary">Your professional summary will appear here.</p>
+
+                <h3>Skills</h3>
+                <p id="previewSkills">Your skills will appear here.</p>
+
+                <h3>Experience</h3>
+                <div id="previewExperience">Your experience will appear here.</div>
+
+                <h3>Education</h3>
+                <p id="previewEducation">Your education will appear here.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cover Letter Maker -->
+          <div class="tool-view" id="tool-cover">
+            <div class="builder-grid">
+              <form class="builder-form" id="coverForm">
+                <h2>Cover Letter Maker</h2>
+                <p class="form-note">
+                  Simple, professional, and less painful than staring at a blank page.
+                </p>
+
+                <label>
+                  Your Name
+                  <input type="text" id="coverName" placeholder="Your name" />
+                </label>
+
+                <label>
+                  Company Name
+                  <input type="text" id="coverCompany" placeholder="Company name" />
+                </label>
+
+                <label>
+                  Role / Position
+                  <input type="text" id="coverRole" placeholder="Role you are applying for" />
+                </label>
+
+                <label>
+                  Your Background
+                  <textarea id="coverBackground" rows="4" placeholder="Briefly describe your experience."></textarea>
+                </label>
+
+                <label>
+                  Key Strengths
+                  <textarea id="coverStrengths" rows="4" placeholder="Mention 2–3 strengths relevant to the role."></textarea>
+                </label>
+
+                <div class="button-row">
+                  <button type="button" class="primary-btn" id="copyCover">Copy Letter</button>
+                  <button type="button" class="ghost-btn" id="printCover">Print / Save PDF</button>
                 </div>
-            </div>
-        </section>
+              </form>
 
-        <section id="philosophy" class="page-section hidden content-section">
-            <div class="container">
-                <div class="content-card glass shadow-lg">
-                    <h2>Our Philosophy</h2>
-                    <div class="divider"></div>
-                    <ul class="philosophy-list">
-                        <li>
-                            <span class="p-icon">1</span>
-                            <div>
-                                <strong>Your spreadsheet is not a dashboard.</strong>
-                                <p>But a 47-slide PowerPoint deck isn't the answer either. Clarity is king.</p>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="p-icon">2</span>
-                            <div>
-                                <strong>Privacy by default.</strong>
-                                <p>Tools should run in your browser. No mysterious data goblins harvesting your information.</p>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="p-icon">3</span>
-                            <div>
-                                <strong>Cut the jargon.</strong>
-                                <p>We don't "leverage robust synergies." We just fix broken workflows.</p>
-                            </div>
-                        </li>
-                    </ul>
-                    <button class="btn btn-primary mt-20" onclick="returnToOrbit()">Back to Orbit</button>
-                </div>
-            </div>
-        </section>
+              <div class="preview-card letter-preview" id="coverPreview">
+                <p>Dear Hiring Team,</p>
 
-        <section id="contact" class="page-section hidden content-section">
-            <div class="container">
-                <div class="content-card glass shadow-lg text-center">
-                    <h2>Let's Talk Dashboards</h2>
-                    <div class="divider" style="margin: 0 auto 20px;"></div>
-                    <p class="contact-blurb">
-                        Solvanta Consulting is currently a personal practice project and experiment, not an active business looking for marketing, SEO, lead-generation, or engagement-growth services.<br><br> 
-                        Genuine feedback, ideas, and interesting dashboard conversations are welcome. <strong>Generic sales pitches may be chased by imaginary unicorns.</strong>
-                    </p>
-                    <a href="mailto:helpdesk@solvantaconsulting.com" class="email-link">helpdesk@solvantaconsulting.com</a>
-                </div>
-            </div>
-        </section>
+                <p>
+                  I am writing to express my interest in the
+                  <span id="letterRole">[Role]</span> position at
+                  <span id="letterCompany">[Company]</span>.
+                </p>
 
+                <p id="letterBackground">
+                  Your background summary will appear here.
+                </p>
+
+                <p id="letterStrengths">
+                  Your key strengths will appear here.
+                </p>
+
+                <p>
+                  I would welcome the opportunity to discuss how my experience and
+                  skills can support your team.
+                </p>
+
+                <p>
+                  Kind regards,<br />
+                  <strong id="letterName">[Your Name]</strong>
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- DEVICE CHECK -->
+        <article class="view" id="view-device">
+          <div class="view-header">
+            <p class="eyebrow">Device check</p>
+            <h1>Check your setup before technology chooses violence.</h1>
+            <p class="lead">
+              Test camera, microphone, speaker, browser support, screen size, and basic
+              connection status. Camera and mic tests require permission and HTTPS.
+            </p>
+          </div>
+
+          <div class="device-grid">
+            <div class="device-card">
+              <h2>Camera Test</h2>
+              <video id="cameraPreview" autoplay playsinline muted></video>
+              <div class="button-row">
+                <button class="primary-btn" id="startCamera" type="button">Start Camera</button>
+                <button class="ghost-btn" id="stopCamera" type="button">Stop</button>
+              </div>
+              <p class="status-text" id="cameraStatus">Camera not tested yet.</p>
+            </div>
+
+            <div class="device-card">
+              <h2>Microphone Test</h2>
+              <div class="mic-meter">
+                <div id="micLevel"></div>
+              </div>
+              <div class="button-row">
+                <button class="primary-btn" id="startMic" type="button">Start Mic</button>
+                <button class="ghost-btn" id="stopMic" type="button">Stop</button>
+              </div>
+              <p class="status-text" id="micStatus">Microphone not tested yet.</p>
+            </div>
+
+            <div class="device-card">
+              <h2>Speaker Test</h2>
+              <p>Play a small test tone. If you hear it, your speaker has chosen peace.</p>
+              <button class="primary-btn" id="playSound" type="button">Play Test Sound</button>
+              <p class="status-text" id="speakerStatus">Speaker not tested yet.</p>
+            </div>
+
+            <div class="device-card">
+              <h2>Browser & Screen</h2>
+              <ul class="check-list" id="browserInfo">
+                <li>Browser info will appear here.</li>
+              </ul>
+              <button class="primary-btn" id="runBrowserCheck" type="button">Run Check</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- PRACTICE LAB -->
+        <article class="view" id="view-practice">
+          <div class="view-header">
+            <p class="eyebrow">Practice lab</p>
+            <h1>Tiny tests for office survival skills nobody officially trained you for.</h1>
+            <p class="lead">
+              Typing, reaction time, aptitude practice, and chart reading. Small,
+              useful, and mildly judgemental.
+            </p>
+          </div>
+
+          <div class="tool-tabs">
+            <button class="tool-tab active" type="button" data-practice="typing">Typing Test</button>
+            <button class="tool-tab" type="button" data-practice="reaction">Reaction Time</button>
+            <button class="tool-tab" type="button" data-practice="aptitude">Aptitude</button>
+            <button class="tool-tab" type="button" data-practice="chart">Chart Quiz</button>
+          </div>
+
+          <div class="practice-view active-practice" id="practice-typing">
+            <div class="practice-card">
+              <h2>Typing Test</h2>
+              <p id="typingText" class="typing-text">
+                Dashboards are only useful when they help people understand what needs attention.
+              </p>
+              <textarea id="typingInput" rows="5" placeholder="Start typing the sentence above..."></textarea>
+              <div class="button-row">
+                <button class="primary-btn" id="startTyping" type="button">Start / Reset</button>
+              </div>
+              <div class="result-grid">
+                <div><strong id="typingWpm">0</strong><span>WPM</span></div>
+                <div><strong id="typingAccuracy">0%</strong><span>Accuracy</span></div>
+                <div><strong id="typingMistakes">0</strong><span>Mistakes</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="practice-view" id="practice-reaction">
+            <div class="practice-card">
+              <h2>Reaction Time Test</h2>
+              <p>Click start, wait for the box to change colour, then click as fast as possible.</p>
+              <button class="reaction-box" id="reactionBox" type="button">
+                Click Start
+              </button>
+              <div class="button-row">
+                <button class="primary-btn" id="startReaction" type="button">Start</button>
+              </div>
+              <p class="status-text" id="reactionResult">Reaction result will appear here.</p>
+            </div>
+          </div>
+
+          <div class="practice-view" id="practice-aptitude">
+            <div class="practice-card">
+              <h2>Aptitude Quick Practice</h2>
+              <p id="aptitudeQuestion">Click “New Question” to begin.</p>
+              <div class="answer-grid" id="aptitudeAnswers"></div>
+              <div class="button-row">
+                <button class="primary-btn" id="newAptitude" type="button">New Question</button>
+              </div>
+              <p class="status-text" id="aptitudeResult">Result will appear here.</p>
+            </div>
+          </div>
+
+          <div class="practice-view" id="practice-chart">
+            <div class="practice-card">
+              <h2>Chart Reading Quiz</h2>
+              <div class="simple-chart">
+                <div style="height: 40%"><span>A</span></div>
+                <div style="height: 70%"><span>B</span></div>
+                <div style="height: 55%"><span>C</span></div>
+                <div style="height: 90%"><span>D</span></div>
+              </div>
+              <p>Which category has the highest value?</p>
+              <div class="answer-grid">
+                <button type="button" data-chart-answer="A">A</button>
+                <button type="button" data-chart-answer="B">B</button>
+                <button type="button" data-chart-answer="C">C</button>
+                <button type="button" data-chart-answer="D">D</button>
+              </div>
+              <p class="status-text" id="chartQuizResult">Choose an answer.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- CONTACT -->
+        <article class="view" id="view-contact">
+          <div class="view-header">
+            <p class="eyebrow">Contact</p>
+            <h1>Got feedback, ideas, or a spreadsheet that has emotionally harmed you?</h1>
+            <p class="lead">
+              Solvanta Consulting is currently a personal practice project and experiment,
+              not an active business looking for marketing, SEO, lead-generation, or
+              engagement-growth services.
+            </p>
+          </div>
+
+          <div class="contact-card">
+            <h2>Friendly humans welcome.</h2>
+            <p>
+              Genuine feedback, ideas, and interesting dashboard/reporting conversations
+              are welcome. Generic sales pitches may be chased by imaginary unicorns.
+            </p>
+
+            <a class="email-link" href="mailto:helpdesk@solvantaconsulting.com">
+              helpdesk@solvantaconsulting.com
+            </a>
+          </div>
+        </article>
+
+      </section>
+
+      <footer class="site-footer">
+        © 2026 Solvanta Consulting. Built for spreadsheet chaos and the people who survive it.
+      </footer>
     </main>
+  </div>
 
-    <footer id="main-footer" class="hidden">
-        <div class="container">
-            <p>© 2026 Solvanta Consulting. Built for spreadsheet chaos and the people who survive it.</p>
-        </div>
-    </footer>
-
-    <script>
-        // --- Orbit Animation Control ---
-        const rotaryTrack = document.getElementById('rotary-track');
-        const counterNodes = document.querySelectorAll('.counter-rotate');
-
-        function pauseOrbit() {
-            rotaryTrack.style.animationPlayState = 'paused';
-            counterNodes.forEach(node => {
-                node.style.animationPlayState = 'paused';
-            });
-        }
-
-        function resumeOrbit() {
-            rotaryTrack.style.animationPlayState = 'running';
-            counterNodes.forEach(node => {
-                node.style.animationPlayState = 'running';
-            });
-        }
-
-        // --- SPA Routing Logic ---
-        function navigateTo(sectionId) {
-            // Hide Home (Rotary)
-            const homeSec = document.getElementById('home');
-            homeSec.classList.remove('active');
-            homeSec.classList.add('hidden');
-
-            // Show Top Nav & Footer
-            document.getElementById('top-nav').classList.remove('hidden');
-            document.getElementById('main-footer').classList.remove('hidden');
-
-            // Hide all content sections
-            document.querySelectorAll('.content-section').forEach(sec => {
-                sec.classList.remove('active');
-                sec.classList.add('hidden');
-            });
-
-            // Show Target Section
-            const targetSec = document.getElementById(sectionId);
-            if (targetSec) {
-                targetSec.classList.remove('hidden');
-                targetSec.classList.add('active');
-            }
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function returnToOrbit() {
-            // Hide Top Nav & Footer
-            document.getElementById('top-nav').classList.add('hidden');
-            document.getElementById('main-footer').classList.add('hidden');
-
-            // Hide all content sections
-            document.querySelectorAll('.content-section').forEach(sec => {
-                sec.classList.remove('active');
-                sec.classList.add('hidden');
-            });
-
-            // Show Home (Rotary)
-            const homeSec = document.getElementById('home');
-            homeSec.classList.remove('hidden');
-            
-            // Small delay to allow display:block to apply before animating opacity/transform
-            setTimeout(() => {
-                homeSec.classList.add('active');
-            }, 50);
-        }
-    </script>
+  <script src="script.js"></script>
 </body>
 </html>
