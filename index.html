@@ -9,6 +9,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Animated Global Background -->
+    <div class="global-bg-blobs">
+        <div class="gb-blob gb-1"></div>
+        <div class="gb-blob gb-2"></div>
+        <div class="gb-blob gb-3"></div>
+    </div>
+
+    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-brand">Solvanta<span>Consulting</span></div>
         <ul class="nav-links">
@@ -23,22 +31,20 @@
         </div>
     </nav>
 
+    <!-- MAIN APP CONTAINER -->
     <main class="app-container">
         
+        <!-- Hero Section -->
         <section id="home" class="page-section hero active">
-            <div class="hero-blobs">
-                <div class="blob blob-1"></div>
-                <div class="blob blob-2"></div>
-                <div class="blob blob-3"></div>
-            </div>
             <div class="hero-content">
-                <h1>Your operations are not broken.</h1>
+                <h1>Your operations are <span class="text-gradient">not broken.</span></h1>
                 <h2>They’re just being held together by spreadsheets, screenshots, and blind optimism.</h2>
                 <p>I help teams deal with messy operations, spreadsheets, reports, emails, trackers, and workflow chaos.</p>
-                <a href="#tools" class="btn-primary">Explore Free Tools</a>
+                <a href="#tools" class="btn-primary bounce-in">Explore Free Tools</a>
             </div>
         </section>
 
+        <!-- Services Section -->
         <section id="services" class="page-section services-section">
             <div class="container">
                 <div class="section-header">
@@ -47,17 +53,17 @@
                 </div>
                 <div class="services-grid">
                     <div class="service-card">
-                        <div class="service-icon purple">📊</div>
+                        <div class="service-icon pulse-hover" style="background: rgba(139, 92, 246, 0.1);">📊</div>
                         <h3>Dashboards People Actually Open</h3>
                         <p>Operational dashboards that make sense, highlight the problem, and don't require an advanced degree to read.</p>
                     </div>
                     <div class="service-card">
-                        <div class="service-icon coral">📝</div>
+                        <div class="service-icon pulse-hover" style="background: rgba(244, 63, 94, 0.1);">📝</div>
                         <h3>Reports That Don't Hurt</h3>
                         <p>Reporting templates and workflow trackers designed to get you out of the office on time.</p>
                     </div>
                     <div class="service-card">
-                        <div class="service-icon teal">🤖</div>
+                        <div class="service-icon pulse-hover" style="background: rgba(20, 184, 166, 0.1);">🤖</div>
                         <h3>AI Without the Sci-Fi Nonsense</h3>
                         <p>Practical AI enablement, lightweight automation, and knowledge systems for everyday office tasks.</p>
                     </div>
@@ -65,24 +71,28 @@
             </div>
         </section>
 
+        <!-- Tools Section -->
         <section id="tools" class="page-section tools-section">
             <div class="container">
                 <div class="section-header">
                     <h2>Tools That Make Work Slightly Less Annoying</h2>
-                    <p class="privacy-note">All tools run in your browser. Nothing is stored, uploaded, or sent anywhere.</p>
+                    <p class="privacy-note">All tools run securely in your browser. Nothing is uploaded or stored.</p>
                 </div>
 
                 <div class="tools-layout">
+                    <!-- Sidebar Tabs -->
                     <div class="tools-sidebar" id="toolTabs">
                         <button class="tool-tab active" data-target="tool-chart">Chart Generator</button>
                         <button class="tool-tab" data-target="tool-writing">Writing Assistant</button>
                         <button class="tool-tab" data-target="tool-cleaner">Data Cleaner</button>
                         <button class="tool-tab" data-target="tool-arbitrator">The Arbitrator</button>
-                        <button class="tool-tab" data-target="tool-game" style="border-top: 2px solid var(--border-light); margin-top: 10px;">☕ Coffee Break</button>
+                        <button class="tool-tab tab-accent mt-10" data-target="tool-game">☕ Coffee Break</button>
                     </div>
 
+                    <!-- Tool Contents -->
                     <div class="tools-content">
                         
+                        <!-- Tool 1: Chart Generator -->
                         <div id="tool-chart" class="tool-panel active">
                             <h3>Chart Generator</h3>
                             <p class="subtitle">Generate and download clean, professional charts from raw data.</p>
@@ -143,17 +153,18 @@
                                 </div>
 
                                 <div class="btn-group mt-15">
-                                    <button class="btn-action" onclick="generateChart()">Generate Chart</button>
+                                    <button class="btn-primary" onclick="generateChart()">Generate Chart</button>
                                     <button class="btn-clear" onclick="clearInputs('tool-chart')">Clear</button>
                                 </div>
                                 
-                                <div class="chart-container mt-15" style="position: relative; height:50vh; width:100%; display:none; background: var(--bg-dark); padding: 20px; border-radius: 8px; border: 1px solid var(--border-light);" id="cg-canvas-container">
+                                <div class="chart-container" id="cg-canvas-container">
                                     <canvas id="myChart"></canvas>
-                                    <button class="btn-action small mt-15" onclick="downloadChart()">Download PNG</button>
+                                    <button class="btn-primary small mt-15" onclick="downloadChart()">Download PNG</button>
                                 </div>
                             </div>
                         </div>
 
+                        <!-- Tool 2: Writing Assistant -->
                         <div id="tool-writing" class="tool-panel">
                             <h3>Writing Assistant</h3>
                             <p class="subtitle">Format, clarify, and structure your office communications.</p>
@@ -194,11 +205,11 @@
                                         <textarea id="eg-points" rows="3" placeholder="Point 1... Point 2..."></textarea>
                                     </div>
                                     <div class="btn-group">
-                                        <button class="btn-action" onclick="generateEmail()">Generate Draft</button>
+                                        <button class="btn-primary" onclick="generateEmail()">Generate Draft</button>
                                     </div>
-                                    <div class="result-box" id="eg-result-box" style="display:none;">
+                                    <div class="result-box" id="eg-result-box">
                                         <textarea id="eg-output" rows="8" readonly></textarea>
-                                        <button class="btn-action small mt-15" onclick="copyText('eg-output')">Copy to Clipboard</button>
+                                        <button class="btn-primary small mt-15" onclick="copyText('eg-output')">Copy to Clipboard</button>
                                     </div>
                                 </div>
                             </div>
@@ -210,14 +221,15 @@
                                         <textarea id="gram-input" rows="5" placeholder="Paste your text..."></textarea>
                                     </div>
                                     <div class="btn-group">
-                                        <button class="btn-action" onclick="checkGrammar()">Check Clarity</button>
+                                        <button class="btn-primary" onclick="checkGrammar()">Check Clarity</button>
                                         <button class="btn-clear" onclick="clearInputs('wa-grammar')">Clear</button>
                                     </div>
-                                    <div class="result-box" id="gram-result" style="display:none;"></div>
+                                    <div class="result-box" id="gram-result"></div>
                                 </div>
                             </div>
                         </div>
 
+                        <!-- Tool 3: Spreadsheet Cleaner -->
                         <div id="tool-cleaner" class="tool-panel">
                             <h3>Spreadsheet Data Cleaner</h3>
                             <p class="subtitle">Instantly fix messy text dumps so your Excel formulas stop breaking.</p>
@@ -227,24 +239,25 @@
                                     <textarea id="cl-input" rows="6" placeholder="Paste your messy data here..."></textarea>
                                 </div>
                                 <div class="cleaner-actions">
-                                    <button class="btn-action small" onclick="cleanText('trim')">Trim Spaces & Empty Lines</button>
-                                    <button class="btn-action small" onclick="cleanText('upper')">UPPERCASE</button>
-                                    <button class="btn-action small" onclick="cleanText('lower')">lowercase</button>
-                                    <button class="btn-action small" onclick="cleanText('title')">Title Case</button>
-                                    <button class="btn-action small" onclick="cleanText('transpose')">Transpose (Row ↔ Col)</button>
-                                    <button class="btn-action small" onclick="cleanText('csv')">Convert to "A", "B" List</button>
+                                    <button class="btn-secondary" onclick="cleanText('trim')">Trim Spaces</button>
+                                    <button class="btn-secondary" onclick="cleanText('upper')">UPPERCASE</button>
+                                    <button class="btn-secondary" onclick="cleanText('lower')">lowercase</button>
+                                    <button class="btn-secondary" onclick="cleanText('title')">Title Case</button>
+                                    <button class="btn-secondary" onclick="cleanText('transpose')">Transpose (Row ↔ Col)</button>
+                                    <button class="btn-secondary" onclick="cleanText('csv')">Format as "A", "B"</button>
                                 </div>
-                                <div class="result-box" id="cl-result-box" style="display:none; margin-top: 15px;">
+                                <div class="result-box" id="cl-result-box" style="margin-top: 15px;">
                                     <label>Cleaned Output:</label>
                                     <textarea id="cl-output" rows="6" readonly></textarea>
                                     <div class="btn-group mt-15">
-                                        <button class="btn-action small" onclick="copyText('cl-output')">Copy to Clipboard</button>
+                                        <button class="btn-primary small" onclick="copyText('cl-output')">Copy to Clipboard</button>
                                         <button class="btn-clear small" onclick="clearInputs('tool-cleaner')">Clear All</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
+                        <!-- Tool 4: The Arbitrator -->
                         <div id="tool-arbitrator" class="tool-panel">
                             <h3>The Arbitrator</h3>
                             <p class="subtitle">Because rock-paper-scissors doesn't work over Zoom.</p>
@@ -255,20 +268,22 @@
                                 <button class="n-tab" data-target="arb-coin">Coin Toss</button>
                             </div>
 
+                            <!-- Chit Roulette -->
                             <div id="arb-chit" class="n-panel active">
                                 <div class="tool-card text-center">
                                     <div class="input-group" style="text-align: left;">
                                         <label>Enter Names/Items (One per line)</label>
                                         <textarea id="arb-chit-input" rows="5" placeholder="Alice\nBob\nCharlie\nTake out the trash..."></textarea>
                                     </div>
-                                    <button class="btn-action" onclick="pickChit()">Spin the Wheel of Fate</button>
+                                    <button class="btn-primary" onclick="pickChit()">Spin the Wheel of Fate</button>
                                     <div class="arbitrator-result mt-15" id="arb-chit-result">?</div>
                                 </div>
                             </div>
 
+                            <!-- Dice Roll -->
                             <div id="arb-dice" class="n-panel">
                                 <div class="tool-card text-center">
-                                    <div class="input-group" style="max-width: 200px; margin: 0 auto 20px;">
+                                    <div class="input-group" style="max-width: 200px; margin: 0 auto 20px; text-align: left;">
                                         <label>Dice Type</label>
                                         <select id="arb-dice-type">
                                             <option value="6">Standard (1-6)</option>
@@ -276,19 +291,21 @@
                                             <option value="100">D100 (1-100)</option>
                                         </select>
                                     </div>
-                                    <button class="btn-action" onclick="rollDice()">Roll Dice</button>
+                                    <button class="btn-primary" onclick="rollDice()">Roll Dice</button>
                                     <div class="arbitrator-result mt-15" id="arb-dice-result">🎲</div>
                                 </div>
                             </div>
 
+                            <!-- Coin Toss -->
                             <div id="arb-coin" class="n-panel">
                                 <div class="tool-card text-center">
-                                    <button class="btn-action" onclick="tossCoin()">Flip Coin</button>
+                                    <button class="btn-primary" onclick="tossCoin()">Flip Coin</button>
                                     <div class="arbitrator-result mt-15" id="arb-coin-result">🪙</div>
                                 </div>
                             </div>
                         </div>
 
+                        <!-- Tool 5: Coffee Break -->
                         <div id="tool-game" class="tool-panel">
                             <h3>Coffee Break</h3>
                             <p class="subtitle">Waiting for an export to finish? Destroy some blocks.</p>
@@ -296,9 +313,9 @@
                                 <div class="game-wrapper">
                                     <canvas id="brickCanvas" width="600" height="400"></canvas>
                                     <div id="gameOverlay" class="game-overlay">
-                                        <h4 id="gameMessage">Ready to play?</h4>
+                                        <h4 id="gameMessage" class="text-gradient" style="font-size: 2rem;">Ready to play?</h4>
                                         <p>Use Left/Right arrows or drag mouse.</p>
-                                        <button class="btn-action mt-15" onclick="startGame()">Start Game</button>
+                                        <button class="btn-primary mt-15 bounce-in" onclick="startGame()">Start Game</button>
                                     </div>
                                 </div>
                             </div>
@@ -309,6 +326,7 @@
             </div>
         </section>
 
+        <!-- About Section -->
         <section id="about" class="page-section about-section">
             <div class="container">
                 <div class="about-content">
@@ -329,12 +347,13 @@
             </div>
         </section>
 
+        <!-- Contact Section -->
         <section id="contact" class="page-section contact-section">
             <div class="container">
                 <h2>Need Help Fixing Your Workflow Chaos?</h2>
                 <p>If you're tired of running your department on blind optimism, let's talk.</p>
                 <div class="contact-card">
-                    <div class="contact-icon">✉️</div>
+                    <div class="contact-icon pulse-hover">✉️</div>
                     <h3>Email Us</h3>
                     <a href="mailto:helpdesk@solvantaconsulting.com" class="email-link">helpdesk@solvantaconsulting.com</a>
                 </div>
@@ -343,6 +362,7 @@
 
     </main>
 
+    <!-- Footer -->
     <footer>
         <div class="container footer-content">
             <div class="footer-brand">Solvanta<span>Consulting</span></div>
@@ -351,6 +371,7 @@
         </div>
     </footer>
 
+    <!-- Logic Script -->
     <script>
         // --- SPA Routing Logic ---
         function navigateTo(hash) {
@@ -373,7 +394,6 @@
             document.querySelector('.nav-links').classList.remove('active');
             document.getElementById('hamburger').classList.remove('active');
 
-            // Pause game if navigating away
             if(hash !== '#tools') {
                 isGameRunning = false;
             }
@@ -398,7 +418,6 @@
                 const target = tab.getAttribute('data-target');
                 document.getElementById(target).classList.add('active');
 
-                // Pause game if tab switched
                 if(target !== 'tool-game') {
                     isGameRunning = false;
                 }
@@ -466,12 +485,12 @@
             const ctx = document.getElementById('myChart').getContext('2d');
             if(myChartInstance) myChartInstance.destroy();
 
-            Chart.defaults.color = '#94a3b8';
+            Chart.defaults.color = '#64748b';
             Chart.defaults.font.family = "'Inter', sans-serif";
 
             let legendConfig = { display: false };
             if (legendPos !== 'none') {
-                legendConfig = { display: true, position: legendPos };
+                legendConfig = { display: true, position: legendPos, labels: { color: '#475569' } };
             }
 
             let scalesConfig = {};
@@ -479,12 +498,12 @@
                 scalesConfig = {
                     y: { 
                         beginAtZero: true, 
-                        grid: { color: 'rgba(255,255,255,0.05)' },
-                        title: { display: !!yLabel, text: yLabel, color: '#f8fafc' }
+                        grid: { color: 'rgba(0,0,0,0.05)' },
+                        title: { display: !!yLabel, text: yLabel, color: '#334155', font: {weight: 'bold'} }
                     },
                     x: { 
                         grid: { display: false },
-                        title: { display: !!xLabel, text: xLabel, color: '#f8fafc' }
+                        title: { display: !!xLabel, text: xLabel, color: '#334155', font: {weight: 'bold'} }
                     }
                 };
             }
@@ -497,9 +516,9 @@
                         label: title || 'Data',
                         data: values,
                         backgroundColor: bgColors,
-                        borderColor: type === 'line' ? bgColors[0] : '#1e293b',
+                        borderColor: type === 'line' ? bgColors[0] : '#ffffff',
                         borderWidth: 2,
-                        borderRadius: type === 'bar' ? 4 : 0,
+                        borderRadius: type === 'bar' ? 6 : 0,
                         tension: 0.3
                     }]
                 },
@@ -508,11 +527,16 @@
                     maintainAspectRatio: false,
                     plugins: {
                         legend: legendConfig,
-                        title: { display: !!title, text: title, color: '#f8fafc', font: {size: 16} }
+                        title: { display: !!title, text: title, color: '#0f172a', font: {size: 18, weight: 'bold'} }
                     },
                     scales: scalesConfig
                 }
             });
+            
+            // Trigger animation
+            container.classList.remove('slide-in');
+            void container.offsetWidth; // trigger reflow
+            container.classList.add('slide-in');
         }
 
         function downloadChart() {
@@ -547,8 +571,13 @@
                 draft = `Hi ${rec},\n\nPlease find the latest data/update for ${ctx}.\n\nHighlights:\n${formattedPts}\n\nAll details are attached/linked. Let me know if you have questions.\n\nBest,\n${sen}`;
             }
 
-            document.getElementById('eg-result-box').style.display = 'block';
+            const resBox = document.getElementById('eg-result-box');
+            resBox.style.display = 'block';
             document.getElementById('eg-output').value = draft;
+            
+            resBox.classList.remove('slide-in');
+            void resBox.offsetWidth;
+            resBox.classList.add('slide-in');
         }
 
         function checkGrammar() {
@@ -583,6 +612,10 @@
                         ${repeatedCount > 0 ? '<span class="error-text">(Check for typos)</span>' : '✅'}</li>
                 </ul>
             `;
+            
+            res.classList.remove('slide-in');
+            void res.offsetWidth;
+            res.classList.add('slide-in');
         }
 
         // --- Tool 3: Spreadsheet Cleaner ---
@@ -597,40 +630,39 @@
                              .filter(line => line.length > 0)
                              .join('\n');
             } 
-            else if(action === 'upper') {
-                result = text.toUpperCase();
-            } 
-            else if(action === 'lower') {
-                result = text.toLowerCase();
-            } 
+            else if(action === 'upper') { result = text.toUpperCase(); } 
+            else if(action === 'lower') { result = text.toLowerCase(); } 
             else if(action === 'title') {
                 result = text.toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
             } 
             else if(action === 'transpose') {
-                // If it has tabs, convert row to col. If newlines, convert col to row (comma separated).
-                if(text.includes('\t')) {
-                    result = text.split('\t').join('\n');
-                } else {
-                    result = text.split('\n').filter(l=>l.trim()).join('\t');
-                }
+                if(text.includes('\t')) { result = text.split('\t').join('\n'); } 
+                else { result = text.split('\n').filter(l=>l.trim()).join('\t'); }
             } 
             else if(action === 'csv') {
-                // Takes a column and formats for SQL / Code: "Item 1", "Item 2"
                 let lines = text.split('\n').map(l=>l.trim()).filter(l=>l.length>0);
                 result = lines.map(l => `"${l}"`).join(', ');
             }
 
-            document.getElementById('cl-result-box').style.display = 'block';
+            const resBox = document.getElementById('cl-result-box');
+            resBox.style.display = 'block';
             document.getElementById('cl-output').value = result;
+            
+            resBox.classList.remove('slide-in');
+            void resBox.offsetWidth;
+            resBox.classList.add('slide-in');
         }
 
         // --- Tool 4: The Arbitrator ---
         function tossCoin() {
             const res = document.getElementById('arb-coin-result');
+            res.classList.remove('anim-flip', 'highlight-text');
+            void res.offsetWidth; 
             res.classList.add('anim-flip');
             res.innerText = "⏳";
             setTimeout(() => {
                 res.classList.remove('anim-flip');
+                res.classList.add('highlight-text');
                 res.innerText = Math.random() < 0.5 ? "Heads" : "Tails";
             }, 600);
         }
@@ -638,10 +670,13 @@
         function rollDice() {
             const max = parseInt(document.getElementById('arb-dice-type').value);
             const res = document.getElementById('arb-dice-result');
+            res.classList.remove('anim-shake', 'highlight-text');
+            void res.offsetWidth;
             res.classList.add('anim-shake');
             res.innerText = "🎲";
             setTimeout(() => {
                 res.classList.remove('anim-shake');
+                res.classList.add('highlight-text');
                 res.innerText = Math.floor(Math.random() * max) + 1;
             }, 500);
         }
@@ -658,7 +693,7 @@
 
             let counter = 0;
             const maxSpins = 20;
-            res.classList.add('highlight-text');
+            res.classList.remove('highlight-text');
 
             const interval = setInterval(() => {
                 res.innerText = items[Math.floor(Math.random() * items.length)];
@@ -666,7 +701,7 @@
                 if(counter >= maxSpins) {
                     clearInterval(interval);
                     const winner = items[Math.floor(Math.random() * items.length)];
-                    res.innerHTML = `👉 <strong>${winner}</strong> 👈`;
+                    res.innerHTML = `<span class="highlight-text anim-pop">👉 ${winner} 👈</span>`;
                 }
             }, 50);
         }
@@ -678,7 +713,7 @@
         let ballRadius = 8;
         let x, y, dx, dy;
         let paddleHeight = 12;
-        let paddleWidth = 85;
+        let paddleWidth = 90;
         let paddleX;
         let rightPressed = false;
         let leftPressed = false;
@@ -697,7 +732,7 @@
         let isGameRunning = false;
         let animationId;
 
-        // Colors from palette
+        // Bright theme colors
         const cPaddle = "#3b82f6";
         const cBall = "#f43f5e";
         const cBrick1 = "#14b8a6";
@@ -717,8 +752,8 @@
         function resetPositions() {
             x = canvas.width/2;
             y = canvas.height-30;
-            dx = 3;
-            dy = -3;
+            dx = 4; // Slightly faster for fun
+            dy = -4;
             paddleX = (canvas.width-paddleWidth)/2;
         }
 
@@ -768,7 +803,7 @@
         }
         function drawPaddle() {
             ctx.beginPath();
-            ctx.rect(paddleX, canvas.height-paddleHeight-5, paddleWidth, paddleHeight);
+            ctx.roundRect(paddleX, canvas.height-paddleHeight-5, paddleWidth, paddleHeight, 6);
             ctx.fillStyle = cPaddle;
             ctx.fill();
             ctx.closePath();
@@ -782,8 +817,7 @@
                         bricks[c][r].x = brickX;
                         bricks[c][r].y = brickY;
                         ctx.beginPath();
-                        ctx.rect(brickX, brickY, brickWidth, brickHeight);
-                        // Alternate colors based on row
+                        ctx.roundRect(brickX, brickY, brickWidth, brickHeight, 4);
                         ctx.fillStyle = r % 3 === 0 ? cBrick1 : (r % 3 === 1 ? cBrick2 : cBrick3);
                         ctx.fill();
                         ctx.closePath();
@@ -792,13 +826,13 @@
             }
         }
         function drawScore() {
-            ctx.font = "14px Inter";
-            ctx.fillStyle = "#94a3b8";
+            ctx.font = "bold 14px Inter";
+            ctx.fillStyle = "#64748b";
             ctx.fillText("Score: "+score, 8, 20);
         }
         function drawLives() {
-            ctx.font = "14px Inter";
-            ctx.fillStyle = "#94a3b8";
+            ctx.font = "bold 14px Inter";
+            ctx.fillStyle = "#64748b";
             ctx.fillText("Lives: "+lives, canvas.width-65, 20);
         }
 
@@ -818,8 +852,7 @@
             else if(y + dy > canvas.height-ballRadius-5) {
                 if(x > paddleX && x < paddleX + paddleWidth) {
                     dy = -dy;
-                    // Add slight angle variance based on where it hit paddle
-                    dx = dx + ((x - (paddleX + paddleWidth/2)) * 0.05);
+                    dx = dx + ((x - (paddleX + paddleWidth/2)) * 0.08);
                 } else {
                     lives--;
                     if(!lives) {
@@ -831,8 +864,8 @@
                 }
             }
 
-            if(rightPressed && paddleX < canvas.width-paddleWidth) paddleX += 6;
-            else if(leftPressed && paddleX > 0) paddleX -= 6;
+            if(rightPressed && paddleX < canvas.width-paddleWidth) paddleX += 7;
+            else if(leftPressed && paddleX > 0) paddleX -= 7;
 
             x += dx;
             y += dy;
@@ -858,7 +891,6 @@
             document.getElementById('gameMessage').innerText = msg;
         }
 
-        // Draw initial static state
         initBricks();
         resetPositions();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
