@@ -3,26 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solvanta Consulting | Practical Office Tools</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <title>Solvanta Consulting | Spreadsheet Chaos to Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Animated Global Background -->
-    <div class="global-bg-blobs">
-        <div class="gb-blob gb-1"></div>
-        <div class="gb-blob gb-2"></div>
-        <div class="gb-blob gb-3"></div>
-    </div>
+    <div class="bg-shape shape-purple"></div>
+    <div class="bg-shape shape-orange"></div>
+    <div class="bg-shape shape-teal"></div>
 
-    <!-- Navigation -->
-    <nav class="navbar">
+    <nav class="navbar glass">
         <div class="nav-brand">Solvanta<span>Consulting</span></div>
         <ul class="nav-links">
             <li><a href="#home">Home</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#tools">Tools</a></li>
+            <li><a href="#dashboard-maker">Dashboard Maker</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact" class="nav-cta">Contact</a></li>
         </ul>
@@ -31,871 +30,601 @@
         </div>
     </nav>
 
-    <!-- MAIN APP CONTAINER -->
-    <main class="app-container">
-        
-        <!-- Hero Section -->
-        <section id="home" class="page-section hero active">
-            <div class="hero-content">
-                <h1>Your operations are <span class="text-gradient">not broken.</span></h1>
-                <h2>They’re just being held together by spreadsheets, screenshots, and blind optimism.</h2>
-                <p>I help teams deal with messy operations, spreadsheets, reports, emails, trackers, and workflow chaos.</p>
-                <a href="#tools" class="btn-primary bounce-in">Explore Free Tools</a>
-            </div>
-        </section>
-
-        <!-- Services Section -->
-        <section id="services" class="page-section services-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>What We Do</h2>
-                    <p>Because "just follow up manually" is not a process.</p>
+    <section id="home" class="hero">
+        <div class="container hero-container">
+            <div class="hero-text">
+                <h1>Your spreadsheet is not a dashboard. <br><span class="text-accent">But we can fix that.</span></h1>
+                <p class="subtitle">Upload an Excel or CSV file, choose a few fields, and generate a quick one-page dashboard directly in your browser.</p>
+                <div class="hero-buttons">
+                    <a href="#dashboard-maker" class="btn btn-primary">Open Dashboard Maker</a>
+                    <a href="#how-it-works" class="btn btn-outline">See How It Works</a>
                 </div>
-                <div class="services-grid">
-                    <div class="service-card">
-                        <div class="service-icon pulse-hover" style="background: rgba(139, 92, 246, 0.1);">📊</div>
-                        <h3>Dashboards People Actually Open</h3>
-                        <p>Operational dashboards that make sense, highlight the problem, and don't require an advanced degree to read.</p>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon pulse-hover" style="background: rgba(244, 63, 94, 0.1);">📝</div>
-                        <h3>Reports That Don't Hurt</h3>
-                        <p>Reporting templates and workflow trackers designed to get you out of the office on time.</p>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon pulse-hover" style="background: rgba(20, 184, 166, 0.1);">🤖</div>
-                        <h3>AI Without the Sci-Fi Nonsense</h3>
-                        <p>Practical AI enablement, lightweight automation, and knowledge systems for everyday office tasks.</p>
-                    </div>
+                <div class="privacy-badge">
+                    <span class="icon">🔒</span> Your file stays in your browser. Nothing is uploaded, stored, or sent anywhere.
                 </div>
             </div>
-        </section>
+            
+            <div class="hero-visual">
+                <div class="orbit-container">
+                    <div class="orbit-ring ring-1"></div>
+                    <div class="orbit-ring ring-2"></div>
+                    
+                    <div class="orbit-item item-1 glass-card">📊</div>
+                    <div class="orbit-item item-2 glass-card">📈</div>
+                    <div class="orbit-item item-3 glass-card">📄</div>
+                    
+                    <div class="center-mockup glass-card shadow-lg">
+                        <div class="mockup-header">
+                            <div class="mockup-title">Q3 Operations</div>
+                            <div class="mockup-chip">Dataset_v4.xlsx</div>
+                        </div>
+                        <div class="mockup-kpis">
+                            <div class="m-kpi"><span>Total</span><strong>$42,050</strong></div>
+                            <div class="m-kpi"><span>Avg</span><strong>$1,204</strong></div>
+                        </div>
+                        <div class="mockup-charts">
+                            <div class="m-chart m-bar"></div>
+                            <div class="m-chart m-donut">
+                                <div class="donut-hole"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <!-- Tools Section -->
-        <section id="tools" class="page-section tools-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Tools That Make Work Slightly Less Annoying</h2>
-                    <p class="privacy-note">All tools run securely in your browser. Nothing is uploaded or stored.</p>
+    <section id="dashboard-maker" class="tool-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>Dashboard Maker</h2>
+                <p>For people who have data, deadlines, and very limited patience.</p>
+            </div>
+
+            <div class="tool-container glass shadow-lg">
+                
+                <div class="tool-step" id="step-upload">
+                    <div class="step-header">
+                        <div class="step-num">1</div>
+                        <h3>Load Your Data</h3>
+                    </div>
+                    <div class="upload-area">
+                        <div class="upload-box" id="drop-zone">
+                            <span style="font-size: 2.5rem; display: block; margin-bottom: 10px;">📁</span>
+                            <p><strong>Drag & Drop Excel/CSV here</strong> or</p>
+                            <input type="file" id="file-input" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" hidden>
+                            <button class="btn btn-outline" onclick="document.getElementById('file-input').click()">Browse Files</button>
+                        </div>
+                        <div class="or-divider"><span>OR</span></div>
+                        <div class="sample-data-box">
+                            <p>Don't have a file ready?</p>
+                            <button class="btn btn-secondary" onclick="loadSampleData()">Try with sample data</button>
+                        </div>
+                    </div>
+                    <div class="privacy-note mt-15 text-center">
+                        <small>🔒 No upload. No storage. No mysterious data goblin.</small>
+                    </div>
                 </div>
 
-                <div class="tools-layout">
-                    <!-- Sidebar Tabs -->
-                    <div class="tools-sidebar" id="toolTabs">
-                        <button class="tool-tab active" data-target="tool-chart">Chart Generator</button>
-                        <button class="tool-tab" data-target="tool-writing">Writing Assistant</button>
-                        <button class="tool-tab" data-target="tool-cleaner">Data Cleaner</button>
-                        <button class="tool-tab" data-target="tool-arbitrator">The Arbitrator</button>
-                        <button class="tool-tab tab-accent mt-10" data-target="tool-game">☕ Coffee Break</button>
+                <div class="tool-step hidden" id="step-configure">
+                    <div class="step-header">
+                        <div class="step-num">2</div>
+                        <h3>Configure Dashboard</h3>
                     </div>
-
-                    <!-- Tool Contents -->
-                    <div class="tools-content">
+                    
+                    <div class="config-grid">
+                        <div class="input-group">
+                            <label>Dashboard Title</label>
+                            <input type="text" id="dash-title" value="Operational Overview">
+                        </div>
                         
-                        <!-- Tool 1: Chart Generator -->
-                        <div id="tool-chart" class="tool-panel active">
-                            <h3>Chart Generator</h3>
-                            <p class="subtitle">Generate and download clean, professional charts from raw data.</p>
-                            <div class="tool-card">
-                                <h4 class="card-subheader">1. Data Inputs</h4>
-                                <div class="input-grid">
-                                    <div class="input-group">
-                                        <label>Chart Title</label>
-                                        <input type="text" id="cg-title" placeholder="e.g. Q3 Sales Volume">
-                                    </div>
-                                    <div class="input-group">
-                                        <label>Chart Type</label>
-                                        <select id="cg-type">
-                                            <option value="bar">Bar</option>
-                                            <option value="line">Line</option>
-                                            <option value="pie">Pie</option>
-                                            <option value="doughnut">Donut</option>
-                                        </select>
-                                    </div>
-                                    <div class="input-group">
-                                        <label>Labels (comma separated)</label>
-                                        <input type="text" id="cg-labels" placeholder="Jan, Feb, Mar, Apr">
-                                    </div>
-                                    <div class="input-group">
-                                        <label>Values (comma separated)</label>
-                                        <input type="text" id="cg-values" placeholder="10, 25, 14, 30">
-                                    </div>
-                                </div>
-
-                                <h4 class="card-subheader mt-15">2. Customization</h4>
-                                <div class="input-grid">
-                                    <div class="input-group">
-                                        <label>Color Palette</label>
-                                        <select id="cg-palette">
-                                            <option value="default">Solvanta Default (Cool)</option>
-                                            <option value="vibrant">Vibrant (Punchy)</option>
-                                            <option value="monochrome">Monochrome (Corporate)</option>
-                                        </select>
-                                    </div>
-                                    <div class="input-group">
-                                        <label>Legend Position</label>
-                                        <select id="cg-legend">
-                                            <option value="bottom">Bottom</option>
-                                            <option value="top">Top</option>
-                                            <option value="right">Right</option>
-                                            <option value="left">Left</option>
-                                            <option value="none">Hidden</option>
-                                        </select>
-                                    </div>
-                                    <div class="input-group">
-                                        <label>X-Axis Label (Optional)</label>
-                                        <input type="text" id="cg-xlabel" placeholder="e.g. Months">
-                                    </div>
-                                    <div class="input-group">
-                                        <label>Y-Axis Label (Optional)</label>
-                                        <input type="text" id="cg-ylabel" placeholder="e.g. Revenue (USD)">
-                                    </div>
-                                </div>
-
-                                <div class="btn-group mt-15">
-                                    <button class="btn-primary" onclick="generateChart()">Generate Chart</button>
-                                    <button class="btn-clear" onclick="clearInputs('tool-chart')">Clear</button>
-                                </div>
-                                
-                                <div class="chart-container" id="cg-canvas-container">
-                                    <canvas id="myChart"></canvas>
-                                    <button class="btn-primary small mt-15" onclick="downloadChart()">Download PNG</button>
-                                </div>
-                            </div>
+                        <div class="input-group hidden" id="sheet-selector-group">
+                            <label>Select Sheet</label>
+                            <select id="sheet-select" onchange="processSelectedSheet()"></select>
                         </div>
 
-                        <!-- Tool 2: Writing Assistant -->
-                        <div id="tool-writing" class="tool-panel">
-                            <h3>Writing Assistant</h3>
-                            <p class="subtitle">Format, clarify, and structure your office communications.</p>
-                            
-                            <div class="nested-tabs">
-                                <button class="n-tab active" data-target="wa-email">Email Generator</button>
-                                <button class="n-tab" data-target="wa-grammar">Grammar & Clarity</button>
-                            </div>
-
-                            <div id="wa-email" class="n-panel active">
-                                <div class="tool-card">
-                                    <div class="input-group">
-                                        <label>Email Type</label>
-                                        <select id="eg-type">
-                                            <option value="analysis">Analysis summary email</option>
-                                            <option value="followup">Follow-up email</option>
-                                            <option value="escalation">Issue escalation email</option>
-                                            <option value="meeting">Meeting summary email</option>
-                                            <option value="update">Data update email</option>
-                                        </select>
-                                    </div>
-                                    <div class="input-grid">
-                                        <div class="input-group">
-                                            <label>Recipient Name</label>
-                                            <input type="text" id="eg-recipient" placeholder="Team, John, etc.">
-                                        </div>
-                                        <div class="input-group">
-                                            <label>Sender Name</label>
-                                            <input type="text" id="eg-sender" placeholder="Your name">
-                                        </div>
-                                    </div>
-                                    <div class="input-group">
-                                        <label>Context / Main Topic</label>
-                                        <input type="text" id="eg-context" placeholder="What is this about?">
-                                    </div>
-                                    <div class="input-group">
-                                        <label>Key Points (bullet notes)</label>
-                                        <textarea id="eg-points" rows="3" placeholder="Point 1... Point 2..."></textarea>
-                                    </div>
-                                    <div class="btn-group">
-                                        <button class="btn-primary" onclick="generateEmail()">Generate Draft</button>
-                                    </div>
-                                    <div class="result-box" id="eg-result-box">
-                                        <textarea id="eg-output" rows="8" readonly></textarea>
-                                        <button class="btn-primary small mt-15" onclick="copyText('eg-output')">Copy to Clipboard</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="wa-grammar" class="n-panel">
-                                <div class="tool-card">
-                                    <div class="input-group">
-                                        <label>Draft Text</label>
-                                        <textarea id="gram-input" rows="5" placeholder="Paste your text..."></textarea>
-                                    </div>
-                                    <div class="btn-group">
-                                        <button class="btn-primary" onclick="checkGrammar()">Check Clarity</button>
-                                        <button class="btn-clear" onclick="clearInputs('wa-grammar')">Clear</button>
-                                    </div>
-                                    <div class="result-box" id="gram-result"></div>
-                                </div>
-                            </div>
+                        <div class="input-group">
+                            <label>Category Column (Text/Groups)</label>
+                            <select id="cat-select"></select>
                         </div>
-
-                        <!-- Tool 3: Spreadsheet Cleaner -->
-                        <div id="tool-cleaner" class="tool-panel">
-                            <h3>Spreadsheet Data Cleaner</h3>
-                            <p class="subtitle">Instantly fix messy text dumps so your Excel formulas stop breaking.</p>
-                            <div class="tool-card">
-                                <div class="input-group">
-                                    <label>Raw Data (Paste from Excel/Sheets or Text)</label>
-                                    <textarea id="cl-input" rows="6" placeholder="Paste your messy data here..."></textarea>
-                                </div>
-                                <div class="cleaner-actions">
-                                    <button class="btn-secondary" onclick="cleanText('trim')">Trim Spaces</button>
-                                    <button class="btn-secondary" onclick="cleanText('upper')">UPPERCASE</button>
-                                    <button class="btn-secondary" onclick="cleanText('lower')">lowercase</button>
-                                    <button class="btn-secondary" onclick="cleanText('title')">Title Case</button>
-                                    <button class="btn-secondary" onclick="cleanText('transpose')">Transpose (Row ↔ Col)</button>
-                                    <button class="btn-secondary" onclick="cleanText('csv')">Format as "A", "B"</button>
-                                </div>
-                                <div class="result-box" id="cl-result-box" style="margin-top: 15px;">
-                                    <label>Cleaned Output:</label>
-                                    <textarea id="cl-output" rows="6" readonly></textarea>
-                                    <div class="btn-group mt-15">
-                                        <button class="btn-primary small" onclick="copyText('cl-output')">Copy to Clipboard</button>
-                                        <button class="btn-clear small" onclick="clearInputs('tool-cleaner')">Clear All</button>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="input-group">
+                            <label>Metric Column (Numbers to Sum/Avg)</label>
+                            <select id="metric-select"></select>
                         </div>
-
-                        <!-- Tool 4: The Arbitrator -->
-                        <div id="tool-arbitrator" class="tool-panel">
-                            <h3>The Arbitrator</h3>
-                            <p class="subtitle">Because rock-paper-scissors doesn't work over Zoom.</p>
-                            
-                            <div class="nested-tabs">
-                                <button class="n-tab active" data-target="arb-chit">Chit Roulette</button>
-                                <button class="n-tab" data-target="arb-dice">Dice Roll</button>
-                                <button class="n-tab" data-target="arb-coin">Coin Toss</button>
-                            </div>
-
-                            <!-- Chit Roulette -->
-                            <div id="arb-chit" class="n-panel active">
-                                <div class="tool-card text-center">
-                                    <div class="input-group" style="text-align: left;">
-                                        <label>Enter Names/Items (One per line)</label>
-                                        <textarea id="arb-chit-input" rows="5" placeholder="Alice\nBob\nCharlie\nTake out the trash..."></textarea>
-                                    </div>
-                                    <button class="btn-primary" onclick="pickChit()">Spin the Wheel of Fate</button>
-                                    <div class="arbitrator-result mt-15" id="arb-chit-result">?</div>
-                                </div>
-                            </div>
-
-                            <!-- Dice Roll -->
-                            <div id="arb-dice" class="n-panel">
-                                <div class="tool-card text-center">
-                                    <div class="input-group" style="max-width: 200px; margin: 0 auto 20px; text-align: left;">
-                                        <label>Dice Type</label>
-                                        <select id="arb-dice-type">
-                                            <option value="6">Standard (1-6)</option>
-                                            <option value="20">D20 (1-20)</option>
-                                            <option value="100">D100 (1-100)</option>
-                                        </select>
-                                    </div>
-                                    <button class="btn-primary" onclick="rollDice()">Roll Dice</button>
-                                    <div class="arbitrator-result mt-15" id="arb-dice-result">🎲</div>
-                                </div>
-                            </div>
-
-                            <!-- Coin Toss -->
-                            <div id="arb-coin" class="n-panel">
-                                <div class="tool-card text-center">
-                                    <button class="btn-primary" onclick="tossCoin()">Flip Coin</button>
-                                    <div class="arbitrator-result mt-15" id="arb-coin-result">🪙</div>
-                                </div>
-                            </div>
+                        <div class="input-group">
+                            <label>Date/Timeline Column (Optional)</label>
+                            <select id="date-select">
+                                <option value="">-- None --</option>
+                            </select>
                         </div>
+                    </div>
+                    
+                    <div class="limitation-note">
+                        <span class="icon">⚠️</span> 
+                        <strong>Note:</strong> This tool creates a quick dashboard based on detected columns. It does not understand business context, so review the output before using it in formal reporting.
+                    </div>
 
-                        <!-- Tool 5: Coffee Break -->
-                        <div id="tool-game" class="tool-panel">
-                            <h3>Coffee Break</h3>
-                            <p class="subtitle">Waiting for an export to finish? Destroy some blocks.</p>
-                            <div class="tool-card text-center">
-                                <div class="game-wrapper">
-                                    <canvas id="brickCanvas" width="600" height="400"></canvas>
-                                    <div id="gameOverlay" class="game-overlay">
-                                        <h4 id="gameMessage" class="text-gradient" style="font-size: 2rem;">Ready to play?</h4>
-                                        <p>Use Left/Right arrows or drag mouse.</p>
-                                        <button class="btn-primary mt-15 bounce-in" onclick="startGame()">Start Game</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                    <div class="action-bar">
+                        <button class="btn btn-primary" onclick="generateDashboard()">Generate Dashboard</button>
+                        <button class="btn btn-text" onclick="resetTool()">Reset</button>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- About Section -->
-        <section id="about" class="page-section about-section">
-            <div class="container">
+                <div class="tool-step hidden" id="step-output">
+                    <div class="step-header flex-between">
+                        <div class="flex-align">
+                            <div class="step-num">3</div>
+                            <h3>Your Dashboard</h3>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary" onclick="downloadDashboardPNG()">Download PNG</button>
+                            <button class="btn btn-outline ml-10" onclick="editConfig()">Edit Config</button>
+                        </div>
+                    </div>
+
+                    <div class="generated-dashboard" id="export-target">
+                        <div class="db-header">
+                            <h2 id="out-title">Operational Overview</h2>
+                            <span class="db-watermark">Generated locally via Solvanta Consulting</span>
+                        </div>
+                        
+                        <div class="db-summary glass">
+                            <span class="icon">💡</span> <span id="out-summary">Summary text goes here...</span>
+                        </div>
+
+                        <div class="db-kpi-grid">
+                            <div class="kpi-card">
+                                <h4>Total Records</h4>
+                                <div class="kpi-val" id="kpi-count">0</div>
+                            </div>
+                            <div class="kpi-card">
+                                <h4 id="lbl-sum">Total Metric</h4>
+                                <div class="kpi-val text-purple" id="kpi-sum">0</div>
+                            </div>
+                            <div class="kpi-card">
+                                <h4 id="lbl-avg">Average Metric</h4>
+                                <div class="kpi-val text-orange" id="kpi-avg">0</div>
+                            </div>
+                            <div class="kpi-card">
+                                <h4>Top Category</h4>
+                                <div class="kpi-val text-teal" id="kpi-top-cat">-</div>
+                            </div>
+                        </div>
+
+                        <div class="db-charts-grid">
+                            <div class="chart-box">
+                                <h4>Distribution by Category</h4>
+                                <div class="canvas-holder"><canvas id="barChart"></canvas></div>
+                            </div>
+                            <div class="chart-box">
+                                <h4>Category Share</h4>
+                                <div class="canvas-holder"><canvas id="donutChart"></canvas></div>
+                            </div>
+                            <div class="chart-box full-width" id="trend-box">
+                                <h4>Trend Over Time</h4>
+                                <div class="canvas-holder"><canvas id="lineChart"></canvas></div>
+                            </div>
+                        </div>
+
+                        <div class="db-table-box mt-20">
+                            <h4>Top 5 Categories</h4>
+                            <table class="db-table" id="out-table">
+                                <thead>
+                                    <tr>
+                                        <th>Category</th>
+                                        <th>Total Volume</th>
+                                        <th>% of Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="how-it-works" class="info-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>How It Works</h2>
+                <p>Because not every spreadsheet needs to become a 47-slide deck.</p>
+            </div>
+            
+            <div class="steps-grid">
+                <div class="step-card glass">
+                    <div class="s-icon purple-bg">1</div>
+                    <h4>Upload spreadsheet</h4>
+                    <p>Bring the chaos. We have containers.</p>
+                </div>
+                <div class="step-card glass">
+                    <div class="s-icon orange-bg">2</div>
+                    <h4>Choose fields</h4>
+                    <p>Pick what matters. Ignore the 47 mystery columns.</p>
+                </div>
+                <div class="step-card glass">
+                    <div class="s-icon teal-bg">3</div>
+                    <h4>Generate dashboard</h4>
+                    <p>Charts appear. Panic decreases.</p>
+                </div>
+                <div class="step-card glass">
+                    <div class="s-icon coral-bg">4</div>
+                    <h4>Download PNG</h4>
+                    <p>Ready for email, PPT, or pretending this was always planned.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-card glass shadow-lg">
                 <div class="about-content">
                     <h2>About Solvanta Consulting</h2>
-                    <p>We believe that business operations shouldn't be a source of daily trauma. Solvanta Consulting is a private workspace dedicated to creating practical office tools, sane operational dashboards, and writing support systems that cut through the noise.</p>
-                    <p>Stop pretending that a 40-tab spreadsheet is a "database" and that manually sending 50 emails is a "strategy." We build tools that make work slightly less annoying.</p>
-                    
-                    <h3 class="mt-15" style="font-size: 1.5rem; margin-bottom: 15px;">The Philosophy</h3>
-                    <p>You don't need a six-month enterprise software deployment to fix a broken workflow. Sometimes, you just need a reliable calculator, a clean dashboard, or a writing tool that refuses to use the word "leverage." We focus on lightweight automation and practical AI enablement that actually helps, rather than adding another layer of complex corporate jargon.</p>
-                    
-                    <h3 class="mt-15" style="font-size: 1.5rem; margin-bottom: 15px;">The Architect of the Anti-Chaos</h3>
-                    <p>Solvanta Consulting is the brainchild of an anonymous operations lead with over 8 years of experience navigating the corporate wilderness. Think of them as a human Swiss Army knife—if that knife could steer teams, execute merciless quality audits, and analyze data with terrifying speed.</p>
-                    <p>After spending nearly a decade thriving in fast-paced environments (read: surviving workflow tornadoes) and mentoring teams to excellence, they realized something: work shouldn't be this hard. Combining the analytical sharpness of a detective with the battle-tested skills of a resident Excel guru, the founder built Solvanta to share the exact tools they use to turn operational chaos into actual, functional strategy.</p>
-
-                    <h3 class="mt-15" style="font-size: 1.5rem; margin-bottom: 15px;">The Promise</h3>
-                    <p>No sign-ups. No paywalls. No external databases. Every tool on this site runs entirely in your local browser. Your data stays on your screen, exactly where it belongs.</p>
+                    <p>We believe that business operations shouldn't be a source of daily trauma.</p>
+                    <p>Solvanta Consulting is a small, practical office productivity lab dedicated to turning messy spreadsheets and chaotic reporting workflows into clear dashboards and useful outputs.</p>
+                    <p>We are not an enterprise BI tool, a Tableau replacement, or a fake AI platform. We just build lightweight, polished, browser-based tools that make work slightly less annoying.</p>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="page-section contact-section">
-            <div class="container">
-                <h2>Need Help Fixing Your Workflow Chaos?</h2>
-                <p>If you're tired of running your department on blind optimism, let's talk.</p>
-                <div class="contact-card">
-                    <div class="contact-icon pulse-hover">✉️</div>
-                    <h3>Email Us</h3>
-                    <a href="mailto:helpdesk@solvantaconsulting.com" class="email-link">helpdesk@solvantaconsulting.com</a>
-                </div>
-            </div>
-        </section>
+    <section id="contact" class="contact-section text-center">
+        <div class="container">
+            <h2>Let's Talk Dashboards</h2>
+            <p class="contact-blurb">
+                Solvanta Consulting is currently a personal practice project and experiment, not an active business looking for marketing, SEO, lead-generation, or engagement-growth services.<br><br> 
+                Genuine feedback, ideas, and interesting dashboard/reporting conversations are welcome. <strong>Generic sales pitches may be chased by imaginary unicorns.</strong>
+            </p>
+            <a href="mailto:helpdesk@solvantaconsulting.com" class="email-link glass">helpdesk@solvantaconsulting.com</a>
+        </div>
+    </section>
 
-    </main>
-
-    <!-- Footer -->
     <footer>
-        <div class="container footer-content">
-            <div class="footer-brand">Solvanta<span>Consulting</span></div>
-            <p class="footer-privacy">All tools on this site run purely in your browser. Nothing is stored, uploaded, or sent to external servers.</p>
-            <p class="copyright">&copy; 2026 Solvanta Consulting. All rights reserved.</p>
+        <div class="container">
+            <p>© 2026 Solvanta Consulting. Built for spreadsheet chaos and the people who survive it.</p>
         </div>
     </footer>
 
-    <!-- Logic Script -->
     <script>
-        // --- SPA Routing Logic ---
-        function navigateTo(hash) {
-            if (!hash) hash = '#home';
-            
-            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
-            document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active-nav'));
-
-            const targetSec = document.querySelector(hash);
-            if (targetSec) {
-                targetSec.classList.add('active');
-                const navLink = document.querySelector(`.nav-links a[href="${hash}"]`);
-                if (navLink) navLink.classList.add('active-nav');
-            } else {
-                document.getElementById('home').classList.add('active');
-            }
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            
-            document.querySelector('.nav-links').classList.remove('active');
-            document.getElementById('hamburger').classList.remove('active');
-
-            if(hash !== '#tools') {
-                isGameRunning = false;
-            }
-        }
-
-        window.addEventListener('hashchange', () => navigateTo(window.location.hash));
-        window.addEventListener('DOMContentLoaded', () => navigateTo(window.location.hash || '#home'));
-
-        // --- Navigation Mobile ---
+        // --- Navigation Mobile & Scroll ---
         document.getElementById('hamburger').addEventListener('click', function() {
             document.querySelector('.nav-links').classList.toggle('active');
             this.classList.toggle('active');
         });
 
-        // --- Tabs Logic ---
-        document.querySelectorAll('.tool-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.tool-tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
-                tab.classList.add('active');
+        // --- Core Variables ---
+        let rawWorkbook = null;
+        let activeJsonData = [];
+        let activeHeaders = [];
+        let chartInstances = {};
+
+        // Disable Chart animations for clean HTML2Canvas export
+        Chart.defaults.animation = false;
+        Chart.defaults.font.family = "'Inter', sans-serif";
+        Chart.defaults.color = "#5F5A6B";
+
+        // Colors for charts
+        const chartColors = ['#7C3AED', '#F97316', '#14B8A6', '#FB7185', '#F59E0B', '#3B82F6', '#8B5CF6'];
+
+        // --- File Upload Logic ---
+        document.getElementById('file-input').addEventListener('change', handleFile);
+
+        function handleFile(e) {
+            const file = e.target.files[0];
+            if(!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const data = new Uint8Array(e.target.result);
+                rawWorkbook = XLSX.read(data, {type: 'array'});
                 
-                const target = tab.getAttribute('data-target');
-                document.getElementById(target).classList.add('active');
-
-                if(target !== 'tool-game') {
-                    isGameRunning = false;
+                // Handle multiple sheets
+                const sheetNames = rawWorkbook.SheetNames;
+                const sheetSelect = document.getElementById('sheet-select');
+                sheetSelect.innerHTML = '';
+                
+                if(sheetNames.length > 1) {
+                    sheetNames.forEach(name => {
+                        const opt = document.createElement('option');
+                        opt.value = name;
+                        opt.textContent = name;
+                        sheetSelect.appendChild(opt);
+                    });
+                    document.getElementById('sheet-selector-group').classList.remove('hidden');
+                } else {
+                    document.getElementById('sheet-selector-group').classList.add('hidden');
                 }
-            });
-        });
-
-        document.querySelectorAll('.n-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.n-tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.n-panel').forEach(p => p.classList.remove('active'));
-                tab.classList.add('active');
-                document.getElementById(tab.getAttribute('data-target')).classList.add('active');
-            });
-        });
-
-        // --- Utility Functions ---
-        function clearInputs(containerId) {
-            const container = document.getElementById(containerId);
-            container.querySelectorAll('input, textarea, select').forEach(el => {
-                if(el.tagName === 'SELECT') el.selectedIndex = 0;
-                else el.value = '';
-            });
-            container.querySelectorAll('.result-box').forEach(el => {
-                el.style.display = 'none';
-            });
-            if(containerId === 'tool-chart') {
-                if(window.myChartInstance) window.myChartInstance.destroy();
-                document.getElementById('cg-canvas-container').style.display = 'none';
-            }
+                
+                processSelectedSheet();
+            };
+            reader.readAsArrayBuffer(file);
         }
 
-        function copyText(elemId) {
-            const txt = document.getElementById(elemId);
-            txt.select();
-            document.execCommand("copy");
-            alert("Copied to clipboard!");
-        }
-
-        // --- Tool 1: Chart Generator ---
-        let myChartInstance = null;
-        function generateChart() {
-            const title = document.getElementById('cg-title').value;
-            const type = document.getElementById('cg-type').value;
-            const labels = document.getElementById('cg-labels').value.split(',').map(s=>s.trim());
-            const values = document.getElementById('cg-values').value.split(',').map(s=>parseFloat(s.trim()));
-            const palette = document.getElementById('cg-palette').value;
-            const legendPos = document.getElementById('cg-legend').value;
-            const xLabel = document.getElementById('cg-xlabel').value;
-            const yLabel = document.getElementById('cg-ylabel').value;
+        function processSelectedSheet() {
+            if(!rawWorkbook) return;
             
-            const container = document.getElementById('cg-canvas-container');
-
-            if(!labels.length || isNaN(values[0])) { alert("Please enter valid comma-separated labels and numbers."); return; }
-
-            let bgColors = [];
-            if(palette === 'vibrant') {
-                bgColors = ['#ff006e', '#3a86ff', '#8338ec', '#ffbe0b', '#fb5607', '#06d6a0'];
-            } else if(palette === 'monochrome') {
-                bgColors = ['#475569', '#64748b', '#94a3b8', '#cbd5e1', '#e2e8f0', '#334155'];
-            } else {
-                bgColors = ['#3b82f6', '#14b8a6', '#8b5cf6', '#f43f5e', '#f59e0b', '#10b981'];
-            }
-
-            container.style.display = 'block';
-            const ctx = document.getElementById('myChart').getContext('2d');
-            if(myChartInstance) myChartInstance.destroy();
-
-            Chart.defaults.color = '#64748b';
-            Chart.defaults.font.family = "'Inter', sans-serif";
-
-            let legendConfig = { display: false };
-            if (legendPos !== 'none') {
-                legendConfig = { display: true, position: legendPos, labels: { color: '#475569' } };
-            }
-
-            let scalesConfig = {};
-            if (type === 'bar' || type === 'line') {
-                scalesConfig = {
-                    y: { 
-                        beginAtZero: true, 
-                        grid: { color: 'rgba(0,0,0,0.05)' },
-                        title: { display: !!yLabel, text: yLabel, color: '#334155', font: {weight: 'bold'} }
-                    },
-                    x: { 
-                        grid: { display: false },
-                        title: { display: !!xLabel, text: xLabel, color: '#334155', font: {weight: 'bold'} }
-                    }
-                };
-            }
-
-            myChartInstance = new Chart(ctx, {
-                type: type,
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: title || 'Data',
-                        data: values,
-                        backgroundColor: bgColors,
-                        borderColor: type === 'line' ? bgColors[0] : '#ffffff',
-                        borderWidth: 2,
-                        borderRadius: type === 'bar' ? 6 : 0,
-                        tension: 0.3
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: legendConfig,
-                        title: { display: !!title, text: title, color: '#0f172a', font: {size: 18, weight: 'bold'} }
-                    },
-                    scales: scalesConfig
-                }
-            });
+            const sheetName = rawWorkbook.SheetNames.length > 1 ? document.getElementById('sheet-select').value : rawWorkbook.SheetNames[0];
+            const worksheet = rawWorkbook.Sheets[sheetName];
             
-            // Trigger animation
-            container.classList.remove('slide-in');
-            void container.offsetWidth; // trigger reflow
-            container.classList.add('slide-in');
-        }
-
-        function downloadChart() {
-            if(!myChartInstance) return;
-            const url = document.getElementById('myChart').toDataURL('image/png');
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'solvanta_chart.png';
-            a.click();
-        }
-
-        // --- Tool 2: Writing Assistant ---
-        function generateEmail() {
-            const type = document.getElementById('eg-type').value;
-            const rec = document.getElementById('eg-recipient').value || '[Recipient]';
-            const sen = document.getElementById('eg-sender').value || '[Your Name]';
-            const ctx = document.getElementById('eg-context').value || '[Topic Context]';
-            const pts = document.getElementById('eg-points').value || '[Your Points Here]';
+            // Convert to JSON
+            activeJsonData = XLSX.utils.sheet_to_json(worksheet, {defval: ""});
             
-            let draft = "";
-            const formattedPts = pts.split('\n').filter(p=>p.trim()).map(p=>`- ${p.trim()}`).join('\n');
-
-            if(type === 'analysis') {
-                draft = `Hi ${rec},\n\nHere is a quick summary regarding ${ctx}.\n\nKey takeaways:\n${formattedPts}\n\nLet me know if you need any clarification.\n\nBest,\n${sen}`;
-            } else if(type === 'followup') {
-                draft = `Hi ${rec},\n\nFollowing up on our previous discussion about ${ctx}.\n\nCould we get an update on the following items?\n${formattedPts}\n\nLooking forward to hearing from you.\n\nThanks,\n${sen}`;
-            } else if(type === 'escalation') {
-                draft = `Hi ${rec},\n\nI need to bring an issue to your attention regarding ${ctx}.\n\nCurrent situation:\n${formattedPts}\n\nPlease let me know how you'd like to proceed or if we can jump on a quick call to resolve this.\n\nBest,\n${sen}`;
-            } else if(type === 'meeting') {
-                draft = `Hi ${rec},\n\nThanks for the time today. Here is a summary of what we discussed regarding ${ctx}.\n\nAction Items & Notes:\n${formattedPts}\n\nLet me know if I missed anything.\n\nRegards,\n${sen}`;
-            } else if(type === 'update') {
-                draft = `Hi ${rec},\n\nPlease find the latest data/update for ${ctx}.\n\nHighlights:\n${formattedPts}\n\nAll details are attached/linked. Let me know if you have questions.\n\nBest,\n${sen}`;
-            }
-
-            const resBox = document.getElementById('eg-result-box');
-            resBox.style.display = 'block';
-            document.getElementById('eg-output').value = draft;
-            
-            resBox.classList.remove('slide-in');
-            void resBox.offsetWidth;
-            resBox.classList.add('slide-in');
-        }
-
-        function checkGrammar() {
-            const text = document.getElementById('gram-input').value;
-            const res = document.getElementById('gram-result');
-            if(!text) return;
-
-            const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
-            let longSentences = 0;
-            let passiveCount = 0;
-            
-            sentences.forEach(s => {
-                if(s.split(/\s+/).length > 25) longSentences++;
-            });
-
-            const passiveRegex = /\b(is|are|was|were|be|been|being)\s+[a-z]+ed\b/ig;
-            const passiveMatches = text.match(passiveRegex);
-            if(passiveMatches) passiveCount = passiveMatches.length;
-
-            const repeatedRegex = /\b(\w+)\s+\1\b/ig;
-            const repeatedMatches = text.match(repeatedRegex);
-            const repeatedCount = repeatedMatches ? repeatedMatches.length : 0;
-
-            res.style.display = 'block';
-            res.innerHTML = `
-                <ul class="analysis-list">
-                    <li><strong>Long Sentences (>25 words):</strong> ${longSentences} 
-                        ${longSentences > 0 ? '<span class="error-text">(Try breaking these up)</span>' : '✅'}</li>
-                    <li><strong>Passive Voice Fragments:</strong> ${passiveCount}
-                        ${passiveCount > 0 ? '<span class="error-text">(Use active voice where possible)</span>' : '✅'}</li>
-                    <li><strong>Consecutive Repeated Words:</strong> ${repeatedCount}
-                        ${repeatedCount > 0 ? '<span class="error-text">(Check for typos)</span>' : '✅'}</li>
-                </ul>
-            `;
-            
-            res.classList.remove('slide-in');
-            void res.offsetWidth;
-            res.classList.add('slide-in');
-        }
-
-        // --- Tool 3: Spreadsheet Cleaner ---
-        function cleanText(action) {
-            let text = document.getElementById('cl-input').value;
-            if(!text) return;
-            let result = "";
-
-            if(action === 'trim') {
-                result = text.split('\n')
-                             .map(line => line.replace(/\s+/g, ' ').trim())
-                             .filter(line => line.length > 0)
-                             .join('\n');
-            } 
-            else if(action === 'upper') { result = text.toUpperCase(); } 
-            else if(action === 'lower') { result = text.toLowerCase(); } 
-            else if(action === 'title') {
-                result = text.toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-            } 
-            else if(action === 'transpose') {
-                if(text.includes('\t')) { result = text.split('\t').join('\n'); } 
-                else { result = text.split('\n').filter(l=>l.trim()).join('\t'); }
-            } 
-            else if(action === 'csv') {
-                let lines = text.split('\n').map(l=>l.trim()).filter(l=>l.length>0);
-                result = lines.map(l => `"${l}"`).join(', ');
-            }
-
-            const resBox = document.getElementById('cl-result-box');
-            resBox.style.display = 'block';
-            document.getElementById('cl-output').value = result;
-            
-            resBox.classList.remove('slide-in');
-            void resBox.offsetWidth;
-            resBox.classList.add('slide-in');
-        }
-
-        // --- Tool 4: The Arbitrator ---
-        function tossCoin() {
-            const res = document.getElementById('arb-coin-result');
-            res.classList.remove('anim-flip', 'highlight-text');
-            void res.offsetWidth; 
-            res.classList.add('anim-flip');
-            res.innerText = "⏳";
-            setTimeout(() => {
-                res.classList.remove('anim-flip');
-                res.classList.add('highlight-text');
-                res.innerText = Math.random() < 0.5 ? "Heads" : "Tails";
-            }, 600);
-        }
-
-        function rollDice() {
-            const max = parseInt(document.getElementById('arb-dice-type').value);
-            const res = document.getElementById('arb-dice-result');
-            res.classList.remove('anim-shake', 'highlight-text');
-            void res.offsetWidth;
-            res.classList.add('anim-shake');
-            res.innerText = "🎲";
-            setTimeout(() => {
-                res.classList.remove('anim-shake');
-                res.classList.add('highlight-text');
-                res.innerText = Math.floor(Math.random() * max) + 1;
-            }, 500);
-        }
-
-        function pickChit() {
-            const input = document.getElementById('arb-chit-input').value;
-            const res = document.getElementById('arb-chit-result');
-            const items = input.split('\n').map(i=>i.trim()).filter(i=>i.length>0);
-            
-            if(items.length < 2) {
-                res.innerText = "Enter at least 2 items.";
+            if(activeJsonData.length === 0) {
+                alert("This sheet appears to be empty.");
                 return;
             }
 
-            let counter = 0;
-            const maxSpins = 20;
-            res.classList.remove('highlight-text');
-
-            const interval = setInterval(() => {
-                res.innerText = items[Math.floor(Math.random() * items.length)];
-                counter++;
-                if(counter >= maxSpins) {
-                    clearInterval(interval);
-                    const winner = items[Math.floor(Math.random() * items.length)];
-                    res.innerHTML = `<span class="highlight-text anim-pop">👉 ${winner} 👈</span>`;
-                }
-            }, 50);
-        }
-
-        // --- Tool 5: Coffee Break (Brick Breaker) ---
-        const canvas = document.getElementById("brickCanvas");
-        const ctx = canvas.getContext("2d");
-        
-        let ballRadius = 8;
-        let x, y, dx, dy;
-        let paddleHeight = 12;
-        let paddleWidth = 90;
-        let paddleX;
-        let rightPressed = false;
-        let leftPressed = false;
-        
-        let brickRowCount = 5;
-        let brickColumnCount = 7;
-        let brickWidth = 70;
-        let brickHeight = 20;
-        let brickPadding = 10;
-        let brickOffsetTop = 40;
-        let brickOffsetLeft = 25;
-        
-        let score = 0;
-        let lives = 3;
-        let bricks = [];
-        let isGameRunning = false;
-        let animationId;
-
-        // Bright theme colors
-        const cPaddle = "#3b82f6";
-        const cBall = "#f43f5e";
-        const cBrick1 = "#14b8a6";
-        const cBrick2 = "#8b5cf6";
-        const cBrick3 = "#f59e0b";
-
-        function initBricks() {
-            bricks = [];
-            for(let c=0; c<brickColumnCount; c++) {
-                bricks[c] = [];
-                for(let r=0; r<brickRowCount; r++) {
-                    bricks[c][r] = { x: 0, y: 0, status: 1 };
-                }
-            }
-        }
-
-        function resetPositions() {
-            x = canvas.width/2;
-            y = canvas.height-30;
-            dx = 4; // Slightly faster for fun
-            dy = -4;
-            paddleX = (canvas.width-paddleWidth)/2;
-        }
-
-        document.addEventListener("keydown", keyDownHandler, false);
-        document.addEventListener("keyup", keyUpHandler, false);
-        canvas.addEventListener("mousemove", mouseMoveHandler, false);
-
-        function keyDownHandler(e) {
-            if(e.key == "Right" || e.key == "ArrowRight") rightPressed = true;
-            else if(e.key == "Left" || e.key == "ArrowLeft") leftPressed = true;
-        }
-        function keyUpHandler(e) {
-            if(e.key == "Right" || e.key == "ArrowRight") rightPressed = false;
-            else if(e.key == "Left" || e.key == "ArrowLeft") leftPressed = false;
-        }
-        function mouseMoveHandler(e) {
-            let relativeX = e.clientX - canvas.getBoundingClientRect().left;
-            if(relativeX > 0 && relativeX < canvas.width) {
-                paddleX = relativeX - paddleWidth/2;
-            }
-        }
-
-        function collisionDetection() {
-            for(let c=0; c<brickColumnCount; c++) {
-                for(let r=0; r<brickRowCount; r++) {
-                    let b = bricks[c][r];
-                    if(b.status == 1) {
-                        if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
-                            dy = -dy;
-                            b.status = 0;
-                            score++;
-                            if(score == brickRowCount*brickColumnCount) {
-                                gameOver("You Win! Operations Saved!");
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        function drawBall() {
-            ctx.beginPath();
-            ctx.arc(x, y, ballRadius, 0, Math.PI*2);
-            ctx.fillStyle = cBall;
-            ctx.fill();
-            ctx.closePath();
-        }
-        function drawPaddle() {
-            ctx.beginPath();
-            ctx.roundRect(paddleX, canvas.height-paddleHeight-5, paddleWidth, paddleHeight, 6);
-            ctx.fillStyle = cPaddle;
-            ctx.fill();
-            ctx.closePath();
-        }
-        function drawBricks() {
-            for(let c=0; c<brickColumnCount; c++) {
-                for(let r=0; r<brickRowCount; r++) {
-                    if(bricks[c][r].status == 1) {
-                        let brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
-                        let brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
-                        bricks[c][r].x = brickX;
-                        bricks[c][r].y = brickY;
-                        ctx.beginPath();
-                        ctx.roundRect(brickX, brickY, brickWidth, brickHeight, 4);
-                        ctx.fillStyle = r % 3 === 0 ? cBrick1 : (r % 3 === 1 ? cBrick2 : cBrick3);
-                        ctx.fill();
-                        ctx.closePath();
-                    }
-                }
-            }
-        }
-        function drawScore() {
-            ctx.font = "bold 14px Inter";
-            ctx.fillStyle = "#64748b";
-            ctx.fillText("Score: "+score, 8, 20);
-        }
-        function drawLives() {
-            ctx.font = "bold 14px Inter";
-            ctx.fillStyle = "#64748b";
-            ctx.fillText("Lives: "+lives, canvas.width-65, 20);
-        }
-
-        function draw() {
-            if(!isGameRunning) return;
+            activeHeaders = Object.keys(activeJsonData[0]);
+            populateConfigDropdowns();
             
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawBricks();
-            drawBall();
-            drawPaddle();
-            drawScore();
-            drawLives();
-            collisionDetection();
+            // UI Transition
+            document.getElementById('step-upload').classList.add('hidden');
+            document.getElementById('step-configure').classList.remove('hidden');
+        }
 
-            if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) dx = -dx;
-            if(y + dy < ballRadius) dy = -dy;
-            else if(y + dy > canvas.height-ballRadius-5) {
-                if(x > paddleX && x < paddleX + paddleWidth) {
-                    dy = -dy;
-                    dx = dx + ((x - (paddleX + paddleWidth/2)) * 0.08);
-                } else {
-                    lives--;
-                    if(!lives) {
-                        gameOver("Game Over.");
-                        return;
-                    } else {
-                        resetPositions();
-                    }
-                }
+        // --- Sample Data Logic ---
+        function loadSampleData() {
+            activeJsonData = [
+                { Date: '2026-01-01', Region: 'North', Product: 'Software', Revenue: 15000, Satisfaction: 4.5 },
+                { Date: '2026-01-05', Region: 'South', Product: 'Consulting', Revenue: 8000, Satisfaction: 4.8 },
+                { Date: '2026-01-12', Region: 'East', Product: 'Software', Revenue: 22000, Satisfaction: 4.2 },
+                { Date: '2026-02-02', Region: 'West', Product: 'Hardware', Revenue: 12500, Satisfaction: 3.9 },
+                { Date: '2026-02-15', Region: 'North', Product: 'Hardware', Revenue: 9000, Satisfaction: 4.1 },
+                { Date: '2026-03-01', Region: 'South', Product: 'Software', Revenue: 31000, Satisfaction: 4.9 },
+                { Date: '2026-03-10', Region: 'East', Product: 'Consulting', Revenue: 14000, Satisfaction: 4.7 },
+                { Date: '2026-03-22', Region: 'West', Product: 'Software', Revenue: 18000, Satisfaction: 4.4 }
+            ];
+            activeHeaders = Object.keys(activeJsonData[0]);
+            
+            document.getElementById('sheet-selector-group').classList.add('hidden');
+            populateConfigDropdowns();
+            
+            // Pre-select for demo
+            document.getElementById('cat-select').value = 'Region';
+            document.getElementById('metric-select').value = 'Revenue';
+            document.getElementById('date-select').value = 'Date';
+
+            document.getElementById('step-upload').classList.add('hidden');
+            document.getElementById('step-configure').classList.remove('hidden');
+        }
+
+        // --- Config UI Logic ---
+        function populateConfigDropdowns() {
+            const catSelect = document.getElementById('cat-select');
+            const metricSelect = document.getElementById('metric-select');
+            const dateSelect = document.getElementById('date-select');
+            
+            catSelect.innerHTML = '';
+            metricSelect.innerHTML = '';
+            dateSelect.innerHTML = '<option value="">-- None (Hide Trend) --</option>';
+
+            activeHeaders.forEach(header => {
+                catSelect.appendChild(new Option(header, header));
+                metricSelect.appendChild(new Option(header, header));
+                dateSelect.appendChild(new Option(header, header));
+            });
+
+            // Try to auto-guess metric (look for 'revenue', 'cost', 'amount', 'total' or just pick last)
+            let guessedMetric = activeHeaders.find(h => /rev|cost|amount|total|price|qty/i.test(h)) || activeHeaders[activeHeaders.length-1];
+            if(guessedMetric) metricSelect.value = guessedMetric;
+
+            // Try to auto-guess date
+            let guessedDate = activeHeaders.find(h => /date|time|month|year/i.test(h));
+            if(guessedDate) dateSelect.value = guessedDate;
+        }
+
+        // --- Dashboard Generation Logic ---
+        function generateDashboard() {
+            const title = document.getElementById('dash-title').value || 'Operational Dashboard';
+            const catCol = document.getElementById('cat-select').value;
+            const metricCol = document.getElementById('metric-select').value;
+            const dateCol = document.getElementById('date-select').value;
+
+            if(!catCol || !metricCol) {
+                alert("Please select both a category and a metric column.");
+                return;
             }
 
-            if(rightPressed && paddleX < canvas.width-paddleWidth) paddleX += 7;
-            else if(leftPressed && paddleX > 0) paddleX -= 7;
+            // 1. Data Aggregation
+            let totalMetric = 0;
+            let validCount = 0;
+            let catAgg = {};
+            let dateAgg = {};
 
-            x += dx;
-            y += dy;
-            animationId = requestAnimationFrame(draw);
+            activeJsonData.forEach(row => {
+                let catVal = String(row[catCol] || 'Unknown').trim();
+                let metricVal = parseFloat(row[metricCol]);
+                
+                if(isNaN(metricVal)) metricVal = 0;
+                else validCount++;
+
+                totalMetric += metricVal;
+
+                // Aggregate by Category
+                catAgg[catVal] = (catAgg[catVal] || 0) + metricVal;
+
+                // Aggregate by Date (if selected)
+                if(dateCol) {
+                    let dateVal = String(row[dateCol] || 'Unknown').trim();
+                    // Simple string slicing to group by basic date if it's a long timestamp
+                    if(dateVal.length > 10) dateVal = dateVal.substring(0,10);
+                    dateAgg[dateVal] = (dateAgg[dateVal] || 0) + metricVal;
+                }
+            });
+
+            // Format numbers function
+            const fmt = (num) => new Intl.NumberFormat('en-US', { maximumFractionDigits: 1 }).format(num);
+
+            // Calculate KPIs
+            const totalRows = activeJsonData.length;
+            const avgMetric = validCount > 0 ? (totalMetric / validCount) : 0;
+            
+            // Sort categories to find top
+            let sortedCats = Object.keys(catAgg).map(k => ({name: k, val: catAgg[k]})).sort((a,b) => b.val - a.val);
+            const topCat = sortedCats.length > 0 ? sortedCats[0].name : '-';
+
+            // 2. Update DOM Text
+            document.getElementById('out-title').innerText = title;
+            document.getElementById('kpi-count').innerText = totalRows;
+            document.getElementById('lbl-sum').innerText = `Total ${metricCol}`;
+            document.getElementById('kpi-sum').innerText = fmt(totalMetric);
+            document.getElementById('lbl-avg').innerText = `Avg ${metricCol}`;
+            document.getElementById('kpi-avg').innerText = fmt(avgMetric);
+            document.getElementById('kpi-top-cat').innerText = topCat;
+
+            // Summary Text
+            let summary = `This dashboard analyzes <strong>${totalRows}</strong> records. The total ${metricCol} is <strong>${fmt(totalMetric)}</strong>. The highest performing ${catCol} is <strong>${topCat}</strong>, making up <strong>${fmt((sortedCats[0]?.val/totalMetric)*100 || 0)}%</strong> of the total volume.`;
+            document.getElementById('out-summary').innerHTML = summary;
+
+            // 3. Render Charts
+            // Destroy old charts if they exist
+            ['barChart', 'donutChart', 'lineChart'].forEach(id => {
+                if(chartInstances[id]) chartInstances[id].destroy();
+            });
+
+            // Top 10 for charts to prevent clutter
+            let chartDataCats = sortedCats.slice(0, 10);
+            let labelsCat = chartDataCats.map(c => c.name);
+            let dataCat = chartDataCats.map(c => c.val);
+
+            // Bar Chart
+            chartInstances['barChart'] = new Chart(document.getElementById('barChart'), {
+                type: 'bar',
+                data: {
+                    labels: labelsCat,
+                    datasets: [{
+                        label: metricCol,
+                        data: dataCat,
+                        backgroundColor: chartColors[0],
+                        borderRadius: 4
+                    }]
+                },
+                options: { plugins: { legend: { display: false } }, maintainAspectRatio: false }
+            });
+
+            // Donut Chart
+            chartInstances['donutChart'] = new Chart(document.getElementById('donutChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: labelsCat,
+                    datasets: [{
+                        data: dataCat,
+                        backgroundColor: chartColors,
+                        borderWidth: 0
+                    }]
+                },
+                options: { 
+                    plugins: { legend: { position: 'right' } },
+                    maintainAspectRatio: false,
+                    cutout: '70%'
+                }
+            });
+
+            // Line Chart (Trend)
+            const trendBox = document.getElementById('trend-box');
+            if(dateCol && Object.keys(dateAgg).length > 1) {
+                trendBox.classList.remove('hidden');
+                // Sort dates chronologically (string sort works for YYYY-MM-DD)
+                let sortedDates = Object.keys(dateAgg).sort();
+                let dataDate = sortedDates.map(d => dateAgg[d]);
+
+                chartInstances['lineChart'] = new Chart(document.getElementById('lineChart'), {
+                    type: 'line',
+                    data: {
+                        labels: sortedDates,
+                        datasets: [{
+                            label: metricCol,
+                            data: dataDate,
+                            borderColor: chartColors[1],
+                            backgroundColor: chartColors[1] + '33',
+                            fill: true,
+                            tension: 0.3
+                        }]
+                    },
+                    options: { plugins: { legend: { display: false } }, maintainAspectRatio: false }
+                });
+            } else {
+                trendBox.classList.add('hidden');
+            }
+
+            // 4. Render Table
+            const tbody = document.querySelector('#out-table tbody');
+            tbody.innerHTML = '';
+            sortedCats.slice(0, 5).forEach(c => {
+                const tr = document.createElement('tr');
+                let pct = totalMetric > 0 ? ((c.val / totalMetric) * 100).toFixed(1) + '%' : '0%';
+                tr.innerHTML = `<td>${c.name}</td><td>${fmt(c.val)}</td><td>${pct}</td>`;
+                tbody.appendChild(tr);
+            });
+
+            // Transition UI
+            document.getElementById('step-configure').classList.add('hidden');
+            document.getElementById('step-output').classList.remove('hidden');
         }
 
-        function startGame() {
-            document.getElementById('gameOverlay').style.display = 'none';
-            initBricks();
-            resetPositions();
-            score = 0;
-            lives = 3;
-            isGameRunning = true;
-            cancelAnimationFrame(animationId);
-            draw();
+        // --- Export & UI Flow ---
+        function downloadDashboardPNG() {
+            const target = document.getElementById('export-target');
+            
+            // Add a temporary class to ensure white background during capture
+            target.style.background = "#ffffff";
+            target.style.padding = "20px";
+            
+            html2canvas(target, {scale: 2, useCORS: true}).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'Solvanta_Dashboard.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                
+                // Reset styles
+                target.style.background = "";
+                target.style.padding = "";
+            });
         }
 
-        function gameOver(msg) {
-            isGameRunning = false;
-            cancelAnimationFrame(animationId);
-            const overlay = document.getElementById('gameOverlay');
-            overlay.style.display = 'flex';
-            document.getElementById('gameMessage').innerText = msg;
+        function editConfig() {
+            document.getElementById('step-output').classList.add('hidden');
+            document.getElementById('step-configure').classList.remove('hidden');
         }
 
-        initBricks();
-        resetPositions();
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        drawBricks();
-        drawPaddle();
+        function resetTool() {
+            activeJsonData = [];
+            activeHeaders = [];
+            rawWorkbook = null;
+            document.getElementById('file-input').value = "";
+            
+            document.getElementById('step-output').classList.add('hidden');
+            document.getElementById('step-configure').classList.add('hidden');
+            document.getElementById('step-upload').classList.remove('hidden');
+        }
+
+        // --- Drag and Drop Logic ---
+        const dropZone = document.getElementById('drop-zone');
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = "var(--color-purple)";
+            dropZone.style.background = "var(--color-lavender)";
+        });
+        dropZone.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = "var(--color-border)";
+            dropZone.style.background = "transparent";
+        });
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = "var(--color-border)";
+            dropZone.style.background = "transparent";
+            
+            if(e.dataTransfer.files.length > 0) {
+                document.getElementById('file-input').files = e.dataTransfer.files;
+                handleFile({target: {files: e.dataTransfer.files}});
+            }
+        });
+
     </script>
 </body>
 </html>
