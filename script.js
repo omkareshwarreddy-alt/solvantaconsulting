@@ -36,10 +36,7 @@ function initRotaryNavigation() {
     const target = document.getElementById(`view-${sectionName}`);
     if (!target) return;
 
-    views.forEach((view) => {
-      view.classList.remove("active-view");
-    });
-
+    views.forEach((view) => view.classList.remove("active-view"));
     target.classList.add("active-view");
 
     dialButtons.forEach((button) => {
@@ -52,6 +49,11 @@ function initRotaryNavigation() {
       setTimeout(() => {
         rotaryDial.classList.remove("open");
       }, 420);
+    }
+
+    const contentStage = document.querySelector(".content-stage");
+    if (contentStage) {
+      contentStage.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }
 
@@ -71,10 +73,8 @@ function initJumpButtons() {
 
   jumpButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      const target = button.dataset.jump;
-
       if (window.solvantaOpenSection) {
-        window.solvantaOpenSection(target);
+        window.solvantaOpenSection(button.dataset.jump);
       }
     });
   });
@@ -169,9 +169,7 @@ function initResumeMaker() {
     field.addEventListener("input", updatePreview);
   });
 
-  printButton?.addEventListener("click", () => {
-    window.print();
-  });
+  printButton?.addEventListener("click", () => window.print());
 
   clearButton?.addEventListener("click", () => {
     Object.values(fields).forEach((field) => {
@@ -280,9 +278,7 @@ function initCoverLetterMaker() {
     }
   });
 
-  printButton?.addEventListener("click", () => {
-    window.print();
-  });
+  printButton?.addEventListener("click", () => window.print());
 
   updateLetter();
 }
@@ -315,14 +311,125 @@ ${name}`;
 ----------------------------- */
 
 function initDeviceCheck() {
-  initCameraCheck();
-  initMicrophoneCheck();
-  initSpeakerCheck();
-  initBrowserCheck();
-  initInternetSpeedCheck();
+  const selectors = {
+    camera: document.getElementById("cameraSelect"),
+    mic: document.getElementById("micSelect"),
+    speaker: document.getElementById("speakerSelect")
+  };
+
+  populateDeviceSelectors(selectors);
+
+  if (navigator.mediaDevices?.addEventListener) {
+    navigator.mediaDevices.addEventListener("devicechange", () => {
+      populateDeviceSelectors(selectors);
+    });
+  }
+
+  initCameraCheck(selectors.camera);
+  initMicrophoneCheck(selectors.mic);
+  initSpeakerCheck(selectors.speaker);
 }
 
-function initCameraCheck() {
+async function populateDeviceSelectors(selectors) {
+  if (!navigator.mediaDevices?.enumerateDevices) {
+    setUnavailable(selectors.camera, "Device list not supported");
+    setUnavailable(selectors.mic, "Device list not supported");
+    setUnavailable(selectors.speaker, "Speaker list not supported");
+    return;
+  }
+
+  try {
+    let devices = await navigator.mediaDevices.enumerateDevices();
+
+    const hasLabels = devices.some((device) => device.label);
+
+    if (!hasLabels && navigator.mediaDevices.getUserMedia) {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: true,
+          video: true
+        });
+
+        stream.getTracks().forEach((track) => track.stop());
+        devices = await navigator.mediaDevices.enumerateDevices();
+      } catch {
+        // User may deny permissions. We can still show generic default options.
+      }
+    }
+
+    fillSelect(
+      selectors.camera,
+      devices.filter((device) => device.kind === "videoinput"),
+      "Default camera",
+      "Camera"
+    );
+
+    fillSelect(
+      selectors.mic,
+      devices.filter((device) => device.kind === "audioinput"),
+      "Default microphone",
+      "Microphone"
+    );
+
+    fillSelect(
+      selectors.speaker,
+      devices.filter((device) => device.kind === "audiooutput"),
+      "Default speaker",
+      "Speaker"
+    );
+
+    if (!HTMLMediaElement.prototype.setSinkId && selectors.speaker) {
+      const option = document.createElement("option");
+      option.value = "";
+      option.textContent = "Speaker selection limited in this browser";
+      selectors.speaker.innerHTML = "";
+      selectors.speaker.appendChild(option);
+      selectors.speaker.disabled = true;
+    }
+  } catch {
+    setUnavailable(selectors.camera, "Camera list unavailable");
+    setUnavailable(selectors.mic, "Microphone list unavailable");
+    setUnavailable(selectors.speaker, "Speaker list unavailable");
+  }
+}
+
+function fillSelect(select, devices, defaultText, labelPrefix) {
+  if (!select) return;
+
+  const previousValue = select.value;
+  select.innerHTML = "";
+
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "";
+  defaultOption.textContent = defaultText;
+  select.appendChild(defaultOption);
+
+  devices.forEach((device, index) => {
+    const option = document.createElement("option");
+    option.value = device.deviceId;
+    option.textContent = device.label || `${labelPrefix} ${index + 1}`;
+    select.appendChild(option);
+  });
+
+  select.disabled = false;
+
+  if ([...select.options].some((option) => option.value === previousValue)) {
+    select.value = previousValue;
+  }
+}
+
+function setUnavailable(select, message) {
+  if (!select) return;
+
+  select.innerHTML = "";
+  const option = document.createElement("option");
+  option.value = "";
+  option.textContent = message;
+  select.appendChild(option);
+  select.disabled = true;
+}
+
+function initCameraCheck(cameraSelect) {
   const startCamera = document.getElementById("startCamera");
   const stopCamera = document.getElementById("stopCamera");
   const cameraPreview = document.getElementById("cameraPreview");
@@ -332,21 +439,47 @@ function initCameraCheck() {
 
   let cameraStream = null;
 
-  startCamera.addEventListener("click", async () => {
+  async function startSelectedCamera() {
     if (!navigator.mediaDevices?.getUserMedia) {
       cameraStatus.textContent = "Camera access is not supported in this browser.";
       return;
     }
 
+    if (cameraStream) {
+      cameraStream.getTracks().forEach((track) => track.stop());
+      cameraStream = null;
+    }
+
+    const selectedCamera = cameraSelect?.value;
+
+    const constraints = {
+      video: selectedCamera ? { deviceId: { exact: selectedCamera } } : true
+    };
+
     try {
-      cameraStream = await navigator.mediaDevices.getUserMedia({ video: true });
+      cameraStream = await navigator.mediaDevices.getUserMedia(constraints);
       cameraPreview.srcObject = cameraStream;
-      cameraStatus.textContent =
-        "Camera detected. The lighting is now between you and your life choices.";
+
+      const activeTrack = cameraStream.getVideoTracks()[0];
+      cameraStatus.textContent = activeTrack?.label
+        ? `Camera running: ${activeTrack.label}. Looking professional is still optional.`
+        : "Camera running. Looking professional is still optional.";
+
+      populateDeviceSelectors({
+        camera: document.getElementById("cameraSelect"),
+        mic: document.getElementById("micSelect"),
+        speaker: document.getElementById("speakerSelect")
+      });
     } catch {
       cameraStatus.textContent =
-        "Camera could not start. Permission may be blocked, or the camera is unavailable.";
+        "Camera could not start. Permission may be blocked, or the selected camera is unavailable.";
     }
+  }
+
+  startCamera.addEventListener("click", startSelectedCamera);
+
+  cameraSelect?.addEventListener("change", () => {
+    if (cameraStream) startSelectedCamera();
   });
 
   stopCamera.addEventListener("click", () => {
@@ -359,7 +492,7 @@ function initCameraCheck() {
   });
 }
 
-function initMicrophoneCheck() {
+function initMicrophoneCheck(micSelect) {
   const startMic = document.getElementById("startMic");
   const stopMic = document.getElementById("stopMic");
   const micLevel = document.getElementById("micLevel");
@@ -371,14 +504,22 @@ function initMicrophoneCheck() {
   let audioContext = null;
   let animationFrame = null;
 
-  startMic.addEventListener("click", async () => {
+  async function startSelectedMic() {
     if (!navigator.mediaDevices?.getUserMedia) {
       micStatus.textContent = "Microphone access is not supported in this browser.";
       return;
     }
 
+    stopMicStream();
+
+    const selectedMic = micSelect?.value;
+
+    const constraints = {
+      audio: selectedMic ? { deviceId: { exact: selectedMic } } : true
+    };
+
     try {
-      micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      micStream = await navigator.mediaDevices.getUserMedia(constraints);
       audioContext = new AudioContext();
 
       const source = audioContext.createMediaStreamSource(micStream);
@@ -402,15 +543,23 @@ function initMicrophoneCheck() {
 
       updateLevel();
 
-      micStatus.textContent =
-        "Microphone detected. The little bar is moving, which is more than some meetings can say.";
+      const activeTrack = micStream.getAudioTracks()[0];
+      micStatus.textContent = activeTrack?.label
+        ? `Microphone running: ${activeTrack.label}. The little bar is now emotionally invested.`
+        : "Microphone running. The little bar is now emotionally invested.";
+
+      populateDeviceSelectors({
+        camera: document.getElementById("cameraSelect"),
+        mic: document.getElementById("micSelect"),
+        speaker: document.getElementById("speakerSelect")
+      });
     } catch {
       micStatus.textContent =
-        "Microphone could not start. Permission may be blocked, or no mic was found.";
+        "Microphone could not start. Permission may be blocked, or the selected mic is unavailable.";
     }
-  });
+  }
 
-  stopMic.addEventListener("click", () => {
+  function stopMicStream() {
     if (animationFrame) {
       cancelAnimationFrame(animationFrame);
       animationFrame = null;
@@ -427,28 +576,51 @@ function initMicrophoneCheck() {
     }
 
     micLevel.style.width = "0%";
+  }
+
+  startMic.addEventListener("click", startSelectedMic);
+
+  micSelect?.addEventListener("change", () => {
+    if (micStream) startSelectedMic();
+  });
+
+  stopMic.addEventListener("click", () => {
+    stopMicStream();
     micStatus.textContent = "Microphone stopped.";
   });
 }
 
-function initSpeakerCheck() {
+function initSpeakerCheck(speakerSelect) {
   const playSound = document.getElementById("playSound");
   const speakerStatus = document.getElementById("speakerStatus");
 
   if (!playSound || !speakerStatus) return;
 
-  playSound.addEventListener("click", () => {
+  playSound.addEventListener("click", async () => {
     try {
       const context = new AudioContext();
       const oscillator = context.createOscillator();
       const gain = context.createGain();
+      const destination = context.createMediaStreamDestination();
 
       oscillator.type = "sine";
       oscillator.frequency.value = 660;
       gain.gain.value = 0.08;
 
       oscillator.connect(gain);
+      gain.connect(destination);
       gain.connect(context.destination);
+
+      if (
+        speakerSelect &&
+        speakerSelect.value &&
+        HTMLMediaElement.prototype.setSinkId
+      ) {
+        const audio = new Audio();
+        audio.srcObject = destination.stream;
+        await audio.setSinkId(speakerSelect.value);
+        await audio.play();
+      }
 
       oscillator.start();
 
@@ -461,120 +633,9 @@ function initSpeakerCheck() {
         "Test sound played. If you heard it, your speaker has chosen peace.";
     } catch {
       speakerStatus.textContent =
-        "Could not play the test sound. Your browser may be blocking audio.";
+        "Could not play the test sound. Your browser may be blocking audio or speaker selection.";
     }
   });
-}
-
-function initBrowserCheck() {
-  const runBrowserCheck = document.getElementById("runBrowserCheck");
-  const browserInfo = document.getElementById("browserInfo");
-
-  if (!runBrowserCheck || !browserInfo) return;
-
-  runBrowserCheck.addEventListener("click", () => {
-    const info = [];
-
-    info.push(`Online status: ${navigator.onLine ? "Online" : "Offline"}`);
-    info.push(`Screen size: ${window.screen.width} × ${window.screen.height}`);
-    info.push(`Browser window: ${window.innerWidth} × ${window.innerHeight}`);
-    info.push(
-      `Camera/microphone API: ${
-        navigator.mediaDevices?.getUserMedia ? "Supported" : "Not supported"
-      }`
-    );
-    info.push(`Clipboard API: ${navigator.clipboard ? "Supported" : "Limited"}`);
-
-    if (navigator.connection) {
-      info.push(
-        `Browser-reported network type: ${
-          navigator.connection.effectiveType || "Unknown"
-        }`
-      );
-      info.push(
-        `Estimated downlink from browser: ${
-          navigator.connection.downlink ? `${navigator.connection.downlink} Mbps` : "Not available"
-        }`
-      );
-    } else {
-      info.push("Browser-reported network details: Not available");
-    }
-
-    browserInfo.innerHTML = info.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
-  });
-}
-
-function initInternetSpeedCheck() {
-  const runSpeedTest = document.getElementById("runSpeedTest");
-  const speedResult = document.getElementById("speedResult");
-
-  if (!runSpeedTest || !speedResult) return;
-
-  runSpeedTest.addEventListener("click", async () => {
-    runSpeedTest.disabled = true;
-    runSpeedTest.textContent = "Checking...";
-    speedResult.innerHTML = `
-      <strong>Testing connection...</strong>
-      <span>Downloading a small test file in the browser. Please wait while the internet considers behaving.</span>
-    `;
-
-    try {
-      const testUrl =
-        "https://upload.wikimedia.org/wikipedia/commons/3/3f/Fronalpstock_big.jpg";
-      const cacheBuster = `?cacheBust=${Date.now()}`;
-      const startTime = performance.now();
-
-      const response = await fetch(testUrl + cacheBuster, { cache: "no-store" });
-
-      if (!response.ok) {
-        throw new Error("Speed test file could not be downloaded.");
-      }
-
-      const blob = await response.blob();
-      const endTime = performance.now();
-
-      const durationSeconds = Math.max((endTime - startTime) / 1000, 0.1);
-      const bitsLoaded = blob.size * 8;
-      const speedMbps = bitsLoaded / durationSeconds / 1024 / 1024;
-
-      const roundedSpeed = Math.round(speedMbps * 10) / 10;
-      const interpretation = getSpeedInterpretation(roundedSpeed);
-
-      speedResult.innerHTML = `
-        <strong>Approx download speed: ${roundedSpeed} Mbps</strong>
-        <span>${interpretation}</span>
-        <span class="small-note">This is a browser-based estimate. Good enough for a quick sanity check, not for arguing with your internet provider.</span>
-      `;
-    } catch {
-      speedResult.innerHTML = `
-        <strong>Speed check could not complete.</strong>
-        <span>Your browser or network may have blocked the test file, which is annoying but not personally surprising. Try again later or use a dedicated speed test if you need exact results.</span>
-      `;
-    } finally {
-      runSpeedTest.disabled = false;
-      runSpeedTest.textContent = "Run Speed Check";
-    }
-  });
-}
-
-function getSpeedInterpretation(speedMbps) {
-  if (speedMbps >= 50) {
-    return "Your connection looks strong enough for video calls, screen sharing, online meetings, downloads, and general work without too much drama. If the call still freezes, blame the meeting platform responsibly.";
-  }
-
-  if (speedMbps >= 20) {
-    return "Your connection looks suitable for normal office work, browsing, email, and most video calls. If five other apps are also fighting for bandwidth, things may still get spicy.";
-  }
-
-  if (speedMbps >= 8) {
-    return "Your connection should handle basic browsing and emails, but video calls or screen sharing may feel unstable if other apps are also using the internet. Proceed with cautious optimism.";
-  }
-
-  if (speedMbps >= 3) {
-    return "Your connection looks weak right now. You may face buffering, dropped audio, slow loading, or the classic meeting phrase: can you hear me now?";
-  }
-
-  return "Your connection is struggling. Basic browsing may work, but video calls, uploads, and screen sharing may behave like they have resigned emotionally.";
 }
 
 /* -----------------------------
