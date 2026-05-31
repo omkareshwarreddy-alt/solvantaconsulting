@@ -43,11 +43,6 @@
           The Lab
         </button>
 
-        <button class="side-link" type="button" data-section="career">
-          <span>✦</span>
-          Career Tools
-        </button>
-
         <button class="side-link" type="button" data-section="survival">
           <span>◉</span>
           Survival Kit
@@ -126,11 +121,6 @@
               <span class="hole-label">Lab</span>
             </button>
 
-            <button class="dial-hole" type="button" data-section="career" aria-label="Open Career Tools">
-              <span class="hole-icon">✦</span>
-              <span class="hole-label">Career</span>
-            </button>
-
             <button class="dial-hole" type="button" data-section="survival" aria-label="Open Survival Kit">
               <span class="hole-icon">◉</span>
               <span class="hole-label">Survival</span>
@@ -160,12 +150,7 @@
       <section class="quick-strip" aria-label="Solvanta sections overview">
         <button type="button" data-jump="lab">
           <span>The Lab</span>
-          Experiments, tools, and useful things built because work got annoying.
-        </button>
-
-        <button type="button" data-jump="career">
-          <span>Career Tools</span>
-          Resume and cover letter helpers that keep things clean and ATS-friendly.
+          Experiments, backend ideas, and useful things built because work got annoying.
         </button>
 
         <button type="button" data-jump="survival">
@@ -176,6 +161,11 @@
         <button type="button" data-jump="notes">
           <span>Notes</span>
           Thoughts, experiments, and mildly useful observations.
+        </button>
+
+        <button type="button" data-jump="contact">
+          <span>Contact</span>
+          Feedback, ideas, bug reports, or spreadsheet-related emotional damage.
         </button>
       </section>
 
@@ -191,7 +181,7 @@
             <p class="large-copy">
               This is not a corporate brochure wearing a tie. Solvanta is a personal
               experiment in building useful things for messy workdays: small tools,
-              career helpers, device checks, practice drills, and whatever else survives
+              backend experiments, office survival utilities, and whatever else survives
               the “will this actually help?” test.
             </p>
 
@@ -207,8 +197,8 @@
               </div>
 
               <div>
-                <h3>Useful over flashy</h3>
-                <p>If it saves five minutes and one sigh, it belongs here.</p>
+                <h3>Backend only when useful</h3>
+                <p>If something needs proper storage, email, AI, or document generation, Google Workspace handles the heavy lifting.</p>
               </div>
             </div>
           </div>
@@ -272,10 +262,10 @@
               <section class="paper-section promise-section">
                 <h3>The Promise</h3>
                 <p>
-                  Most tools on this site run directly in your browser. If a feature ever
-                  uses Google Workspace or another backend, it will clearly say when data is
-                  being submitted. No mystery data goblins. We have standards. Questionable
-                  jokes, yes. Sneaky storage, no.
+                  Simple tools stay browser-first where possible. Features that need storage,
+                  email notifications, document generation, or AI support use a Google Workspace
+                  backend. No mystery data goblins. We have standards. Questionable jokes, yes.
+                  Sneaky storage, no.
                 </p>
               </section>
             </div>
@@ -296,171 +286,55 @@
 
             <div class="simple-list">
               <div>
-                <h3>Dashboard concepts</h3>
-                <p>Layouts and reporting ideas for turning messy information into something readable.</p>
+                <h3>Google Workspace Backend</h3>
+                <p>
+                  Contact forms, feedback, tool logs, notes, document requests, and future
+                  content management using Apps Script and Google Sheets.
+                </p>
               </div>
 
               <div>
-                <h3>Writing support</h3>
-                <p>Structured writing helpers that avoid sounding like a corporate brochure learned to breathe.</p>
+                <h3>Document Engine</h3>
+                <p>
+                  Resume and cover letter generation will return later using Google Docs
+                  templates and proper backend PDF generation instead of browser chaos.
+                </p>
               </div>
 
               <div>
-                <h3>Future experiments</h3>
-                <p>Small office utilities, AI workflows, document helpers, and tools built because curiosity won.</p>
+                <h3>Ask Solvanta</h3>
+                <p>
+                  A future Gemini-powered site assistant for tool guidance, writing help,
+                  workflow ideas, and practical office survival questions.
+                </p>
               </div>
             </div>
-          </div>
-        </article>
 
-        <!-- CAREER -->
-        <article class="view" id="view-career">
-          <div class="view-inner">
-            <p class="kicker">Career Tools</p>
-            <h2>Resume and cover letter tools without the motivational fog machine.</h2>
+            <div class="lab-roadmap">
+              <h3>Planned experiments</h3>
 
-            <p class="large-copy">
-              Build a simple ATS-friendly resume or a clean professional cover letter.
-              No glitter. No six-column design disaster. Just structured output you can print,
-              copy, or export properly once we connect the document engine.
-            </p>
+              <div class="roadmap-grid">
+                <div>
+                  <span>01</span>
+                  <p>Contact and feedback forms connected to Google Sheets.</p>
+                </div>
 
-            <div class="tool-tabs">
-              <button class="tool-tab active" type="button" data-tool="resume">Resume Maker</button>
-              <button class="tool-tab" type="button" data-tool="cover">Cover Letter Maker</button>
+                <div>
+                  <span>02</span>
+                  <p>Notes pulled from Google Sheets instead of hardcoded HTML.</p>
+                </div>
+
+                <div>
+                  <span>03</span>
+                  <p>Google Docs based resume and cover letter PDF generation.</p>
+                </div>
+
+                <div>
+                  <span>04</span>
+                  <p>Gemini chatbot with a controlled Solvanta knowledge base.</p>
+                </div>
+              </div>
             </div>
-
-            <!-- Resume Maker -->
-            <section class="tool-view active-tool" id="tool-resume">
-              <div class="builder-grid">
-                <form class="builder-panel" id="resumeForm">
-                  <h3>ATS-Friendly Resume Maker</h3>
-                  <p>
-                    Fill the basics. The preview updates instantly. PDF export can be upgraded
-                    later using Google Docs templates through Google Workspace.
-                  </p>
-
-                  <label>
-                    Full Name
-                    <input type="text" id="resumeName" placeholder="Example: P. Omkareshwar Reddy" />
-                  </label>
-
-                  <label>
-                    Contact Line
-                    <input type="text" id="resumeContact" placeholder="Email · Phone · City · LinkedIn" />
-                  </label>
-
-                  <label>
-                    Professional Summary
-                    <textarea id="resumeSummary" rows="4" placeholder="Short 3–4 line professional summary."></textarea>
-                  </label>
-
-                  <label>
-                    Skills
-                    <textarea id="resumeSkills" rows="3" placeholder="Dashboarding, Reporting, Operations, Excel, AI Tools"></textarea>
-                  </label>
-
-                  <label>
-                    Experience
-                    <textarea id="resumeExperience" rows="7" placeholder="Role | Company | Dates&#10;- Achievement or responsibility&#10;- Achievement or responsibility"></textarea>
-                  </label>
-
-                  <label>
-                    Education
-                    <textarea id="resumeEducation" rows="3" placeholder="Degree · University · Year"></textarea>
-                  </label>
-
-                  <div class="button-row">
-                    <button type="button" class="primary-btn small-btn" id="printResume">Download PDF</button>
-                    <button type="button" class="secondary-btn small-btn" id="clearResume">Clear</button>
-                  </div>
-                </form>
-
-                <div class="document-preview resume-preview" id="resumePreview">
-                  <h3 id="previewName">Your Name</h3>
-                  <p id="previewContact">Email · Phone · City · LinkedIn</p>
-
-                  <hr />
-
-                  <h4>Professional Summary</h4>
-                  <p id="previewSummary">Your professional summary will appear here.</p>
-
-                  <h4>Skills</h4>
-                  <p id="previewSkills">Your skills will appear here.</p>
-
-                  <h4>Experience</h4>
-                  <div id="previewExperience">Your experience will appear here.</div>
-
-                  <h4>Education</h4>
-                  <p id="previewEducation">Your education will appear here.</p>
-                </div>
-              </div>
-            </section>
-
-            <!-- Cover Letter Maker -->
-            <section class="tool-view" id="tool-cover">
-              <div class="builder-grid">
-                <form class="builder-panel" id="coverForm">
-                  <h3>Cover Letter Maker</h3>
-                  <p>
-                    Simple, professional, and less painful than staring at a blank page.
-                  </p>
-
-                  <label>
-                    Your Name
-                    <input type="text" id="coverName" placeholder="Your name" />
-                  </label>
-
-                  <label>
-                    Company Name
-                    <input type="text" id="coverCompany" placeholder="Company name" />
-                  </label>
-
-                  <label>
-                    Role / Position
-                    <input type="text" id="coverRole" placeholder="Role you are applying for" />
-                  </label>
-
-                  <label>
-                    Your Background
-                    <textarea id="coverBackground" rows="4" placeholder="Briefly describe your experience."></textarea>
-                  </label>
-
-                  <label>
-                    Key Strengths
-                    <textarea id="coverStrengths" rows="4" placeholder="Mention 2–3 strengths relevant to the role."></textarea>
-                  </label>
-
-                  <div class="button-row">
-                    <button type="button" class="primary-btn small-btn" id="copyCover">Copy Letter</button>
-                    <button type="button" class="secondary-btn small-btn" id="printCover">Download PDF</button>
-                  </div>
-                </form>
-
-                <div class="document-preview letter-preview" id="coverPreview">
-                  <p>Dear Hiring Team,</p>
-
-                  <p>
-                    I am writing to express my interest in the
-                    <span id="letterRole">[Role]</span> position at
-                    <span id="letterCompany">[Company]</span>.
-                  </p>
-
-                  <p id="letterBackground">Your background summary will appear here.</p>
-                  <p id="letterStrengths">Your key strengths will appear here.</p>
-
-                  <p>
-                    I would welcome the opportunity to discuss how my experience and skills
-                    can support your team.
-                  </p>
-
-                  <p>
-                    Kind regards,<br />
-                    <strong id="letterName">[Your Name]</strong>
-                  </p>
-                </div>
-              </div>
-            </section>
           </div>
         </article>
 
@@ -721,6 +595,105 @@
               <a href="mailto:helpdesk@solvantaconsulting.com">
                 helpdesk@solvantaconsulting.com
               </a>
+            </div>
+
+            <div class="form-grid">
+              <!-- Contact Form -->
+              <form class="backend-form" id="contactForm">
+                <h3>Send a message</h3>
+                <p>
+                  This form uses the Solvanta Google Workspace backend. Translation:
+                  your message goes to a Google Sheet, not a mysterious basement server.
+                </p>
+
+                <input type="text" name="website" class="hidden-field" tabindex="-1" autocomplete="off" />
+
+                <label>
+                  Name
+                  <input type="text" id="contactName" name="name" placeholder="Your name" required />
+                </label>
+
+                <label>
+                  Email
+                  <input type="email" id="contactEmail" name="email" placeholder="you@example.com" required />
+                </label>
+
+                <label>
+                  Reason
+                  <select id="contactReason" name="reason">
+                    <option value="General">General</option>
+                    <option value="Feedback">Feedback</option>
+                    <option value="Idea">Idea</option>
+                    <option value="Bug Report">Bug Report</option>
+                    <option value="Dashboard / Reporting Conversation">Dashboard / Reporting Conversation</option>
+                    <option value="Not a sales pitch, promise">Not a sales pitch, promise</option>
+                  </select>
+                </label>
+
+                <label>
+                  Message
+                  <textarea id="contactMessage" name="message" rows="6" placeholder="Tell me what survived the spreadsheet incident..." required></textarea>
+                </label>
+
+                <button class="primary-btn small-btn" type="submit">
+                  Send Message
+                </button>
+
+                <p class="form-status" id="contactStatus"></p>
+              </form>
+
+              <!-- Feedback Form -->
+              <form class="backend-form" id="feedbackForm">
+                <h3>Send feedback</h3>
+                <p>
+                  Found something broken, weird, useful, or suspiciously functional?
+                  Tell the lab. The lab pretends to be calm.
+                </p>
+
+                <input type="text" name="website" class="hidden-field" tabindex="-1" autocomplete="off" />
+
+                <label>
+                  Section / Tool
+                  <select id="feedbackTool" name="tool">
+                    <option value="General Website">General Website</option>
+                    <option value="The Lab">The Lab</option>
+                    <option value="Survival Kit">Survival Kit</option>
+                    <option value="Device Check">Device Check</option>
+                    <option value="Typing Test">Typing Test</option>
+                    <option value="Reaction Test">Reaction Test</option>
+                    <option value="Aptitude Practice">Aptitude Practice</option>
+                    <option value="Chart Quiz">Chart Quiz</option>
+                    <option value="Notes">Notes</option>
+                  </select>
+                </label>
+
+                <label>
+                  Feedback Type
+                  <select id="feedbackType" name="feedbackType">
+                    <option value="Suggestion">Suggestion</option>
+                    <option value="Bug">Bug</option>
+                    <option value="Idea">Idea</option>
+                    <option value="Compliment">Compliment</option>
+                    <option value="Mildly concerned observation">Mildly concerned observation</option>
+                  </select>
+                </label>
+
+                <label>
+                  Email optional
+                  <input type="email" id="feedbackEmail" name="email" placeholder="Optional" />
+                </label>
+
+                <label>
+                  Message
+                  <textarea id="feedbackMessage" name="message" rows="6" placeholder="Explain the situation. Use dramatic punctuation only if required." required></textarea>
+                </label>
+
+                <button class="secondary-btn small-btn" type="submit">
+                  Send Feedback
+                </button>
+
+                <p class="form-status" id="feedbackStatus"></p>
+              </form>
             </div>
           </div>
         </article>
