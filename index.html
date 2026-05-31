@@ -507,19 +507,30 @@
           </div>
         </article>
 
-        <!-- NOTES -->
-        <article class="view" id="view-notes">
-          <div class="view-inner narrow">
-            <p class="kicker">Notes</p>
-            <h2>Useful thoughts, questionable observations, and things that might become tools later.</h2>
+<!-- NOTES -->
+<article class="view" id="view-notes">
+  <div class="view-inner narrow">
+    <p class="kicker">Notes</p>
+    <h2>Useful thoughts, questionable observations, and things that might become tools later.</h2>
 
-            <p class="large-copy">
-              This section can later pull from Google Sheets so notes can be updated without
-              editing the website code. For now, it is a small parking lot for practical thinking.
-            </p>
+    <p class="large-copy">
+      These notes are pulled from the Solvanta Google Workspace backend.
+      Translation: future thoughts can be updated from Google Sheets instead of wrestling with GitHub every time.
+    </p>
 
-            <div class="notes-list">
-              <article>
+    <div class="notes-list" id="notesList">
+      <article>
+        <span>...</span>
+        <div>
+          <h3>Loading notes from the lab...</h3>
+          <p>If this takes too long, the spreadsheet may be considering its life choices.</p>
+        </div>
+      </article>
+    </div>
+
+    <p class="form-status" id="notesStatus"></p>
+  </div>
+</article>
                 <span>01</span>
                 <h3>Your spreadsheet is not a database.</h3>
                 <p>
