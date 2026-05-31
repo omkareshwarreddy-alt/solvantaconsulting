@@ -11,6 +11,7 @@
   --rust-soft: #f6e4d8;
   --cream: #fff8ef;
   --green: #168f85;
+  --danger: #b42318;
   --shadow: 0 18px 45px rgba(36, 28, 18, 0.08);
   --soft-shadow: 0 10px 28px rgba(36, 28, 18, 0.06);
   --radius-xl: 34px;
@@ -308,6 +309,13 @@ h3 {
   transform: translateY(-2px);
 }
 
+.primary-btn:disabled,
+.secondary-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .small-btn {
   padding: 11px 16px;
   font-size: 14px;
@@ -455,6 +463,7 @@ h3 {
   opacity: 1;
 }
 
+/* 6 rotary holes after center button */
 .rotary-dial:hover .dial-hole:nth-of-type(2),
 .rotary-dial.open .dial-hole:nth-of-type(2) {
   transform: translate(0, -148px) scale(1);
@@ -462,32 +471,27 @@ h3 {
 
 .rotary-dial:hover .dial-hole:nth-of-type(3),
 .rotary-dial.open .dial-hole:nth-of-type(3) {
-  transform: translate(124px, -92px) scale(1);
+  transform: translate(128px, -74px) scale(1);
 }
 
 .rotary-dial:hover .dial-hole:nth-of-type(4),
 .rotary-dial.open .dial-hole:nth-of-type(4) {
-  transform: translate(140px, 36px) scale(1);
+  transform: translate(128px, 74px) scale(1);
 }
 
 .rotary-dial:hover .dial-hole:nth-of-type(5),
 .rotary-dial.open .dial-hole:nth-of-type(5) {
-  transform: translate(62px, 138px) scale(1);
+  transform: translate(0, 148px) scale(1);
 }
 
 .rotary-dial:hover .dial-hole:nth-of-type(6),
 .rotary-dial.open .dial-hole:nth-of-type(6) {
-  transform: translate(-62px, 138px) scale(1);
+  transform: translate(-128px, 74px) scale(1);
 }
 
 .rotary-dial:hover .dial-hole:nth-of-type(7),
 .rotary-dial.open .dial-hole:nth-of-type(7) {
-  transform: translate(-140px, 36px) scale(1);
-}
-
-.rotary-dial:hover .dial-hole:nth-of-type(8),
-.rotary-dial.open .dial-hole:nth-of-type(8) {
-  transform: translate(-124px, -92px) scale(1);
+  transform: translate(-128px, -74px) scale(1);
 }
 
 .dial-hole:hover,
@@ -622,11 +626,11 @@ h3 {
 .simple-list > div,
 .paper-section,
 .tool-panel,
-.builder-panel,
-.document-preview,
 .contact-panel,
 .profile-contact-card,
-.notes-list article {
+.notes-list article,
+.lab-roadmap,
+.backend-form {
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background: var(--paper);
@@ -636,26 +640,55 @@ h3 {
 .simple-list > div,
 .paper-section,
 .tool-panel,
-.builder-panel,
-.document-preview,
 .contact-panel,
 .profile-contact-card,
-.notes-list article {
+.notes-list article,
+.lab-roadmap,
+.backend-form {
   padding: 28px;
 }
 
 .simple-list p,
 .paper-section p,
 .tool-panel p,
-.builder-panel p,
 .contact-panel p,
-.notes-list p {
+.notes-list p,
+.lab-roadmap p,
+.backend-form p {
   color: var(--muted);
   line-height: 1.7;
 }
 
 .promise-section {
   background: var(--soft-bg);
+}
+
+/* LAB ROADMAP */
+
+.lab-roadmap {
+  margin-top: 22px;
+  background: var(--soft-bg);
+}
+
+.roadmap-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.roadmap-grid div {
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+}
+
+.roadmap-grid span {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--rust);
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.14em;
 }
 
 /* TABS / FORMS */
@@ -688,22 +721,13 @@ h3 {
   background: var(--rust-dark);
 }
 
-.tool-view,
 .survival-view {
   display: none;
 }
 
-.tool-view.active-tool,
 .survival-view.active-survival {
   display: block;
   animation: viewIn 0.2s ease;
-}
-
-.builder-grid {
-  display: grid;
-  grid-template-columns: 420px minmax(0, 1fr);
-  gap: 22px;
-  align-items: start;
 }
 
 label {
@@ -743,41 +767,6 @@ select:focus {
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 18px;
-}
-
-.document-preview {
-  background: #ffffff;
-  color: #111827;
-  font-family: Georgia, "Times New Roman", serif;
-}
-
-.resume-preview h3 {
-  margin-bottom: 6px;
-  font-size: 32px;
-  letter-spacing: -0.04em;
-}
-
-.resume-preview h4 {
-  margin: 20px 0 8px;
-  font-size: 14px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.resume-preview p,
-.letter-preview p {
-  color: #374151;
-  line-height: 1.65;
-}
-
-.resume-preview hr {
-  border: 0;
-  border-top: 1px solid #d1d5db;
-  margin: 18px 0;
-}
-
-.resume-preview ul {
-  padding-left: 20px;
 }
 
 /* SURVIVAL KIT */
@@ -1045,6 +1034,47 @@ select:focus {
   color: var(--rust);
 }
 
+/* BACKEND FORMS */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.backend-form {
+  background: #ffffff;
+}
+
+.backend-form h3 {
+  margin-bottom: 8px;
+}
+
+.hidden-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.form-status {
+  min-height: 22px;
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-weight: 850;
+}
+
+.form-status.success {
+  color: var(--green);
+}
+
+.form-status.error {
+  color: var(--danger);
+}
+
 /* FOOTER */
 
 .site-footer {
@@ -1053,47 +1083,6 @@ select:focus {
   color: var(--muted);
   font-size: 13px;
   text-align: center;
-}
-
-/* PRINT */
-
-@media print {
-  body {
-    background: #ffffff;
-  }
-
-  .sidebar,
-  .hero-section,
-  .quick-strip,
-  .site-footer,
-  .builder-panel,
-  .tool-tabs,
-  .kicker,
-  .view > .view-inner > h2,
-  .view > .view-inner > .large-copy {
-    display: none !important;
-  }
-
-  .page-shell,
-  .main-content,
-  .content-stage,
-  .view,
-  .view-inner {
-    display: block;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-  }
-
-  .view {
-    display: block;
-  }
-
-  .document-preview {
-    border: 0;
-    box-shadow: none;
-    padding: 0;
-  }
 }
 
 /* RESPONSIVE */
@@ -1122,8 +1111,9 @@ select:focus {
 
   .quick-strip,
   .simple-list,
-  .builder-grid,
-  .device-grid {
+  .device-grid,
+  .roadmap-grid,
+  .form-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -1198,32 +1188,27 @@ select:focus {
 
   .rotary-dial:hover .dial-hole:nth-of-type(3),
   .rotary-dial.open .dial-hole:nth-of-type(3) {
-    transform: translate(104px, -76px) scale(1);
+    transform: translate(106px, -62px) scale(1);
   }
 
   .rotary-dial:hover .dial-hole:nth-of-type(4),
   .rotary-dial.open .dial-hole:nth-of-type(4) {
-    transform: translate(116px, 30px) scale(1);
+    transform: translate(106px, 62px) scale(1);
   }
 
   .rotary-dial:hover .dial-hole:nth-of-type(5),
   .rotary-dial.open .dial-hole:nth-of-type(5) {
-    transform: translate(52px, 116px) scale(1);
+    transform: translate(0, 124px) scale(1);
   }
 
   .rotary-dial:hover .dial-hole:nth-of-type(6),
   .rotary-dial.open .dial-hole:nth-of-type(6) {
-    transform: translate(-52px, 116px) scale(1);
+    transform: translate(-106px, 62px) scale(1);
   }
 
   .rotary-dial:hover .dial-hole:nth-of-type(7),
   .rotary-dial.open .dial-hole:nth-of-type(7) {
-    transform: translate(-116px, 30px) scale(1);
-  }
-
-  .rotary-dial:hover .dial-hole:nth-of-type(8),
-  .rotary-dial.open .dial-hole:nth-of-type(8) {
-    transform: translate(-104px, -76px) scale(1);
+    transform: translate(-106px, -62px) scale(1);
   }
 
   .result-row,
@@ -1302,43 +1287,38 @@ select:focus {
 
   .rotary-dial:hover .dial-hole:nth-of-type(3),
   .rotary-dial.open .dial-hole:nth-of-type(3) {
-    transform: translate(90px, -66px) scale(1);
+    transform: translate(92px, -54px) scale(1);
   }
 
   .rotary-dial:hover .dial-hole:nth-of-type(4),
   .rotary-dial.open .dial-hole:nth-of-type(4) {
-    transform: translate(100px, 26px) scale(1);
+    transform: translate(92px, 54px) scale(1);
   }
 
   .rotary-dial:hover .dial-hole:nth-of-type(5),
   .rotary-dial.open .dial-hole:nth-of-type(5) {
-    transform: translate(45px, 100px) scale(1);
+    transform: translate(0, 108px) scale(1);
   }
 
   .rotary-dial:hover .dial-hole:nth-of-type(6),
   .rotary-dial.open .dial-hole:nth-of-type(6) {
-    transform: translate(-45px, 100px) scale(1);
+    transform: translate(-92px, 54px) scale(1);
   }
 
   .rotary-dial:hover .dial-hole:nth-of-type(7),
   .rotary-dial.open .dial-hole:nth-of-type(7) {
-    transform: translate(-100px, 26px) scale(1);
-  }
-
-  .rotary-dial:hover .dial-hole:nth-of-type(8),
-  .rotary-dial.open .dial-hole:nth-of-type(8) {
-    transform: translate(-90px, -66px) scale(1);
+    transform: translate(-92px, -54px) scale(1);
   }
 
   .quick-strip button,
   .simple-list > div,
   .paper-section,
   .tool-panel,
-  .builder-panel,
-  .document-preview,
   .contact-panel,
   .profile-contact-card,
-  .notes-list article {
+  .notes-list article,
+  .lab-roadmap,
+  .backend-form {
     padding: 22px;
   }
 
