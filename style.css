@@ -927,6 +927,15 @@ select:focus {
 
 /* NOTES */
 
+.note-category {
+  margin: 0 0 8px;
+  color: var(--rust) !important;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 .notes-list article {
   display: grid;
   grid-template-columns: 60px 1fr;
