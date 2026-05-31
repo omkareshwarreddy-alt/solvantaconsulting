@@ -1,19 +1,18 @@
 /* Solvanta Consulting
-   Minimal rotary site interactions.
-   Browser-only. No backend. No storage. No mysterious data goblin.
+   Questionable jokes. Surprisingly useful outcomes.
+   Browser-only frontend interactions.
 */
 
 document.addEventListener("DOMContentLoaded", () => {
-  initRotaryNavigation();
+  initNavigation();
   initJumpButtons();
 
   initCareerTabs();
   initResumeMaker();
   initCoverLetterMaker();
 
+  initSurvivalTabs();
   initDeviceCheck();
-
-  initPracticeTabs();
   initTypingTest();
   initReactionTest();
   initAptitudePractice();
@@ -21,16 +20,16 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* -----------------------------
-   ROTARY NAVIGATION
+   NAVIGATION
 ----------------------------- */
 
-function initRotaryNavigation() {
+function initNavigation() {
   const rotaryDial = document.getElementById("rotaryDial");
   const dialHome = document.getElementById("dialHome");
-  const dialButtons = document.querySelectorAll(".dial-hole");
+  const navButtons = document.querySelectorAll("[data-section]");
   const views = document.querySelectorAll(".view");
 
-  if (!rotaryDial || !dialHome || !dialButtons.length || !views.length) return;
+  if (!navButtons.length || !views.length) return;
 
   function openSection(sectionName) {
     const target = document.getElementById(`view-${sectionName}`);
@@ -39,16 +38,18 @@ function initRotaryNavigation() {
     views.forEach((view) => view.classList.remove("active-view"));
     target.classList.add("active-view");
 
-    dialButtons.forEach((button) => {
+    navButtons.forEach((button) => {
       button.classList.toggle("active", button.dataset.section === sectionName);
     });
 
-    rotaryDial.classList.add("open");
+    if (rotaryDial) {
+      rotaryDial.classList.add("open");
 
-    if (sectionName === "home") {
-      setTimeout(() => {
-        rotaryDial.classList.remove("open");
-      }, 420);
+      if (sectionName === "home") {
+        setTimeout(() => {
+          rotaryDial.classList.remove("open");
+        }, 450);
+      }
     }
 
     const contentStage = document.querySelector(".content-stage");
@@ -57,13 +58,15 @@ function initRotaryNavigation() {
     }
   }
 
-  dialHome.addEventListener("click", () => openSection("home"));
-
-  dialButtons.forEach((button) => {
+  navButtons.forEach((button) => {
     button.addEventListener("click", () => {
       openSection(button.dataset.section);
     });
   });
+
+  if (dialHome) {
+    dialHome.addEventListener("click", () => openSection("home"));
+  }
 
   window.solvantaOpenSection = openSection;
 }
@@ -105,6 +108,88 @@ function initCareerTabs() {
 }
 
 /* -----------------------------
+   PDF HELPER
+----------------------------- */
+
+function loadHtml2Pdf() {
+  return new Promise((resolve, reject) => {
+    if (window.html2pdf) {
+      resolve();
+      return;
+    }
+
+    const existingScript = document.querySelector("script[data-html2pdf]");
+    if (existingScript) {
+      existingScript.addEventListener("load", resolve);
+      existingScript.addEventListener("error", reject);
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
+    script.dataset.html2pdf = "true";
+    script.onload = resolve;
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+}
+
+async function downloadElementAsPdf(element, fileName, button) {
+  if (!element) return;
+
+  const originalText = button ? button.textContent : "";
+
+  try {
+    if (button) {
+      button.disabled = true;
+      button.textContent = "Preparing PDF...";
+    }
+
+    await loadHtml2Pdf();
+
+    const options = {
+      margin: [12, 12, 12, 12],
+      filename: fileName,
+      image: {
+        type: "jpeg",
+        quality: 0.98
+      },
+      html2canvas: {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: "#ffffff"
+      },
+      jsPDF: {
+        unit: "mm",
+        format: "a4",
+        orientation: "portrait"
+      },
+      pagebreak: {
+        mode: ["avoid-all", "css", "legacy"]
+      }
+    };
+
+    await window.html2pdf().set(options).from(element).save();
+  } catch (error) {
+    alert("PDF download could not be created. Please try again, or use your browser print option as a backup.");
+  } finally {
+    if (button) {
+      button.disabled = false;
+      button.textContent = originalText;
+    }
+  }
+}
+
+function safeFileName(value, fallback) {
+  const cleaned = value && value.trim() ? value.trim() : fallback;
+
+  return cleaned
+    .replace(/[^a-z0-9]+/gi, "_")
+    .replace(/^_+|_+$/g, "")
+    .substring(0, 70);
+}
+
+/* -----------------------------
    RESUME MAKER
 ----------------------------- */
 
@@ -127,8 +212,9 @@ function initResumeMaker() {
     education: document.getElementById("previewEducation")
   };
 
-  const printButton = document.getElementById("printResume");
+  const downloadButton = document.getElementById("printResume");
   const clearButton = document.getElementById("clearResume");
+  const resumePreview = document.getElementById("resumePreview");
 
   if (!fields.name || !preview.name) return;
 
@@ -169,7 +255,10 @@ function initResumeMaker() {
     field.addEventListener("input", updatePreview);
   });
 
-  printButton?.addEventListener("click", () => window.print());
+  downloadButton?.addEventListener("click", async () => {
+    const name = safeFileName(fields.name.value, "Solvanta_Resume");
+    await downloadElementAsPdf(resumePreview, `${name}_Resume.pdf`, downloadButton);
+  });
 
   clearButton?.addEventListener("click", () => {
     Object.values(fields).forEach((field) => {
@@ -236,7 +325,8 @@ function initCoverLetterMaker() {
   };
 
   const copyButton = document.getElementById("copyCover");
-  const printButton = document.getElementById("printCover");
+  const downloadButton = document.getElementById("printCover");
+  const coverPreview = document.getElementById("coverPreview");
 
   if (!fields.name || !preview.name) return;
 
@@ -278,7 +368,10 @@ function initCoverLetterMaker() {
     }
   });
 
-  printButton?.addEventListener("click", () => window.print());
+  downloadButton?.addEventListener("click", async () => {
+    const name = safeFileName(fields.name.value, "Solvanta_Cover_Letter");
+    await downloadElementAsPdf(coverPreview, `${name}_Cover_Letter.pdf`, downloadButton);
+  });
 
   updateLetter();
 }
@@ -304,6 +397,33 @@ I would welcome the opportunity to discuss how my experience and skills can supp
 
 Kind regards,
 ${name}`;
+}
+
+/* -----------------------------
+   SURVIVAL TABS
+----------------------------- */
+
+function initSurvivalTabs() {
+  const tabs = document.querySelectorAll("[data-survival]");
+  const survivalViews = document.querySelectorAll(".survival-view");
+
+  if (!tabs.length || !survivalViews.length) return;
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const selected = tab.dataset.survival;
+
+      tabs.forEach((item) => item.classList.remove("active"));
+      tab.classList.add("active");
+
+      survivalViews.forEach((view) => {
+        view.classList.toggle(
+          "active-survival",
+          view.id === `survival-${selected}`
+        );
+      });
+    });
+  });
 }
 
 /* -----------------------------
@@ -353,7 +473,7 @@ async function populateDeviceSelectors(selectors) {
         stream.getTracks().forEach((track) => track.stop());
         devices = await navigator.mediaDevices.enumerateDevices();
       } catch {
-        // User may deny permissions. We can still show generic default options.
+        // Permission may be denied. Generic device options may still appear.
       }
     }
 
@@ -379,10 +499,10 @@ async function populateDeviceSelectors(selectors) {
     );
 
     if (!HTMLMediaElement.prototype.setSinkId && selectors.speaker) {
+      selectors.speaker.innerHTML = "";
       const option = document.createElement("option");
       option.value = "";
       option.textContent = "Speaker selection limited in this browser";
-      selectors.speaker.innerHTML = "";
       selectors.speaker.appendChild(option);
       selectors.speaker.disabled = true;
     }
@@ -461,6 +581,7 @@ function initCameraCheck(cameraSelect) {
       cameraPreview.srcObject = cameraStream;
 
       const activeTrack = cameraStream.getVideoTracks()[0];
+
       cameraStatus.textContent = activeTrack?.label
         ? `Camera running: ${activeTrack.label}. Looking professional is still optional.`
         : "Camera running. Looking professional is still optional.";
@@ -544,6 +665,7 @@ function initMicrophoneCheck(micSelect) {
       updateLevel();
 
       const activeTrack = micStream.getAudioTracks()[0];
+
       micStatus.textContent = activeTrack?.label
         ? `Microphone running: ${activeTrack.label}. The little bar is now emotionally invested.`
         : "Microphone running. The little bar is now emotionally invested.";
@@ -601,26 +723,13 @@ function initSpeakerCheck(speakerSelect) {
       const context = new AudioContext();
       const oscillator = context.createOscillator();
       const gain = context.createGain();
-      const destination = context.createMediaStreamDestination();
 
       oscillator.type = "sine";
       oscillator.frequency.value = 660;
       gain.gain.value = 0.08;
 
       oscillator.connect(gain);
-      gain.connect(destination);
       gain.connect(context.destination);
-
-      if (
-        speakerSelect &&
-        speakerSelect.value &&
-        HTMLMediaElement.prototype.setSinkId
-      ) {
-        const audio = new Audio();
-        audio.srcObject = destination.stream;
-        await audio.setSinkId(speakerSelect.value);
-        await audio.play();
-      }
 
       oscillator.start();
 
@@ -635,33 +744,6 @@ function initSpeakerCheck(speakerSelect) {
       speakerStatus.textContent =
         "Could not play the test sound. Your browser may be blocking audio or speaker selection.";
     }
-  });
-}
-
-/* -----------------------------
-   PRACTICE TABS
------------------------------ */
-
-function initPracticeTabs() {
-  const tabs = document.querySelectorAll("[data-practice]");
-  const practiceViews = document.querySelectorAll(".practice-view");
-
-  if (!tabs.length || !practiceViews.length) return;
-
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      const selected = tab.dataset.practice;
-
-      tabs.forEach((item) => item.classList.remove("active"));
-      tab.classList.add("active");
-
-      practiceViews.forEach((view) => {
-        view.classList.toggle(
-          "active-practice",
-          view.id === `practice-${selected}`
-        );
-      });
-    });
   });
 }
 
