@@ -48,9 +48,14 @@
           Survival Kit
         </button>
 
-        <button class="side-link" type="button" data-section="notes">
+        <button class="side-link" type="button" data-section="chaos">
           <span>✎</span>
-          Notes
+          Chaos Notes
+        </button>
+
+        <button class="side-link" type="button" data-section="ask">
+          <span>?</span>
+          Ask Solvanta
         </button>
 
         <button class="side-link" type="button" data-section="contact">
@@ -59,9 +64,16 @@
         </button>
       </nav>
 
-      <div class="sidebar-motto">
-        <p>Questionable jokes.</p>
-        <p>Surprisingly useful outcomes.</p>
+      <div class="sidebar-bottom">
+        <div class="backend-pill" id="backendStatus">
+          <span></span>
+          Backend: checking
+        </div>
+
+        <div class="sidebar-motto">
+          <p>Questionable jokes.</p>
+          <p>Surprisingly useful outcomes.</p>
+        </div>
       </div>
     </aside>
 
@@ -79,7 +91,8 @@
 
           <p class="hero-text">
             Solvanta is a personal workspace for practical browser-based tools,
-            office survival experiments, and mildly sarcastic solutions for everyday work problems.
+            office survival experiments, backend experiments, and mildly sarcastic solutions
+            for everyday work problems.
           </p>
 
           <div class="hero-motto">
@@ -92,8 +105,8 @@
               <span>→</span>
             </button>
 
-            <button class="text-btn" type="button" data-jump="about">
-              Read the philosophy
+            <button class="text-btn" type="button" data-jump="ask">
+              Ask Solvanta
               <span>→</span>
             </button>
           </div>
@@ -126,9 +139,14 @@
               <span class="hole-label">Survival</span>
             </button>
 
-            <button class="dial-hole" type="button" data-section="notes" aria-label="Open Notes">
+            <button class="dial-hole" type="button" data-section="chaos" aria-label="Open Chaos Notes">
               <span class="hole-icon">✎</span>
               <span class="hole-label">Notes</span>
+            </button>
+
+            <button class="dial-hole" type="button" data-section="ask" aria-label="Open Ask Solvanta">
+              <span class="hole-icon">?</span>
+              <span class="hole-label">Ask</span>
             </button>
 
             <button class="dial-hole" type="button" data-section="contact" aria-label="Open Contact">
@@ -158,14 +176,14 @@
           Device checks, typing tests, aptitude drills, and practical office survival tools.
         </button>
 
-        <button type="button" data-jump="notes">
-          <span>Notes</span>
-          Thoughts, experiments, and mildly useful observations.
+        <button type="button" data-jump="chaos">
+          <span>Chaos Notes</span>
+          Short useful observations pulled from Google Sheets.
         </button>
 
-        <button type="button" data-jump="contact">
-          <span>Contact</span>
-          Feedback, ideas, bug reports, or spreadsheet-related emotional damage.
+        <button type="button" data-jump="ask">
+          <span>Ask Solvanta</span>
+          A Gemini-powered helper for website questions and office chaos.
         </button>
       </section>
 
@@ -198,7 +216,7 @@
 
               <div>
                 <h3>Backend only when useful</h3>
-                <p>If something needs proper storage, email, AI, or document generation, Google Workspace handles the heavy lifting.</p>
+                <p>If something needs storage, email, AI, or document generation, Google Workspace handles the heavy lifting.</p>
               </div>
             </div>
           </div>
@@ -288,8 +306,8 @@
               <div>
                 <h3>Google Workspace Backend</h3>
                 <p>
-                  Contact forms, feedback, tool logs, notes, document requests, and future
-                  content management using Apps Script and Google Sheets.
+                  Contact forms, feedback, tool logs, Chaos Notes, chatbot knowledge, document
+                  requests, and future content management using Apps Script and Google Sheets.
                 </p>
               </div>
 
@@ -304,34 +322,34 @@
               <div>
                 <h3>Ask Solvanta</h3>
                 <p>
-                  A future Gemini-powered site assistant for tool guidance, writing help,
-                  workflow ideas, and practical office survival questions.
+                  A Gemini-powered assistant for tool guidance, writing help, workflow ideas,
+                  and practical office survival questions.
                 </p>
               </div>
             </div>
 
             <div class="lab-roadmap">
-              <h3>Planned experiments</h3>
+              <h3>Build roadmap</h3>
 
               <div class="roadmap-grid">
                 <div>
-                  <span>01</span>
+                  <span>Done</span>
                   <p>Contact and feedback forms connected to Google Sheets.</p>
                 </div>
 
                 <div>
-                  <span>02</span>
-                  <p>Notes pulled from Google Sheets instead of hardcoded HTML.</p>
+                  <span>Done</span>
+                  <p>Chaos Notes pulled from Google Sheets instead of hardcoded HTML.</p>
                 </div>
 
                 <div>
-                  <span>03</span>
+                  <span>Live</span>
+                  <p>Ask Solvanta chatbot connected through Apps Script and Gemini.</p>
+                </div>
+
+                <div>
+                  <span>Later</span>
                   <p>Google Docs based resume and cover letter PDF generation.</p>
-                </div>
-
-                <div>
-                  <span>04</span>
-                  <p>Gemini chatbot with a controlled Solvanta knowledge base.</p>
                 </div>
               </div>
             </div>
@@ -357,6 +375,7 @@
               <button class="tool-tab" type="button" data-survival="chart">Chart Quiz</button>
             </div>
 
+            <!-- Device Check -->
             <section class="survival-view active-survival" id="survival-device">
               <div class="device-grid">
                 <section class="tool-panel">
@@ -422,6 +441,7 @@
               </div>
             </section>
 
+            <!-- Typing Test -->
             <section class="survival-view" id="survival-typing">
               <div class="tool-panel wide-panel">
                 <h3>Typing Test</h3>
@@ -444,6 +464,7 @@
               </div>
             </section>
 
+            <!-- Reaction -->
             <section class="survival-view" id="survival-reaction">
               <div class="tool-panel wide-panel">
                 <h3>Reaction Time Test</h3>
@@ -461,6 +482,7 @@
               </div>
             </section>
 
+            <!-- Aptitude -->
             <section class="survival-view" id="survival-aptitude">
               <div class="tool-panel wide-panel">
                 <h3>Aptitude Quick Practice</h3>
@@ -476,6 +498,7 @@
               </div>
             </section>
 
+            <!-- Chart Quiz -->
             <section class="survival-view" id="survival-chart">
               <div class="tool-panel wide-panel">
                 <h3>Chart Reading Quiz</h3>
@@ -502,10 +525,10 @@
           </div>
         </article>
 
-        <!-- NOTES -->
-        <article class="view" id="view-notes">
+        <!-- CHAOS NOTES -->
+        <article class="view" id="view-chaos">
           <div class="view-inner narrow">
-            <p class="kicker">Notes</p>
+            <p class="kicker">Chaos Notes</p>
             <h2>Useful thoughts, questionable observations, and things that might become tools later.</h2>
 
             <p class="large-copy">
@@ -524,6 +547,57 @@
             </div>
 
             <p class="form-status" id="notesStatus"></p>
+          </div>
+        </article>
+
+        <!-- ASK SOLVANTA -->
+        <article class="view" id="view-ask">
+          <div class="view-inner narrow">
+            <p class="kicker">Ask Solvanta</p>
+            <h2>A tiny chatbot for office chaos, site questions, and mildly useful suggestions.</h2>
+
+            <p class="large-copy">
+              Ask Solvanta uses the Google Workspace backend and Gemini. It is designed
+              for questions about this site, workplace tools, writing help, workflow ideas,
+              and practical office survival. It is not a therapist, lawyer, accountant,
+              doctor, or your manager in disguise.
+            </p>
+
+            <div class="chat-shell">
+              <div class="chat-window" id="chatWindow">
+                <div class="chat-message bot">
+                  <p>
+                    Hello. I am Ask Solvanta. I can explain the site, suggest workflow ideas,
+                    help with writing direction, and lightly roast spreadsheet chaos.
+                  </p>
+                </div>
+              </div>
+
+              <form class="chat-form" id="chatForm">
+                <label for="chatInput">
+                  Ask a question
+                </label>
+
+                <textarea
+                  id="chatInput"
+                  rows="4"
+                  placeholder="Example: What is Solvanta? Or: How can I make my weekly report less painful?"
+                  required
+                ></textarea>
+
+                <div class="button-row">
+                  <button class="primary-btn small-btn" type="submit" id="chatSubmit">
+                    Ask Solvanta
+                  </button>
+
+                  <button class="secondary-btn small-btn" type="button" id="clearChat">
+                    Clear Chat
+                  </button>
+                </div>
+
+                <p class="form-status" id="chatStatus"></p>
+              </form>
+            </div>
           </div>
         </article>
 
@@ -576,6 +650,7 @@
             </div>
 
             <div class="form-grid">
+              <!-- Contact Form -->
               <form class="backend-form" id="contactForm">
                 <h3>Send a message</h3>
                 <p>
@@ -619,6 +694,7 @@
                 <p class="form-status" id="contactStatus"></p>
               </form>
 
+              <!-- Feedback Form -->
               <form class="backend-form" id="feedbackForm">
                 <h3>Send feedback</h3>
                 <p>
@@ -639,7 +715,8 @@
                     <option value="Reaction Test">Reaction Test</option>
                     <option value="Aptitude Practice">Aptitude Practice</option>
                     <option value="Chart Quiz">Chart Quiz</option>
-                    <option value="Notes">Notes</option>
+                    <option value="Chaos Notes">Chaos Notes</option>
+                    <option value="Ask Solvanta">Ask Solvanta</option>
                   </select>
                 </label>
 
