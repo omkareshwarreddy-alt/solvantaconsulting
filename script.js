@@ -105,8 +105,7 @@ function initContactForm() {
 
     const honeypot = form.querySelector('[name="website"]')?.value || "";
     if (honeypot.trim()) {
-      status.textContent = "Submission blocked.";
-      status.className = "form-status error";
+      showFormStatus(status, "Submission blocked.", "error");
       return;
     }
 
@@ -132,8 +131,7 @@ function initContactForm() {
       button: submitButton,
       loadingText: "Sending...",
       successText: "Message sent. The imaginary unicorns have been notified.",
-      errorText:
-        "Message could not be sent. The backend may be having a dramatic moment."
+      errorText: "Message could not be sent. The backend may be having a dramatic moment."
     });
 
     if (status.classList.contains("success")) {
@@ -153,8 +151,7 @@ function initFeedbackForm() {
 
     const honeypot = form.querySelector('[name="website"]')?.value || "";
     if (honeypot.trim()) {
-      status.textContent = "Submission blocked.";
-      status.className = "form-status error";
+      showFormStatus(status, "Submission blocked.", "error");
       return;
     }
 
@@ -180,8 +177,7 @@ function initFeedbackForm() {
       button: submitButton,
       loadingText: "Sending...",
       successText: "Feedback saved. Somewhere, a bug is nervous.",
-      errorText:
-        "Feedback could not be sent. The lab may be pretending everything is fine."
+      errorText: "Feedback could not be sent. The lab may be pretending everything is fine."
     });
 
     if (status.classList.contains("success")) {
@@ -243,10 +239,6 @@ function showFormStatus(element, message, type) {
 }
 
 /* -----------------------------
-   SURVIVAL TABS
------------------------------ */
-
-/* -----------------------------
    DYNAMIC NOTES
 ----------------------------- */
 
@@ -257,8 +249,23 @@ async function initDynamicNotes() {
   if (!notesList) return;
 
   try {
-    const response = await fetch(`${SOLVANTA_BACKEND_URL}?action=getNotes`);
-    const data = await response.json();
+    const notesUrl = `${SOLVANTA_BACKEND_URL}?action=getNotes`;
+
+    const response = await fetch(notesUrl, {
+      method: "GET",
+      cache: "no-store"
+    });
+
+    const text = await response.text();
+
+    let data;
+
+    try {
+      data = JSON.parse(text);
+    } catch (parseError) {
+      console.error("Backend returned non-JSON response:", text);
+      throw new Error("Backend response was not valid JSON.");
+    }
 
     if (!data.ok) {
       throw new Error(data.error || "Could not load notes.");
@@ -328,6 +335,10 @@ async function initDynamicNotes() {
     }
   }
 }
+
+/* -----------------------------
+   SURVIVAL TABS
+----------------------------- */
 
 function initSurvivalTabs() {
   const tabs = document.querySelectorAll("[data-survival]");
@@ -673,23 +684,14 @@ function initTypingTest() {
 
   const typingPassages = [
     "Congratulations, you have voluntarily started a typing test. Somewhere, a spreadsheet just gained confidence. Type this carefully, because your keyboard is about to reveal whether you are a productive professional or just someone who sends emails with alarming confidence and three hidden typos.",
-
     "A good dashboard should help people understand what changed, what matters, and what needs attention. A bad dashboard looks like someone trapped twenty charts in a room and told them to fight for leadership attention. Please type this before another pie chart applies for emotional support.",
-
     "Most office chaos does not arrive dramatically. It sneaks in as duplicate trackers, unclear ownership, missing updates, and one file named final version two. If you are typing this calmly, congratulations. You may already be more organized than the folder structure that hurt you.",
-
     "This typing test is not here to judge you. That would be rude. It is here to quietly measure your speed, accuracy, and ability to survive a paragraph without blaming the keyboard. If mistakes appear, please remember denial is not a valid productivity strategy.",
-
     "Good reporting is not about adding more slides, more charts, or more words that sound important in a meeting. It is about helping people understand the situation quickly. If your report needs a treasure map, three calls, and a follow-up email to explain it, the report has chosen violence.",
-
     "Before joining an online meeting, check your camera, microphone, speakers, and internet connection. Future you will appreciate the preparation. Present you may think this is unnecessary, but present you is also the person who once said, can everyone hear me, while clearly muted.",
-
     "A clean process should survive a busy Monday, a missing team member, and at least three people asking for the same update in different ways. If the process collapses because one person is on leave, that is not a process. That is a group project wearing a business suit.",
-
     "Your resume should be clear, direct, and easy to scan. It should not look like it was designed during a font emergency. Recruiters do not need a treasure hunt. They need your skills, experience, achievements, and proof that you can use bullet points without starting a graphic design incident.",
-
     "Not every spreadsheet needs to become a dashboard, but every important decision deserves information that is clean, readable, and slightly less terrifying. If the file has twelve tabs, four colour codes, and no explanation, it is not a report. It is an escape room with formulas.",
-
     "The best tools are simple enough that people actually use them, useful enough that they save time, and calm enough that nobody needs a training session. If a tool requires three manuals and a motivational speech, congratulations, you have invented another problem."
   ];
 
@@ -908,4 +910,17 @@ function initChartQuiz() {
       }
     });
   });
+}
+
+/* -----------------------------
+   HELPERS
+----------------------------- */
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
