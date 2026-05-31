@@ -8,655 +8,730 @@
 
   <meta
     name="description"
-    content="Solvanta Consulting is a private digital lab for dashboards, career tools, device checks, and practical office experiments."
+    content="Solvanta Consulting is a personal office chaos lab with practical tools, questionable jokes, and surprisingly useful outcomes."
   />
 
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-  <main class="site-shell">
+  <div class="page-shell">
 
-    <!-- HERO / ROTARY MENU -->
-    <section class="hero-section">
-      <div class="hero-intro">
-        <p class="kicker">Private workspace · practical experiments</p>
-        <h1>Practical little tools for office chaos.</h1>
-        <p class="hero-text">
-          A minimal digital workspace for dashboards, career tools, device checks,
-          and small browser-based experiments that make everyday work slightly less annoying.
-        </p>
-
-        <div class="hero-actions">
-          <button class="text-link" type="button" data-jump="about">
-            Read the philosophy <span>→</span>
-          </button>
-
-          <button class="text-link muted-link" type="button" data-jump="career">
-            Try career tools <span>→</span>
-          </button>
+    <!-- SIDEBAR -->
+    <aside class="sidebar" aria-label="Solvanta sidebar navigation">
+      <div class="sidebar-brand">
+        <div class="brand-mark" aria-hidden="true">✦</div>
+        <div>
+          <p class="brand-name">Solvanta</p>
+          <p class="brand-sub">Consulting</p>
         </div>
       </div>
 
-      <div class="rotary-zone">
-        <nav class="rotary-dial" id="rotaryDial" aria-label="Solvanta rotary navigation">
+      <nav class="side-nav" aria-label="Primary navigation">
+        <button class="side-link active" type="button" data-section="home">
+          <span>⌂</span>
+          Home
+        </button>
 
-          <button class="dial-center" id="dialHome" type="button" aria-label="Open Home">
-            <span>Solvanta</span>
-            <small>Consulting</small>
-          </button>
+        <button class="side-link" type="button" data-section="about">
+          <span>◌</span>
+          About
+        </button>
 
-          <button class="dial-hole active" type="button" data-section="home" aria-label="Open Home">
-            <span class="hole-icon">⌂</span>
-            <span class="hole-label">Home</span>
-          </button>
+        <button class="side-link" type="button" data-section="lab">
+          <span>⚗</span>
+          The Lab
+        </button>
 
-          <button class="dial-hole" type="button" data-section="about" aria-label="Open About">
-            <span class="hole-icon">◌</span>
-            <span class="hole-label">About</span>
-          </button>
+        <button class="side-link" type="button" data-section="career">
+          <span>✦</span>
+          Career Tools
+        </button>
 
-          <button class="dial-hole" type="button" data-section="dashboards" aria-label="Open Dashboards">
-            <span class="hole-icon">▦</span>
-            <span class="hole-label">Dashboards</span>
-          </button>
+        <button class="side-link" type="button" data-section="survival">
+          <span>◉</span>
+          Survival Kit
+        </button>
 
-          <button class="dial-hole" type="button" data-section="career" aria-label="Open Career Tools">
-            <span class="hole-icon">✦</span>
-            <span class="hole-label">Career</span>
-          </button>
+        <button class="side-link" type="button" data-section="notes">
+          <span>✎</span>
+          Notes
+        </button>
 
-          <button class="dial-hole" type="button" data-section="device" aria-label="Open Device Check">
-            <span class="hole-icon">◉</span>
-            <span class="hole-label">Device</span>
-          </button>
+        <button class="side-link" type="button" data-section="contact">
+          <span>@</span>
+          Contact
+        </button>
+      </nav>
 
-          <button class="dial-hole" type="button" data-section="practice" aria-label="Open Practice Lab">
-            <span class="hole-icon">⚡</span>
-            <span class="hole-label">Practice</span>
-          </button>
-
-          <button class="dial-hole" type="button" data-section="contact" aria-label="Open Contact">
-            <span class="hole-icon">@</span>
-            <span class="hole-label">Contact</span>
-          </button>
-
-          <div class="dial-outline" aria-hidden="true"></div>
-          <div class="dial-stop" aria-hidden="true"></div>
-        </nav>
-
-        <p class="rotary-hint">
-          Hover the dial to open the menu. Click the centre to return home.
-        </p>
+      <div class="sidebar-motto">
+        <p>Questionable jokes.</p>
+        <p>Surprisingly useful outcomes.</p>
       </div>
-    </section>
+    </aside>
 
-    <!-- CONTENT AREA -->
-    <section class="content-stage" aria-live="polite">
+    <!-- MAIN -->
+    <main class="main-content">
 
-      <!-- HOME -->
-      <article class="view active-view" id="view-home">
-        <div class="view-inner">
-          <p class="kicker">Home</p>
-          <h2>Built for people with data, deadlines, and very limited patience.</h2>
+      <!-- HERO -->
+      <section class="hero-section" id="top">
+        <div class="hero-copy">
+          <p class="kicker">Private workspace · practical experiments</p>
 
-          <p class="large-copy">
-            Solvanta is a personal experiment in building practical, lightweight,
-            browser-based tools for office work. No big platform energy. No fake
-            enterprise promise. Just useful things, clean layouts, and occasional sarcasm.
+          <h1>
+            A tiny lab for office chaos, career prep, and things I built because work got annoying.
+          </h1>
+
+          <p class="hero-text">
+            Solvanta is a personal workspace for practical browser-based tools,
+            office survival experiments, and mildly sarcastic solutions for everyday work problems.
           </p>
 
-          <div class="feature-grid">
-            <div class="feature-card">
-              <span>01</span>
-              <h3>Dashboards</h3>
-              <p>Reporting concepts and layout ideas for making data less terrifying.</p>
-            </div>
+          <div class="hero-motto">
+            Questionable jokes. Surprisingly useful outcomes.
+          </div>
 
-            <div class="feature-card">
-              <span>02</span>
-              <h3>Career Tools</h3>
-              <p>ATS-friendly resume and cover letter builders without design drama.</p>
-            </div>
+          <div class="hero-actions">
+            <button class="primary-btn" type="button" data-jump="lab">
+              Enter the Lab
+              <span>→</span>
+            </button>
 
-            <div class="feature-card">
-              <span>03</span>
-              <h3>Device Check</h3>
-              <p>Camera, mic, and speaker checks before technology chooses violence.</p>
-            </div>
-
-            <div class="feature-card">
-              <span>04</span>
-              <h3>Practice Lab</h3>
-              <p>Typing, reaction, aptitude, and chart reading drills for office survival.</p>
-            </div>
+            <button class="text-btn" type="button" data-jump="about">
+              Read the philosophy
+              <span>→</span>
+            </button>
           </div>
         </div>
-      </article>
 
-      <!-- ABOUT -->
-      <article class="view" id="view-about">
-        <div class="view-inner narrow">
-          <p class="kicker">About</p>
-          <h2>About Solvanta Consulting</h2>
+        <div class="rotary-wrap">
+          <nav class="rotary-dial" id="rotaryDial" aria-label="Rotary navigation">
+            <button class="dial-center" id="dialHome" type="button" aria-label="Open Home">
+              <span>Solvanta</span>
+              <small>Consulting</small>
+            </button>
 
-          <div class="text-block">
-            <p>
-              We believe that business operations shouldn't be a source of daily trauma.
-              Solvanta Consulting is a private workspace dedicated to creating practical
-              office tools, sane operational dashboards, and writing support systems that
-              cut through the noise.
+            <button class="dial-hole active" type="button" data-section="home" aria-label="Open Home">
+              <span class="hole-icon">⌂</span>
+              <span class="hole-label">Home</span>
+            </button>
+
+            <button class="dial-hole" type="button" data-section="about" aria-label="Open About">
+              <span class="hole-icon">◌</span>
+              <span class="hole-label">About</span>
+            </button>
+
+            <button class="dial-hole" type="button" data-section="lab" aria-label="Open The Lab">
+              <span class="hole-icon">⚗</span>
+              <span class="hole-label">Lab</span>
+            </button>
+
+            <button class="dial-hole" type="button" data-section="career" aria-label="Open Career Tools">
+              <span class="hole-icon">✦</span>
+              <span class="hole-label">Career</span>
+            </button>
+
+            <button class="dial-hole" type="button" data-section="survival" aria-label="Open Survival Kit">
+              <span class="hole-icon">◉</span>
+              <span class="hole-label">Survival</span>
+            </button>
+
+            <button class="dial-hole" type="button" data-section="notes" aria-label="Open Notes">
+              <span class="hole-icon">✎</span>
+              <span class="hole-label">Notes</span>
+            </button>
+
+            <button class="dial-hole" type="button" data-section="contact" aria-label="Open Contact">
+              <span class="hole-icon">@</span>
+              <span class="hole-label">Contact</span>
+            </button>
+
+            <div class="dial-outline" aria-hidden="true"></div>
+            <div class="dial-stop" aria-hidden="true"></div>
+          </nav>
+
+          <p class="rotary-hint">
+            Hover the dial. Click a section. Pretend this was always the plan.
+          </p>
+        </div>
+      </section>
+
+      <!-- QUICK STRIP -->
+      <section class="quick-strip" aria-label="Solvanta sections overview">
+        <button type="button" data-jump="lab">
+          <span>The Lab</span>
+          Experiments, tools, and useful things built because work got annoying.
+        </button>
+
+        <button type="button" data-jump="career">
+          <span>Career Tools</span>
+          Resume and cover letter helpers that keep things clean and ATS-friendly.
+        </button>
+
+        <button type="button" data-jump="survival">
+          <span>Survival Kit</span>
+          Device checks, typing tests, aptitude drills, and practical office survival tools.
+        </button>
+
+        <button type="button" data-jump="notes">
+          <span>Notes</span>
+          Thoughts, experiments, and mildly useful observations.
+        </button>
+      </section>
+
+      <!-- CONTENT STAGE -->
+      <section class="content-stage" aria-live="polite">
+
+        <!-- HOME -->
+        <article class="view active-view" id="view-home">
+          <div class="view-inner">
+            <p class="kicker">Home</p>
+            <h2>Built for people with data, deadlines, and very limited patience.</h2>
+
+            <p class="large-copy">
+              This is not a corporate brochure wearing a tie. Solvanta is a personal
+              experiment in building useful things for messy workdays: small tools,
+              career helpers, device checks, practice drills, and whatever else survives
+              the “will this actually help?” test.
             </p>
 
-            <p>
-              Stop pretending that a 40-tab spreadsheet is a "database" and that manually
-              sending 50 emails is a "strategy." We build tools that make work slightly
-              less annoying.
-            </p>
-          </div>
-
-          <div class="about-grid">
-            <section class="about-card">
-              <h3>The Philosophy</h3>
-              <p>
-                You don't need a six-month enterprise software deployment to fix a broken
-                workflow. Sometimes, you just need a reliable calculator, a clean dashboard,
-                or a writing tool that refuses to use the word "leverage."
-              </p>
-              <p>
-                We focus on lightweight automation and practical AI enablement that actually
-                helps, rather than adding another layer of complex corporate jargon.
-              </p>
-            </section>
-
-            <section class="about-card">
-              <h3>The Architect of the Anti-Chaos</h3>
-              <p>
-                Solvanta Consulting is the brainchild of an anonymous operations lead with
-                over 8 years of experience navigating the corporate wilderness. Think of
-                them as a human Swiss Army knife—if that knife could steer teams, execute
-                merciless quality audits, and analyze data with terrifying speed.
-              </p>
-              <p>
-                After spending nearly a decade thriving in fast-paced environments
-                (read: surviving workflow tornadoes) and mentoring teams to excellence,
-                they realized something: work shouldn't be this hard.
-              </p>
-              <p>
-                Combining the analytical sharpness of a detective with the battle-tested
-                skills of a resident Excel guru, the founder built Solvanta to share the
-                exact tools they use to turn operational chaos into actual, functional strategy.
-              </p>
-            </section>
-
-            <section class="about-card promise-card">
-              <h3>The Promise</h3>
-              <p>
-                No sign-ups. No paywalls. No external databases. Every tool on this site
-                runs entirely in your local browser. Your data stays on your screen,
-                exactly where it belongs.
-              </p>
-            </section>
-          </div>
-        </div>
-      </article>
-
-      <!-- DASHBOARDS -->
-      <article class="view" id="view-dashboards">
-        <div class="view-inner">
-          <p class="kicker">Dashboards</p>
-          <h2>Your spreadsheet is not a dashboard. But we respect its ambition.</h2>
-
-          <p class="large-copy">
-            This section is for dashboard experiments, reporting layout ideas, and
-            practical ways to make data easier to read before someone asks for “one quick visual”
-            five minutes before the meeting.
-          </p>
-
-          <div class="dashboard-layout">
-            <div class="dashboard-mock">
-              <div class="mock-header">
-                <div>
-                  <small>Operations Snapshot</small>
-                  <h3>Weekly Overview</h3>
-                </div>
-                <span>Concept</span>
-              </div>
-
-              <div class="mock-kpis">
-                <div>
-                  <small>Volume</small>
-                  <strong>1,248</strong>
-                  <em>+12%</em>
-                </div>
-
-                <div>
-                  <small>Quality</small>
-                  <strong>94%</strong>
-                  <em>+3%</em>
-                </div>
-
-                <div>
-                  <small>Risk</small>
-                  <strong>Low</strong>
-                  <em>Stable</em>
-                </div>
-              </div>
-
-              <div class="mock-charts">
-                <div class="fake-bar-chart">
-                  <span style="height:42%"></span>
-                  <span style="height:68%"></span>
-                  <span style="height:55%"></span>
-                  <span style="height:82%"></span>
-                  <span style="height:61%"></span>
-                  <span style="height:76%"></span>
-                </div>
-
-                <div class="fake-donut">
-                  <div></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="dashboard-notes">
+            <div class="simple-list">
               <div>
-                <h3>Reporting layouts</h3>
-                <p>Structures for weekly updates, KPI summaries, and leadership snapshots.</p>
+                <h3>No unnecessary drama</h3>
+                <p>Tools should reduce friction, not create another ritual that needs three meetings.</p>
               </div>
 
               <div>
-                <h3>Dashboard thinking</h3>
-                <p>Less “look at all my charts” and more “here is what needs attention.”</p>
+                <h3>Browser-first where possible</h3>
+                <p>Simple things should run on your screen without asking for your life story.</p>
               </div>
 
               <div>
-                <h3>Coming later</h3>
-                <p>More interactive dashboard experiments when they stop behaving like office furniture with Wi-Fi.</p>
+                <h3>Useful over flashy</h3>
+                <p>If it saves five minutes and one sigh, it belongs here.</p>
               </div>
             </div>
           </div>
-        </div>
-      </article>
+        </article>
 
-      <!-- CAREER -->
-      <article class="view" id="view-career">
-        <div class="view-inner">
-          <p class="kicker">Career Tools</p>
-          <h2>Resume and cover letter tools without the motivational fog machine.</h2>
+        <!-- ABOUT -->
+        <article class="view" id="view-about">
+          <div class="view-inner narrow">
+            <p class="kicker">About</p>
+            <h2>About Solvanta Consulting</h2>
 
-          <p class="large-copy">
-            Build a simple ATS-friendly resume or a clean professional cover letter.
-            No glitter. No six-column design disaster. Just structured output you can print or save as PDF.
-          </p>
+            <div class="text-block">
+              <p>
+                We believe that business operations shouldn't be a source of daily trauma.
+                Solvanta Consulting is a private workspace dedicated to creating practical
+                office tools, sane operational dashboards, and writing support systems that
+                cut through the noise.
+              </p>
 
-          <div class="tool-tabs">
-            <button class="tool-tab active" type="button" data-tool="resume">Resume Maker</button>
-            <button class="tool-tab" type="button" data-tool="cover">Cover Letter Maker</button>
-          </div>
+              <p>
+                Stop pretending that a 40-tab spreadsheet is a "database" and that manually
+                sending 50 emails is a "strategy." We build tools that make work slightly
+                less annoying.
+              </p>
+            </div>
 
-          <!-- Resume Maker -->
-          <section class="tool-view active-tool" id="tool-resume">
-            <div class="builder-grid">
-              <form class="builder-panel" id="resumeForm">
-                <h3>ATS-Friendly Resume Maker</h3>
+            <div class="about-stack">
+              <section class="paper-section">
+                <h3>The Philosophy</h3>
                 <p>
-                  Fill the basics. The preview updates instantly. Use your browser’s print
-                  option to save as PDF.
+                  You don't need a six-month enterprise software deployment to fix a broken
+                  workflow. Sometimes, you just need a reliable calculator, a clean dashboard,
+                  or a writing tool that refuses to use the word "leverage."
+                </p>
+                <p>
+                  We focus on lightweight automation and practical AI enablement that actually
+                  helps, rather than adding another layer of complex corporate jargon.
+                </p>
+              </section>
+
+              <section class="paper-section">
+                <h3>The Architect of the Anti-Chaos</h3>
+                <p>
+                  Solvanta Consulting is the brainchild of an anonymous operations lead with
+                  over 8 years of experience navigating the corporate wilderness. Think of
+                  them as a human Swiss Army knife—if that knife could steer teams, execute
+                  merciless quality audits, and analyze data with terrifying speed.
+                </p>
+                <p>
+                  After spending nearly a decade thriving in fast-paced environments
+                  (read: surviving workflow tornadoes) and mentoring teams to excellence,
+                  they realized something: work shouldn't be this hard.
+                </p>
+                <p>
+                  Combining the analytical sharpness of a detective with the battle-tested
+                  skills of a resident Excel guru, the founder built Solvanta to share the
+                  exact tools they use to turn operational chaos into actual, functional strategy.
+                </p>
+              </section>
+
+              <section class="paper-section promise-section">
+                <h3>The Promise</h3>
+                <p>
+                  Most tools on this site run directly in your browser. If a feature ever
+                  uses Google Workspace or another backend, it will clearly say when data is
+                  being submitted. No mystery data goblins. We have standards. Questionable
+                  jokes, yes. Sneaky storage, no.
+                </p>
+              </section>
+            </div>
+          </div>
+        </article>
+
+        <!-- LAB -->
+        <article class="view" id="view-lab">
+          <div class="view-inner">
+            <p class="kicker">The Lab</p>
+            <h2>Where useful ideas go before they become proper tools.</h2>
+
+            <p class="large-copy">
+              The Lab is the flexible experiment corner. Some things here will be practical.
+              Some will be weird. Ideally, most will not break. This is where Solvanta gets
+              to test ideas without pretending everything is a polished enterprise platform.
+            </p>
+
+            <div class="simple-list">
+              <div>
+                <h3>Dashboard concepts</h3>
+                <p>Layouts and reporting ideas for turning messy information into something readable.</p>
+              </div>
+
+              <div>
+                <h3>Writing support</h3>
+                <p>Structured writing helpers that avoid sounding like a corporate brochure learned to breathe.</p>
+              </div>
+
+              <div>
+                <h3>Future experiments</h3>
+                <p>Small office utilities, AI workflows, document helpers, and tools built because curiosity won.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CAREER -->
+        <article class="view" id="view-career">
+          <div class="view-inner">
+            <p class="kicker">Career Tools</p>
+            <h2>Resume and cover letter tools without the motivational fog machine.</h2>
+
+            <p class="large-copy">
+              Build a simple ATS-friendly resume or a clean professional cover letter.
+              No glitter. No six-column design disaster. Just structured output you can print,
+              copy, or export properly once we connect the document engine.
+            </p>
+
+            <div class="tool-tabs">
+              <button class="tool-tab active" type="button" data-tool="resume">Resume Maker</button>
+              <button class="tool-tab" type="button" data-tool="cover">Cover Letter Maker</button>
+            </div>
+
+            <!-- Resume Maker -->
+            <section class="tool-view active-tool" id="tool-resume">
+              <div class="builder-grid">
+                <form class="builder-panel" id="resumeForm">
+                  <h3>ATS-Friendly Resume Maker</h3>
+                  <p>
+                    Fill the basics. The preview updates instantly. PDF export can be upgraded
+                    later using Google Docs templates through Google Workspace.
+                  </p>
+
+                  <label>
+                    Full Name
+                    <input type="text" id="resumeName" placeholder="Example: P. Omkareshwar Reddy" />
+                  </label>
+
+                  <label>
+                    Contact Line
+                    <input type="text" id="resumeContact" placeholder="Email · Phone · City · LinkedIn" />
+                  </label>
+
+                  <label>
+                    Professional Summary
+                    <textarea id="resumeSummary" rows="4" placeholder="Short 3–4 line professional summary."></textarea>
+                  </label>
+
+                  <label>
+                    Skills
+                    <textarea id="resumeSkills" rows="3" placeholder="Dashboarding, Reporting, Operations, Excel, AI Tools"></textarea>
+                  </label>
+
+                  <label>
+                    Experience
+                    <textarea id="resumeExperience" rows="7" placeholder="Role | Company | Dates&#10;- Achievement or responsibility&#10;- Achievement or responsibility"></textarea>
+                  </label>
+
+                  <label>
+                    Education
+                    <textarea id="resumeEducation" rows="3" placeholder="Degree · University · Year"></textarea>
+                  </label>
+
+                  <div class="button-row">
+                    <button type="button" class="primary-btn small-btn" id="printResume">Download PDF</button>
+                    <button type="button" class="secondary-btn small-btn" id="clearResume">Clear</button>
+                  </div>
+                </form>
+
+                <div class="document-preview resume-preview" id="resumePreview">
+                  <h3 id="previewName">Your Name</h3>
+                  <p id="previewContact">Email · Phone · City · LinkedIn</p>
+
+                  <hr />
+
+                  <h4>Professional Summary</h4>
+                  <p id="previewSummary">Your professional summary will appear here.</p>
+
+                  <h4>Skills</h4>
+                  <p id="previewSkills">Your skills will appear here.</p>
+
+                  <h4>Experience</h4>
+                  <div id="previewExperience">Your experience will appear here.</div>
+
+                  <h4>Education</h4>
+                  <p id="previewEducation">Your education will appear here.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- Cover Letter Maker -->
+            <section class="tool-view" id="tool-cover">
+              <div class="builder-grid">
+                <form class="builder-panel" id="coverForm">
+                  <h3>Cover Letter Maker</h3>
+                  <p>
+                    Simple, professional, and less painful than staring at a blank page.
+                  </p>
+
+                  <label>
+                    Your Name
+                    <input type="text" id="coverName" placeholder="Your name" />
+                  </label>
+
+                  <label>
+                    Company Name
+                    <input type="text" id="coverCompany" placeholder="Company name" />
+                  </label>
+
+                  <label>
+                    Role / Position
+                    <input type="text" id="coverRole" placeholder="Role you are applying for" />
+                  </label>
+
+                  <label>
+                    Your Background
+                    <textarea id="coverBackground" rows="4" placeholder="Briefly describe your experience."></textarea>
+                  </label>
+
+                  <label>
+                    Key Strengths
+                    <textarea id="coverStrengths" rows="4" placeholder="Mention 2–3 strengths relevant to the role."></textarea>
+                  </label>
+
+                  <div class="button-row">
+                    <button type="button" class="primary-btn small-btn" id="copyCover">Copy Letter</button>
+                    <button type="button" class="secondary-btn small-btn" id="printCover">Download PDF</button>
+                  </div>
+                </form>
+
+                <div class="document-preview letter-preview" id="coverPreview">
+                  <p>Dear Hiring Team,</p>
+
+                  <p>
+                    I am writing to express my interest in the
+                    <span id="letterRole">[Role]</span> position at
+                    <span id="letterCompany">[Company]</span>.
+                  </p>
+
+                  <p id="letterBackground">Your background summary will appear here.</p>
+                  <p id="letterStrengths">Your key strengths will appear here.</p>
+
+                  <p>
+                    I would welcome the opportunity to discuss how my experience and skills
+                    can support your team.
+                  </p>
+
+                  <p>
+                    Kind regards,<br />
+                    <strong id="letterName">[Your Name]</strong>
+                  </p>
+                </div>
+              </div>
+            </section>
+          </div>
+        </article>
+
+        <!-- SURVIVAL KIT -->
+        <article class="view" id="view-survival">
+          <div class="view-inner">
+            <p class="kicker">Survival Kit</p>
+            <h2>Tiny tools for meetings, interviews, typing speed, and other workplace side quests.</h2>
+
+            <p class="large-copy">
+              A practical kit for checking devices, testing reflexes, surviving typing passages,
+              and pretending aptitude questions are fun.
+            </p>
+
+            <div class="tool-tabs">
+              <button class="tool-tab active" type="button" data-survival="device">Device Check</button>
+              <button class="tool-tab" type="button" data-survival="typing">Typing Test</button>
+              <button class="tool-tab" type="button" data-survival="reaction">Reaction Time</button>
+              <button class="tool-tab" type="button" data-survival="aptitude">Aptitude</button>
+              <button class="tool-tab" type="button" data-survival="chart">Chart Quiz</button>
+            </div>
+
+            <!-- Device Check -->
+            <section class="survival-view active-survival" id="survival-device">
+              <div class="device-grid">
+                <section class="tool-panel">
+                  <h3>Camera Test</h3>
+
+                  <label>
+                    Select camera
+                    <select id="cameraSelect">
+                      <option value="">Default camera</option>
+                    </select>
+                  </label>
+
+                  <video id="cameraPreview" autoplay playsinline muted></video>
+
+                  <div class="button-row">
+                    <button class="primary-btn small-btn" id="startCamera" type="button">Start Camera</button>
+                    <button class="secondary-btn small-btn" id="stopCamera" type="button">Stop</button>
+                  </div>
+
+                  <p class="status-text" id="cameraStatus">Camera not tested yet.</p>
+                </section>
+
+                <section class="tool-panel">
+                  <h3>Microphone Test</h3>
+
+                  <label>
+                    Select microphone
+                    <select id="micSelect">
+                      <option value="">Default microphone</option>
+                    </select>
+                  </label>
+
+                  <div class="mic-meter">
+                    <div id="micLevel"></div>
+                  </div>
+
+                  <div class="button-row">
+                    <button class="primary-btn small-btn" id="startMic" type="button">Start Mic</button>
+                    <button class="secondary-btn small-btn" id="stopMic" type="button">Stop</button>
+                  </div>
+
+                  <p class="status-text" id="micStatus">Microphone not tested yet.</p>
+                </section>
+
+                <section class="tool-panel">
+                  <h3>Speaker Test</h3>
+
+                  <label>
+                    Select speaker
+                    <select id="speakerSelect">
+                      <option value="">Default speaker</option>
+                    </select>
+                  </label>
+
+                  <p>
+                    Play a small test tone. If you hear it, your speaker has chosen peace.
+                  </p>
+
+                  <button class="primary-btn small-btn" id="playSound" type="button">Play Test Sound</button>
+
+                  <p class="status-text" id="speakerStatus">Speaker not tested yet.</p>
+                </section>
+              </div>
+            </section>
+
+            <!-- Typing Test -->
+            <section class="survival-view" id="survival-typing">
+              <div class="tool-panel wide-panel">
+                <h3>Typing Test</h3>
+                <p class="mini-copy">Today’s unnecessary personality assessment:</p>
+                <p id="typingText" class="typing-text">
+                  Click Start to receive your paragraph. The keyboard is already nervous.
                 </p>
 
-                <label>
-                  Full Name
-                  <input type="text" id="resumeName" placeholder="Example: P. Omkareshwar Reddy" />
-                </label>
-
-                <label>
-                  Contact Line
-                  <input type="text" id="resumeContact" placeholder="Email · Phone · City · LinkedIn" />
-                </label>
-
-                <label>
-                  Professional Summary
-                  <textarea id="resumeSummary" rows="4" placeholder="Short 3–4 line professional summary."></textarea>
-                </label>
-
-                <label>
-                  Skills
-                  <textarea id="resumeSkills" rows="3" placeholder="Dashboarding, Reporting, Operations, Excel, AI Tools"></textarea>
-                </label>
-
-                <label>
-                  Experience
-                  <textarea id="resumeExperience" rows="7" placeholder="Role | Company | Dates&#10;- Achievement or responsibility&#10;- Achievement or responsibility"></textarea>
-                </label>
-
-                <label>
-                  Education
-                  <textarea id="resumeEducation" rows="3" placeholder="Degree · University · Year"></textarea>
-                </label>
+                <textarea id="typingInput" rows="7" placeholder="Start typing the passage here..."></textarea>
 
                 <div class="button-row">
-                  <button type="button" class="primary-btn" id="printResume">Print / Save PDF</button>
-                  <button type="button" class="secondary-btn" id="clearResume">Clear</button>
+                  <button class="primary-btn small-btn" id="startTyping" type="button">Start / New Passage</button>
                 </div>
-              </form>
 
-              <div class="document-preview resume-preview" id="resumePreview">
-                <h3 id="previewName">Your Name</h3>
-                <p id="previewContact">Email · Phone · City · LinkedIn</p>
-
-                <hr />
-
-                <h4>Professional Summary</h4>
-                <p id="previewSummary">Your professional summary will appear here.</p>
-
-                <h4>Skills</h4>
-                <p id="previewSkills">Your skills will appear here.</p>
-
-                <h4>Experience</h4>
-                <div id="previewExperience">Your experience will appear here.</div>
-
-                <h4>Education</h4>
-                <p id="previewEducation">Your education will appear here.</p>
+                <div class="result-row">
+                  <div><strong id="typingWpm">0</strong><span>WPM</span></div>
+                  <div><strong id="typingAccuracy">0%</strong><span>Accuracy</span></div>
+                  <div><strong id="typingMistakes">0</strong><span>Mistakes</span></div>
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
 
-          <!-- Cover Letter Maker -->
-          <section class="tool-view" id="tool-cover">
-            <div class="builder-grid">
-              <form class="builder-panel" id="coverForm">
-                <h3>Cover Letter Maker</h3>
-                <p>Simple, professional, and less painful than staring at a blank page.</p>
+            <!-- Reaction -->
+            <section class="survival-view" id="survival-reaction">
+              <div class="tool-panel wide-panel">
+                <h3>Reaction Time Test</h3>
+                <p>Click start, wait for the box to change, then click as fast as possible.</p>
 
-                <label>
-                  Your Name
-                  <input type="text" id="coverName" placeholder="Your name" />
-                </label>
-
-                <label>
-                  Company Name
-                  <input type="text" id="coverCompany" placeholder="Company name" />
-                </label>
-
-                <label>
-                  Role / Position
-                  <input type="text" id="coverRole" placeholder="Role you are applying for" />
-                </label>
-
-                <label>
-                  Your Background
-                  <textarea id="coverBackground" rows="4" placeholder="Briefly describe your experience."></textarea>
-                </label>
-
-                <label>
-                  Key Strengths
-                  <textarea id="coverStrengths" rows="4" placeholder="Mention 2–3 strengths relevant to the role."></textarea>
-                </label>
+                <button class="reaction-box" id="reactionBox" type="button">
+                  Click Start
+                </button>
 
                 <div class="button-row">
-                  <button type="button" class="primary-btn" id="copyCover">Copy Letter</button>
-                  <button type="button" class="secondary-btn" id="printCover">Print / Save PDF</button>
+                  <button class="primary-btn small-btn" id="startReaction" type="button">Start</button>
                 </div>
-              </form>
 
-              <div class="document-preview letter-preview" id="coverPreview">
-                <p>Dear Hiring Team,</p>
-
-                <p>
-                  I am writing to express my interest in the
-                  <span id="letterRole">[Role]</span> position at
-                  <span id="letterCompany">[Company]</span>.
-                </p>
-
-                <p id="letterBackground">Your background summary will appear here.</p>
-                <p id="letterStrengths">Your key strengths will appear here.</p>
-
-                <p>
-                  I would welcome the opportunity to discuss how my experience and skills
-                  can support your team.
-                </p>
-
-                <p>
-                  Kind regards,<br />
-                  <strong id="letterName">[Your Name]</strong>
-                </p>
+                <p class="status-text" id="reactionResult">Reaction result will appear here.</p>
               </div>
-            </div>
-          </section>
-        </div>
-      </article>
-
-      <!-- DEVICE -->
-      <article class="view" id="view-device">
-        <div class="view-inner">
-          <p class="kicker">Device Check</p>
-          <h2>Check your setup before technology chooses violence.</h2>
-
-          <p class="large-copy">
-            Test your webcam, microphone, and speaker before a meeting, interview, webinar,
-            or any situation where “can you hear me?” would be a personal attack.
-          </p>
-
-          <div class="device-grid">
-            <section class="device-card">
-              <h3>Camera Test</h3>
-
-              <label>
-                Select camera
-                <select id="cameraSelect">
-                  <option value="">Default camera</option>
-                </select>
-              </label>
-
-              <video id="cameraPreview" autoplay playsinline muted></video>
-
-              <div class="button-row">
-                <button class="primary-btn" id="startCamera" type="button">Start Camera</button>
-                <button class="secondary-btn" id="stopCamera" type="button">Stop</button>
-              </div>
-
-              <p class="status-text" id="cameraStatus">Camera not tested yet.</p>
             </section>
 
-            <section class="device-card">
-              <h3>Microphone Test</h3>
+            <!-- Aptitude -->
+            <section class="survival-view" id="survival-aptitude">
+              <div class="tool-panel wide-panel">
+                <h3>Aptitude Quick Practice</h3>
+                <p id="aptitudeQuestion">Click “New Question” to begin.</p>
 
-              <label>
-                Select microphone
-                <select id="micSelect">
-                  <option value="">Default microphone</option>
-                </select>
-              </label>
+                <div class="answer-grid" id="aptitudeAnswers"></div>
 
-              <div class="mic-meter">
-                <div id="micLevel"></div>
+                <div class="button-row">
+                  <button class="primary-btn small-btn" id="newAptitude" type="button">New Question</button>
+                </div>
+
+                <p class="status-text" id="aptitudeResult">Result will appear here.</p>
               </div>
-
-              <div class="button-row">
-                <button class="primary-btn" id="startMic" type="button">Start Mic</button>
-                <button class="secondary-btn" id="stopMic" type="button">Stop</button>
-              </div>
-
-              <p class="status-text" id="micStatus">Microphone not tested yet.</p>
             </section>
 
-            <section class="device-card">
-              <h3>Speaker Test</h3>
+            <!-- Chart Quiz -->
+            <section class="survival-view" id="survival-chart">
+              <div class="tool-panel wide-panel">
+                <h3>Chart Reading Quiz</h3>
 
-              <label>
-                Select speaker
-                <select id="speakerSelect">
-                  <option value="">Default speaker</option>
-                </select>
-              </label>
+                <div class="simple-chart">
+                  <div style="height: 40%"><span>A</span></div>
+                  <div style="height: 70%"><span>B</span></div>
+                  <div style="height: 55%"><span>C</span></div>
+                  <div style="height: 90%"><span>D</span></div>
+                </div>
 
-              <p>
-                Play a small test tone. If you hear it, your speaker has chosen peace.
-              </p>
+                <p>Which category has the highest value?</p>
 
-              <button class="primary-btn" id="playSound" type="button">Play Test Sound</button>
+                <div class="answer-grid">
+                  <button type="button" data-chart-answer="A">A</button>
+                  <button type="button" data-chart-answer="B">B</button>
+                  <button type="button" data-chart-answer="C">C</button>
+                  <button type="button" data-chart-answer="D">D</button>
+                </div>
 
-              <p class="status-text" id="speakerStatus">Speaker not tested yet.</p>
+                <p class="status-text" id="chartQuizResult">Choose an answer.</p>
+              </div>
             </section>
           </div>
-        </div>
-      </article>
+        </article>
 
-      <!-- PRACTICE -->
-      <article class="view" id="view-practice">
-        <div class="view-inner">
-          <p class="kicker">Practice Lab</p>
-          <h2>Tiny tests for office survival skills nobody officially trained you for.</h2>
+        <!-- NOTES -->
+        <article class="view" id="view-notes">
+          <div class="view-inner narrow">
+            <p class="kicker">Notes</p>
+            <h2>Useful thoughts, questionable observations, and things that might become tools later.</h2>
 
-          <p class="large-copy">
-            Typing, reaction time, aptitude practice, and chart reading. Useful enough
-            to justify the tab. Roastful enough to keep you awake.
-          </p>
-
-          <div class="tool-tabs">
-            <button class="tool-tab active" type="button" data-practice="typing">Typing Test</button>
-            <button class="tool-tab" type="button" data-practice="reaction">Reaction Time</button>
-            <button class="tool-tab" type="button" data-practice="aptitude">Aptitude</button>
-            <button class="tool-tab" type="button" data-practice="chart">Chart Quiz</button>
-          </div>
-
-          <section class="practice-view active-practice" id="practice-typing">
-            <div class="practice-card">
-              <h3>Typing Test</h3>
-              <p class="mini-copy">Today’s unnecessary personality assessment:</p>
-              <p id="typingText" class="typing-text">
-                Click Start to receive your paragraph. The keyboard is already nervous.
-              </p>
-
-              <textarea id="typingInput" rows="7" placeholder="Start typing the passage here..."></textarea>
-
-              <div class="button-row">
-                <button class="primary-btn" id="startTyping" type="button">Start / New Passage</button>
-              </div>
-
-              <div class="result-row">
-                <div><strong id="typingWpm">0</strong><span>WPM</span></div>
-                <div><strong id="typingAccuracy">0%</strong><span>Accuracy</span></div>
-                <div><strong id="typingMistakes">0</strong><span>Mistakes</span></div>
-              </div>
-            </div>
-          </section>
-
-          <section class="practice-view" id="practice-reaction">
-            <div class="practice-card">
-              <h3>Reaction Time Test</h3>
-              <p>Click start, wait for the box to change, then click as fast as possible.</p>
-
-              <button class="reaction-box" id="reactionBox" type="button">
-                Click Start
-              </button>
-
-              <div class="button-row">
-                <button class="primary-btn" id="startReaction" type="button">Start</button>
-              </div>
-
-              <p class="status-text" id="reactionResult">Reaction result will appear here.</p>
-            </div>
-          </section>
-
-          <section class="practice-view" id="practice-aptitude">
-            <div class="practice-card">
-              <h3>Aptitude Quick Practice</h3>
-              <p id="aptitudeQuestion">Click “New Question” to begin.</p>
-
-              <div class="answer-grid" id="aptitudeAnswers"></div>
-
-              <div class="button-row">
-                <button class="primary-btn" id="newAptitude" type="button">New Question</button>
-              </div>
-
-              <p class="status-text" id="aptitudeResult">Result will appear here.</p>
-            </div>
-          </section>
-
-          <section class="practice-view" id="practice-chart">
-            <div class="practice-card">
-              <h3>Chart Reading Quiz</h3>
-
-              <div class="simple-chart">
-                <div style="height: 40%"><span>A</span></div>
-                <div style="height: 70%"><span>B</span></div>
-                <div style="height: 55%"><span>C</span></div>
-                <div style="height: 90%"><span>D</span></div>
-              </div>
-
-              <p>Which category has the highest value?</p>
-
-              <div class="answer-grid">
-                <button type="button" data-chart-answer="A">A</button>
-                <button type="button" data-chart-answer="B">B</button>
-                <button type="button" data-chart-answer="C">C</button>
-                <button type="button" data-chart-answer="D">D</button>
-              </div>
-
-              <p class="status-text" id="chartQuizResult">Choose an answer.</p>
-            </div>
-          </section>
-        </div>
-      </article>
-
-      <!-- CONTACT -->
-      <article class="view" id="view-contact">
-        <div class="view-inner narrow">
-          <p class="kicker">Contact</p>
-          <h2>Got feedback, ideas, or a spreadsheet that has emotionally harmed you?</h2>
-
-          <div class="profile-contact-card">
-            <div class="profile-photo-wrap">
-              <img src="profile.jpg" alt="P. Omkareshwar Reddy" class="profile-photo" />
-            </div>
-
-            <div class="profile-contact-copy">
-              <p class="profile-name">P. Omkareshwar Reddy</p>
-              <p class="profile-line">
-                I build practical office tools for people who have data, deadlines,
-                and exactly zero patience for broken workflows.
-              </p>
-
-              <div class="profile-links">
-                <a href="https://www.linkedin.com/in/reddyop/" target="_blank" rel="noopener noreferrer">
-                  Connect on LinkedIn
-                </a>
-
-                <a href="mailto:helpdesk@solvantaconsulting.com">
-                  Email Solvanta
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <p class="large-copy">
-            Solvanta Consulting is currently a personal practice project and experiment,
-            not an active business looking for marketing, SEO, lead-generation, or
-            engagement-growth services.
-          </p>
-
-          <div class="contact-panel">
-            <h3>Friendly humans welcome.</h3>
-            <p>
-              Genuine feedback, ideas, and interesting dashboard/reporting conversations
-              are welcome. Generic sales pitches may be chased by imaginary unicorns.
+            <p class="large-copy">
+              This section can later pull from Google Sheets so notes can be updated without
+              editing the website code. For now, it is a small parking lot for practical thinking.
             </p>
 
-            <a href="mailto:helpdesk@solvantaconsulting.com">
-              helpdesk@solvantaconsulting.com
-            </a>
+            <div class="notes-list">
+              <article>
+                <span>01</span>
+                <h3>Your spreadsheet is not a database.</h3>
+                <p>
+                  It may be brave. It may be colourful. It may even have filters.
+                  But if it breaks when someone sorts the wrong column, it needs help.
+                </p>
+              </article>
+
+              <article>
+                <span>02</span>
+                <h3>Dashboards should answer questions.</h3>
+                <p>
+                  If the viewer needs another meeting to understand the dashboard,
+                  congratulations, you have built a visual side quest.
+                </p>
+              </article>
+
+              <article>
+                <span>03</span>
+                <h3>AI is useful when the workflow is clear.</h3>
+                <p>
+                  If the process is already chaos, AI will not fix it. It will simply
+                  generate chaos with better grammar.
+                </p>
+              </article>
+            </div>
           </div>
-        </div>
-      </article>
+        </article>
 
-    </section>
+        <!-- CONTACT -->
+        <article class="view" id="view-contact">
+          <div class="view-inner narrow">
+            <p class="kicker">Contact</p>
+            <h2>Got feedback, ideas, or a spreadsheet that has emotionally harmed you?</h2>
 
-    <footer class="site-footer">
-      © 2026 Solvanta Consulting. Built for spreadsheet chaos and the people who survive it.
-    </footer>
-  </main>
+            <div class="profile-contact-card">
+              <div class="profile-photo-wrap">
+                <img src="profile.jpg" alt="P. Omkareshwar Reddy" class="profile-photo" />
+              </div>
+
+              <div class="profile-contact-copy">
+                <p class="profile-name">P. Omkareshwar Reddy</p>
+                <p class="profile-line">
+                  I build practical office tools for people who have data, deadlines,
+                  and exactly zero patience for broken workflows.
+                </p>
+
+                <div class="profile-links">
+                  <a href="https://www.linkedin.com/in/reddyop/" target="_blank" rel="noopener noreferrer">
+                    Connect on LinkedIn
+                  </a>
+
+                  <a href="mailto:helpdesk@solvantaconsulting.com">
+                    Email Solvanta
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <p class="large-copy">
+              Solvanta Consulting is currently a personal practice project and experiment,
+              not an active business looking for marketing, SEO, lead-generation, or
+              engagement-growth services.
+            </p>
+
+            <div class="contact-panel">
+              <h3>Friendly humans welcome.</h3>
+              <p>
+                Genuine feedback, ideas, and interesting dashboard/reporting conversations
+                are welcome. Generic sales pitches may be chased by imaginary unicorns.
+              </p>
+
+              <a href="mailto:helpdesk@solvantaconsulting.com">
+                helpdesk@solvantaconsulting.com
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </section>
+
+      <footer class="site-footer">
+        © 2026 Solvanta Consulting. Questionable jokes. Surprisingly useful outcomes.
+      </footer>
+    </main>
+  </div>
 
   <script src="script.js"></script>
 </body>
