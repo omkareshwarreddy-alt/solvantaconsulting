@@ -459,6 +459,51 @@ async function populateDeviceSelectors(selectors) {
   }
 
   try {
+    const devices = await navigator.mediaDevices.enumerateDevices();
+
+    fillSelect(
+      selectors.camera,
+      devices.filter((device) => device.kind === "videoinput"),
+      "Default camera",
+      "Camera"
+    );
+
+    fillSelect(
+      selectors.mic,
+      devices.filter((device) => device.kind === "audioinput"),
+      "Default microphone",
+      "Microphone"
+    );
+
+    fillSelect(
+      selectors.speaker,
+      devices.filter((device) => device.kind === "audiooutput"),
+      "Default speaker",
+      "Speaker"
+    );
+
+    if (!HTMLMediaElement.prototype.setSinkId && selectors.speaker) {
+      selectors.speaker.innerHTML = "";
+      const option = document.createElement("option");
+      option.value = "";
+      option.textContent = "Speaker selection limited in this browser";
+      selectors.speaker.appendChild(option);
+      selectors.speaker.disabled = true;
+    }
+  } catch {
+    setUnavailable(selectors.camera, "Camera list unavailable");
+    setUnavailable(selectors.mic, "Microphone list unavailable");
+    setUnavailable(selectors.speaker, "Speaker list unavailable");
+  }
+}
+  if (!navigator.mediaDevices?.enumerateDevices) {
+    setUnavailable(selectors.camera, "Device list not supported");
+    setUnavailable(selectors.mic, "Device list not supported");
+    setUnavailable(selectors.speaker, "Speaker list not supported");
+    return;
+  }
+
+  try {
     let devices = await navigator.mediaDevices.enumerateDevices();
 
     const hasLabels = devices.some((device) => device.label);
