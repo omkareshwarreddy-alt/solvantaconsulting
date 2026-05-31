@@ -1,15 +1,16 @@
 /* Solvanta Consulting
    Questionable jokes. Surprisingly useful outcomes.
-   Browser-only frontend interactions.
+   Frontend + Google Workspace backend connection.
 */
+
+const SOLVANTA_BACKEND_URL =
+  "https://script.google.com/macros/s/AKfycbzKyDE333KHBXT9lKKCACsbBtndpc3IPirujlbRCJqD4XsYqmCw9LRyZHF823DLGs5k/exec";
 
 document.addEventListener("DOMContentLoaded", () => {
   initNavigation();
   initJumpButtons();
 
-  initCareerTabs();
-  initResumeMaker();
-  initCoverLetterMaker();
+  initBackendForms();
 
   initSurvivalTabs();
   initDeviceCheck();
@@ -84,319 +85,160 @@ function initJumpButtons() {
 }
 
 /* -----------------------------
-   CAREER TOOL TABS
+   BACKEND FORMS
 ----------------------------- */
 
-function initCareerTabs() {
-  const tabs = document.querySelectorAll("[data-tool]");
-  const toolViews = document.querySelectorAll(".tool-view");
-
-  if (!tabs.length || !toolViews.length) return;
-
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      const selectedTool = tab.dataset.tool;
-
-      tabs.forEach((item) => item.classList.remove("active"));
-      tab.classList.add("active");
-
-      toolViews.forEach((view) => {
-        view.classList.toggle("active-tool", view.id === `tool-${selectedTool}`);
-      });
-    });
-  });
+function initBackendForms() {
+  initContactForm();
+  initFeedbackForm();
 }
 
-/* -----------------------------
-   PDF HELPER
------------------------------ */
+function initContactForm() {
+  const form = document.getElementById("contactForm");
+  const status = document.getElementById("contactStatus");
 
-function loadHtml2Pdf() {
-  return new Promise((resolve, reject) => {
-    if (window.html2pdf) {
-      resolve();
+  if (!form || !status) return;
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const honeypot = form.querySelector('[name="website"]')?.value || "";
+    if (honeypot.trim()) {
+      status.textContent = "Submission blocked.";
+      status.className = "form-status error";
       return;
     }
 
-    const existingScript = document.querySelector("script[data-html2pdf]");
-    if (existingScript) {
-      existingScript.addEventListener("load", resolve);
-      existingScript.addEventListener("error", reject);
-      return;
-    }
+    const submitButton = form.querySelector('button[type="submit"]');
 
-    const script = document.createElement("script");
-    script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
-    script.dataset.html2pdf = "true";
-    script.onload = resolve;
-    script.onerror = reject;
-    document.head.appendChild(script);
-  });
-}
-
-async function downloadElementAsPdf(element, fileName, button) {
-  if (!element) return;
-
-  const originalText = button ? button.textContent : "";
-
-  try {
-    if (button) {
-      button.disabled = true;
-      button.textContent = "Preparing PDF...";
-    }
-
-    await loadHtml2Pdf();
-
-    const options = {
-      margin: [12, 12, 12, 12],
-      filename: fileName,
-      image: {
-        type: "jpeg",
-        quality: 0.98
-      },
-      html2canvas: {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: "#ffffff"
-      },
-      jsPDF: {
-        unit: "mm",
-        format: "a4",
-        orientation: "portrait"
-      },
-      pagebreak: {
-        mode: ["avoid-all", "css", "legacy"]
-      }
+    const payload = {
+      action: "submitContact",
+      name: document.getElementById("contactName")?.value || "",
+      email: document.getElementById("contactEmail")?.value || "",
+      reason: document.getElementById("contactReason")?.value || "General",
+      message: document.getElementById("contactMessage")?.value || "",
+      source: "solvanta-website"
     };
 
-    await window.html2pdf().set(options).from(element).save();
+    if (!payload.name.trim() || !payload.email.trim() || !payload.message.trim()) {
+      showFormStatus(status, "Please fill name, email, and message.", "error");
+      return;
+    }
+
+    await submitToBackend({
+      payload,
+      statusElement: status,
+      button: submitButton,
+      loadingText: "Sending...",
+      successText: "Message sent. The imaginary unicorns have been notified.",
+      errorText:
+        "Message could not be sent. The backend may be having a dramatic moment."
+    });
+
+    if (status.classList.contains("success")) {
+      form.reset();
+    }
+  });
+}
+
+function initFeedbackForm() {
+  const form = document.getElementById("feedbackForm");
+  const status = document.getElementById("feedbackStatus");
+
+  if (!form || !status) return;
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const honeypot = form.querySelector('[name="website"]')?.value || "";
+    if (honeypot.trim()) {
+      status.textContent = "Submission blocked.";
+      status.className = "form-status error";
+      return;
+    }
+
+    const submitButton = form.querySelector('button[type="submit"]');
+
+    const payload = {
+      action: "submitFeedback",
+      tool: document.getElementById("feedbackTool")?.value || "General Website",
+      feedbackType: document.getElementById("feedbackType")?.value || "Suggestion",
+      email: document.getElementById("feedbackEmail")?.value || "",
+      message: document.getElementById("feedbackMessage")?.value || "",
+      source: "solvanta-website"
+    };
+
+    if (!payload.message.trim()) {
+      showFormStatus(status, "Please enter your feedback message.", "error");
+      return;
+    }
+
+    await submitToBackend({
+      payload,
+      statusElement: status,
+      button: submitButton,
+      loadingText: "Sending...",
+      successText: "Feedback saved. Somewhere, a bug is nervous.",
+      errorText:
+        "Feedback could not be sent. The lab may be pretending everything is fine."
+    });
+
+    if (status.classList.contains("success")) {
+      form.reset();
+    }
+  });
+}
+
+async function submitToBackend({
+  payload,
+  statusElement,
+  button,
+  loadingText,
+  successText,
+  errorText
+}) {
+  const originalButtonText = button ? button.textContent : "";
+
+  try {
+    showFormStatus(statusElement, loadingText, "");
+
+    if (button) {
+      button.disabled = true;
+      button.textContent = loadingText;
+    }
+
+    const response = await fetch(SOLVANTA_BACKEND_URL, {
+      method: "POST",
+      body: JSON.stringify(payload)
+    });
+
+    const data = await response.json();
+
+    if (!data.ok) {
+      throw new Error(data.error || "Backend rejected the request.");
+    }
+
+    showFormStatus(statusElement, data.message || successText, "success");
   } catch (error) {
-    alert("PDF download could not be created. Please try again, or use your browser print option as a backup.");
+    console.error("Solvanta backend error:", error);
+    showFormStatus(statusElement, errorText, "error");
   } finally {
     if (button) {
       button.disabled = false;
-      button.textContent = originalText;
+      button.textContent = originalButtonText;
     }
   }
 }
 
-function safeFileName(value, fallback) {
-  const cleaned = value && value.trim() ? value.trim() : fallback;
+function showFormStatus(element, message, type) {
+  if (!element) return;
 
-  return cleaned
-    .replace(/[^a-z0-9]+/gi, "_")
-    .replace(/^_+|_+$/g, "")
-    .substring(0, 70);
-}
+  element.textContent = message;
+  element.className = "form-status";
 
-/* -----------------------------
-   RESUME MAKER
------------------------------ */
-
-function initResumeMaker() {
-  const fields = {
-    name: document.getElementById("resumeName"),
-    contact: document.getElementById("resumeContact"),
-    summary: document.getElementById("resumeSummary"),
-    skills: document.getElementById("resumeSkills"),
-    experience: document.getElementById("resumeExperience"),
-    education: document.getElementById("resumeEducation")
-  };
-
-  const preview = {
-    name: document.getElementById("previewName"),
-    contact: document.getElementById("previewContact"),
-    summary: document.getElementById("previewSummary"),
-    skills: document.getElementById("previewSkills"),
-    experience: document.getElementById("previewExperience"),
-    education: document.getElementById("previewEducation")
-  };
-
-  const downloadButton = document.getElementById("printResume");
-  const clearButton = document.getElementById("clearResume");
-  const resumePreview = document.getElementById("resumePreview");
-
-  if (!fields.name || !preview.name) return;
-
-  function cleanText(value, fallback) {
-    return value && value.trim() ? value.trim() : fallback;
+  if (type) {
+    element.classList.add(type);
   }
-
-  function updatePreview() {
-    preview.name.textContent = cleanText(fields.name.value, "Your Name");
-
-    preview.contact.textContent = cleanText(
-      fields.contact.value,
-      "Email · Phone · City · LinkedIn"
-    );
-
-    preview.summary.textContent = cleanText(
-      fields.summary.value,
-      "Your professional summary will appear here."
-    );
-
-    preview.skills.textContent = cleanText(
-      fields.skills.value,
-      "Your skills will appear here."
-    );
-
-    preview.experience.innerHTML = formatExperience(
-      fields.experience.value,
-      "Your experience will appear here."
-    );
-
-    preview.education.textContent = cleanText(
-      fields.education.value,
-      "Your education will appear here."
-    );
-  }
-
-  Object.values(fields).forEach((field) => {
-    field.addEventListener("input", updatePreview);
-  });
-
-  downloadButton?.addEventListener("click", async () => {
-    const name = safeFileName(fields.name.value, "Solvanta_Resume");
-    await downloadElementAsPdf(resumePreview, `${name}_Resume.pdf`, downloadButton);
-  });
-
-  clearButton?.addEventListener("click", () => {
-    Object.values(fields).forEach((field) => {
-      field.value = "";
-    });
-
-    updatePreview();
-  });
-
-  updatePreview();
-}
-
-function formatExperience(value, fallback) {
-  const text = value && value.trim() ? value.trim() : fallback;
-  const lines = text
-    .split("\n")
-    .map((line) => line.trim())
-    .filter(Boolean);
-
-  if (!lines.length) return escapeHtml(fallback);
-
-  let html = "";
-  let bullets = [];
-
-  lines.forEach((line) => {
-    if (line.startsWith("-")) {
-      bullets.push(`<li>${escapeHtml(line.replace(/^-/, "").trim())}</li>`);
-    } else {
-      if (bullets.length) {
-        html += `<ul>${bullets.join("")}</ul>`;
-        bullets = [];
-      }
-
-      html += `<p>${escapeHtml(line)}</p>`;
-    }
-  });
-
-  if (bullets.length) {
-    html += `<ul>${bullets.join("")}</ul>`;
-  }
-
-  return html;
-}
-
-/* -----------------------------
-   COVER LETTER MAKER
------------------------------ */
-
-function initCoverLetterMaker() {
-  const fields = {
-    name: document.getElementById("coverName"),
-    company: document.getElementById("coverCompany"),
-    role: document.getElementById("coverRole"),
-    background: document.getElementById("coverBackground"),
-    strengths: document.getElementById("coverStrengths")
-  };
-
-  const preview = {
-    name: document.getElementById("letterName"),
-    company: document.getElementById("letterCompany"),
-    role: document.getElementById("letterRole"),
-    background: document.getElementById("letterBackground"),
-    strengths: document.getElementById("letterStrengths")
-  };
-
-  const copyButton = document.getElementById("copyCover");
-  const downloadButton = document.getElementById("printCover");
-  const coverPreview = document.getElementById("coverPreview");
-
-  if (!fields.name || !preview.name) return;
-
-  function valueOrFallback(value, fallback) {
-    return value && value.trim() ? value.trim() : fallback;
-  }
-
-  function updateLetter() {
-    preview.name.textContent = valueOrFallback(fields.name.value, "[Your Name]");
-    preview.company.textContent = valueOrFallback(fields.company.value, "[Company]");
-    preview.role.textContent = valueOrFallback(fields.role.value, "[Role]");
-
-    preview.background.textContent = valueOrFallback(
-      fields.background.value,
-      "Your background summary will appear here."
-    );
-
-    preview.strengths.textContent = valueOrFallback(
-      fields.strengths.value,
-      "Your key strengths will appear here."
-    );
-  }
-
-  Object.values(fields).forEach((field) => {
-    field.addEventListener("input", updateLetter);
-  });
-
-  copyButton?.addEventListener("click", async () => {
-    const letterText = buildCoverLetterText(fields);
-
-    try {
-      await navigator.clipboard.writeText(letterText);
-      copyButton.textContent = "Copied";
-      setTimeout(() => {
-        copyButton.textContent = "Copy Letter";
-      }, 1200);
-    } catch {
-      alert("Copy failed. Please select the letter text manually.");
-    }
-  });
-
-  downloadButton?.addEventListener("click", async () => {
-    const name = safeFileName(fields.name.value, "Solvanta_Cover_Letter");
-    await downloadElementAsPdf(coverPreview, `${name}_Cover_Letter.pdf`, downloadButton);
-  });
-
-  updateLetter();
-}
-
-function buildCoverLetterText(fields) {
-  const name = fields.name.value.trim() || "[Your Name]";
-  const company = fields.company.value.trim() || "[Company]";
-  const role = fields.role.value.trim() || "[Role]";
-  const background =
-    fields.background.value.trim() || "Your background summary will appear here.";
-  const strengths =
-    fields.strengths.value.trim() || "Your key strengths will appear here.";
-
-  return `Dear Hiring Team,
-
-I am writing to express my interest in the ${role} position at ${company}.
-
-${background}
-
-${strengths}
-
-I would welcome the opportunity to discuss how my experience and skills can support your team.
-
-Kind regards,
-${name}`;
 }
 
 /* -----------------------------
@@ -754,7 +596,17 @@ function initTypingTest() {
 
     "This typing test is not here to judge you. That would be rude. It is here to quietly measure your speed, accuracy, and ability to survive a paragraph without blaming the keyboard. If mistakes appear, please remember denial is not a valid productivity strategy.",
 
-    "Good reporting is not about adding more slides, more charts, or more words that sound important in a meeting. It is about helping people understand the situation quickly. If your report needs a treasure map, three calls, and a follow-up email to explain it, the report has chosen violence."
+    "Good reporting is not about adding more slides, more charts, or more words that sound important in a meeting. It is about helping people understand the situation quickly. If your report needs a treasure map, three calls, and a follow-up email to explain it, the report has chosen violence.",
+
+    "Before joining an online meeting, check your camera, microphone, speakers, and internet connection. Future you will appreciate the preparation. Present you may think this is unnecessary, but present you is also the person who once said, can everyone hear me, while clearly muted.",
+
+    "A clean process should survive a busy Monday, a missing team member, and at least three people asking for the same update in different ways. If the process collapses because one person is on leave, that is not a process. That is a group project wearing a business suit.",
+
+    "Your resume should be clear, direct, and easy to scan. It should not look like it was designed during a font emergency. Recruiters do not need a treasure hunt. They need your skills, experience, achievements, and proof that you can use bullet points without starting a graphic design incident.",
+
+    "Not every spreadsheet needs to become a dashboard, but every important decision deserves information that is clean, readable, and slightly less terrifying. If the file has twelve tabs, four colour codes, and no explanation, it is not a report. It is an escape room with formulas.",
+
+    "The best tools are simple enough that people actually use them, useful enough that they save time, and calm enough that nobody needs a training session. If a tool requires three manuals and a motivational speech, congratulations, you have invented another problem."
   ];
 
   let currentPassage = "";
@@ -905,6 +757,18 @@ function initAptitudePractice() {
       options: ["30", "36", "48", "60"],
       answer: "48",
       explanation: "Each number doubles."
+    },
+    {
+      question: "If a task takes 5 people 10 days, how many person-days are required?",
+      options: ["15", "25", "50", "100"],
+      answer: "50",
+      explanation: "5 people × 10 days = 50 person-days."
+    },
+    {
+      question: "A target is 200 and current achievement is 150. What percentage is achieved?",
+      options: ["65%", "70%", "75%", "80%"],
+      answer: "75%",
+      explanation: "150 ÷ 200 × 100 = 75%."
     }
   ];
 
@@ -960,17 +824,4 @@ function initChartQuiz() {
       }
     });
   });
-}
-
-/* -----------------------------
-   HELPERS
------------------------------ */
-
-function escapeHtml(value) {
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
 }
