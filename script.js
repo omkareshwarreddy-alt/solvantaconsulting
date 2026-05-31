@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initJumpButtons();
 
   initBackendForms();
+  initDynamicNotes();
 
   initSurvivalTabs();
   initDeviceCheck();
@@ -244,6 +245,89 @@ function showFormStatus(element, message, type) {
 /* -----------------------------
    SURVIVAL TABS
 ----------------------------- */
+
+/* -----------------------------
+   DYNAMIC NOTES
+----------------------------- */
+
+async function initDynamicNotes() {
+  const notesList = document.getElementById("notesList");
+  const notesStatus = document.getElementById("notesStatus");
+
+  if (!notesList) return;
+
+  try {
+    const response = await fetch(`${SOLVANTA_BACKEND_URL}?action=getNotes`);
+    const data = await response.json();
+
+    if (!data.ok) {
+      throw new Error(data.error || "Could not load notes.");
+    }
+
+    const notes = Array.isArray(data.notes) ? data.notes : [];
+
+    if (!notes.length) {
+      notesList.innerHTML = `
+        <article>
+          <span>!</span>
+          <div>
+            <h3>No published notes yet.</h3>
+            <p>The Notes sheet is connected, but nothing is marked as Published yet.</p>
+          </div>
+        </article>
+      `;
+
+      if (notesStatus) {
+        notesStatus.textContent = "";
+        notesStatus.className = "form-status";
+      }
+
+      return;
+    }
+
+    notesList.innerHTML = notes
+      .map((note, index) => {
+        const number = String(index + 1).padStart(2, "0");
+        const title = escapeHtml(note.title || "Untitled note");
+        const content = escapeHtml(note.content || "");
+        const category = escapeHtml(note.category || "General");
+
+        return `
+          <article>
+            <span>${number}</span>
+            <div>
+              <p class="note-category">${category}</p>
+              <h3>${title}</h3>
+              <p>${content}</p>
+            </div>
+          </article>
+        `;
+      })
+      .join("");
+
+    if (notesStatus) {
+      notesStatus.textContent = `Loaded ${notes.length} note${notes.length === 1 ? "" : "s"} from Google Sheets.`;
+      notesStatus.className = "form-status success";
+    }
+  } catch (error) {
+    console.error("Could not load Solvanta notes:", error);
+
+    notesList.innerHTML = `
+      <article>
+        <span>!</span>
+        <div>
+          <h3>Notes could not be loaded.</h3>
+          <p>The backend may be unavailable, or the spreadsheet may be pretending it is on annual leave.</p>
+        </div>
+      </article>
+    `;
+
+    if (notesStatus) {
+      notesStatus.textContent = "Could not load notes from Google Sheets.";
+      notesStatus.className = "form-status error";
+    }
+  }
+}
 
 function initSurvivalTabs() {
   const tabs = document.querySelectorAll("[data-survival]");
