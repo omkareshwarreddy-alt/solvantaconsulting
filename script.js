@@ -1,6 +1,6 @@
 /* Solvanta Consulting
    Questionable jokes. Surprisingly useful outcomes.
-   Frontend + Google Workspace backend connection.
+   Final frontend + Google Workspace backend connection.
 */
 
 const SOLVANTA_BACKEND_URL =
@@ -10,8 +10,10 @@ document.addEventListener("DOMContentLoaded", () => {
   initNavigation();
   initJumpButtons();
 
+  initBackendStatus();
   initBackendForms();
   initDynamicNotes();
+  initAskSolvanta();
 
   initSurvivalTabs();
   initDeviceCheck();
@@ -54,6 +56,8 @@ function initNavigation() {
       }
     }
 
+    logToolUsage(sectionName, "section_opened", "navigation");
+
     const contentStage = document.querySelector(".content-stage");
     if (contentStage) {
       contentStage.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -83,6 +87,36 @@ function initJumpButtons() {
       }
     });
   });
+}
+
+/* -----------------------------
+   BACKEND STATUS
+----------------------------- */
+
+async function initBackendStatus() {
+  const status = document.getElementById("backendStatus");
+  if (!status) return;
+
+  try {
+    const response = await fetch(`${SOLVANTA_BACKEND_URL}?action=healthCheck`, {
+      method: "GET",
+      cache: "no-store"
+    });
+
+    const data = await response.json();
+
+    if (!data.ok) {
+      throw new Error("Backend health check failed.");
+    }
+
+    status.className = "backend-pill online";
+    status.innerHTML = "<span></span>Backend: online";
+  } catch (error) {
+    console.error("Backend status check failed:", error);
+
+    status.className = "backend-pill offline";
+    status.innerHTML = "<span></span>Backend: resting dramatically";
+  }
 }
 
 /* -----------------------------
@@ -135,6 +169,7 @@ function initContactForm() {
     });
 
     if (status.classList.contains("success")) {
+      logToolUsage("Contact", "contact_form_submitted", "contact");
       form.reset();
     }
   });
@@ -181,6 +216,7 @@ function initFeedbackForm() {
     });
 
     if (status.classList.contains("success")) {
+      logToolUsage("Feedback", "feedback_form_submitted", "contact");
       form.reset();
     }
   });
@@ -239,7 +275,28 @@ function showFormStatus(element, message, type) {
 }
 
 /* -----------------------------
-   DYNAMIC NOTES
+   TOOL USAGE LOGGING
+----------------------------- */
+
+function logToolUsage(tool, toolAction, page) {
+  const payload = {
+    action: "logToolUsage",
+    tool: tool || "Unknown",
+    toolAction: toolAction || "unknown_action",
+    page: page || "solvanta-website",
+    userAgent: navigator.userAgent || "unknown"
+  };
+
+  fetch(SOLVANTA_BACKEND_URL, {
+    method: "POST",
+    body: JSON.stringify(payload)
+  }).catch((error) => {
+    console.warn("Tool usage log failed:", error);
+  });
+}
+
+/* -----------------------------
+   DYNAMIC CHAOS NOTES
 ----------------------------- */
 
 async function initDynamicNotes() {
@@ -249,15 +306,12 @@ async function initDynamicNotes() {
   if (!notesList) return;
 
   try {
-    const notesUrl = `${SOLVANTA_BACKEND_URL}?action=getNotes`;
-
-    const response = await fetch(notesUrl, {
+    const response = await fetch(`${SOLVANTA_BACKEND_URL}?action=getNotes`, {
       method: "GET",
       cache: "no-store"
     });
 
     const text = await response.text();
-
     let data;
 
     try {
@@ -278,7 +332,7 @@ async function initDynamicNotes() {
         <article>
           <span>!</span>
           <div>
-            <h3>No published notes yet.</h3>
+            <h3>No published Chaos Notes yet.</h3>
             <p>The Notes sheet is connected, but nothing is marked as Published yet.</p>
           </div>
         </article>
@@ -313,9 +367,11 @@ async function initDynamicNotes() {
       .join("");
 
     if (notesStatus) {
-      notesStatus.textContent = `Loaded ${notes.length} note${notes.length === 1 ? "" : "s"} from Google Sheets.`;
+      notesStatus.textContent = `Loaded ${notes.length} Chaos Note${notes.length === 1 ? "" : "s"} from Google Sheets.`;
       notesStatus.className = "form-status success";
     }
+
+    logToolUsage("Chaos Notes", "notes_loaded", "chaos");
   } catch (error) {
     console.error("Could not load Solvanta notes:", error);
 
@@ -323,17 +379,122 @@ async function initDynamicNotes() {
       <article>
         <span>!</span>
         <div>
-          <h3>Notes could not be loaded.</h3>
+          <h3>Chaos Notes could not be loaded.</h3>
           <p>The backend may be unavailable, or the spreadsheet may be pretending it is on annual leave.</p>
         </div>
       </article>
     `;
 
     if (notesStatus) {
-      notesStatus.textContent = "Could not load notes from Google Sheets.";
+      notesStatus.textContent = "Could not load Chaos Notes from Google Sheets.";
       notesStatus.className = "form-status error";
     }
   }
+}
+
+/* -----------------------------
+   ASK SOLVANTA CHATBOT
+----------------------------- */
+
+function initAskSolvanta() {
+  const form = document.getElementById("chatForm");
+  const input = document.getElementById("chatInput");
+  const chatWindow = document.getElementById("chatWindow");
+  const status = document.getElementById("chatStatus");
+  const submitButton = document.getElementById("chatSubmit");
+  const clearButton = document.getElementById("clearChat");
+
+  if (!form || !input || !chatWindow || !status || !submitButton) return;
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const question = input.value.trim();
+
+    if (!question) {
+      showFormStatus(status, "Please enter a question first.", "error");
+      return;
+    }
+
+    appendChatMessage(chatWindow, question, "user");
+    input.value = "";
+
+    const originalButtonText = submitButton.textContent;
+
+    try {
+      showFormStatus(status, "Asking Solvanta...", "");
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Thinking...";
+
+      const response = await fetch(SOLVANTA_BACKEND_URL, {
+        method: "POST",
+        body: JSON.stringify({
+          action: "askSolvanta",
+          question,
+          source: "solvanta-chatbot"
+        })
+      });
+
+      const data = await response.json();
+
+      if (!data.ok) {
+        throw new Error(data.error || "Chatbot request failed.");
+      }
+
+      appendChatMessage(
+        chatWindow,
+        data.answer || "I responded, but apparently forgot to say anything useful.",
+        "bot"
+      );
+
+      showFormStatus(status, "Response received.", "success");
+      logToolUsage("Ask Solvanta", "chatbot_question_answered", "ask");
+    } catch (error) {
+      console.error("Ask Solvanta error:", error);
+
+      appendChatMessage(
+        chatWindow,
+        "I could not answer that right now. The backend may be overthinking its life choices.",
+        "bot"
+      );
+
+      showFormStatus(status, "Ask Solvanta could not respond.", "error");
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = originalButtonText;
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+  });
+
+  if (clearButton) {
+    clearButton.addEventListener("click", () => {
+      chatWindow.innerHTML = `
+        <div class="chat-message bot">
+          <p>
+            Hello. I am Ask Solvanta. I can explain the site, suggest workflow ideas,
+            help with writing direction, and lightly roast spreadsheet chaos.
+          </p>
+        </div>
+      `;
+
+      showFormStatus(status, "", "");
+      logToolUsage("Ask Solvanta", "chat_cleared", "ask");
+    });
+  }
+}
+
+function appendChatMessage(chatWindow, message, type) {
+  const wrapper = document.createElement("div");
+  wrapper.className = `chat-message ${type}`;
+
+  const paragraph = document.createElement("p");
+  paragraph.textContent = message;
+
+  wrapper.appendChild(paragraph);
+  chatWindow.appendChild(wrapper);
+
+  chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
 /* -----------------------------
@@ -359,6 +520,8 @@ function initSurvivalTabs() {
           view.id === `survival-${selected}`
         );
       });
+
+      logToolUsage("Survival Kit", `${selected}_tab_opened`, "survival");
     });
   });
 }
@@ -512,6 +675,8 @@ function initCameraCheck(cameraSelect) {
         mic: document.getElementById("micSelect"),
         speaker: document.getElementById("speakerSelect")
       });
+
+      logToolUsage("Device Check", "camera_started", "survival");
     } catch {
       cameraStatus.textContent =
         "Camera could not start. Permission may be blocked, or the selected camera is unavailable.";
@@ -530,6 +695,7 @@ function initCameraCheck(cameraSelect) {
       cameraStream = null;
       cameraPreview.srcObject = null;
       cameraStatus.textContent = "Camera stopped.";
+      logToolUsage("Device Check", "camera_stopped", "survival");
     }
   });
 }
@@ -596,6 +762,8 @@ function initMicrophoneCheck(micSelect) {
         mic: document.getElementById("micSelect"),
         speaker: document.getElementById("speakerSelect")
       });
+
+      logToolUsage("Device Check", "microphone_started", "survival");
     } catch {
       micStatus.textContent =
         "Microphone could not start. Permission may be blocked, or the selected mic is unavailable.";
@@ -630,10 +798,11 @@ function initMicrophoneCheck(micSelect) {
   stopMic.addEventListener("click", () => {
     stopMicStream();
     micStatus.textContent = "Microphone stopped.";
+    logToolUsage("Device Check", "microphone_stopped", "survival");
   });
 }
 
-function initSpeakerCheck(speakerSelect) {
+function initSpeakerCheck() {
   const playSound = document.getElementById("playSound");
   const speakerStatus = document.getElementById("speakerStatus");
 
@@ -661,6 +830,8 @@ function initSpeakerCheck(speakerSelect) {
 
       speakerStatus.textContent =
         "Test sound played. If you heard it, your speaker has chosen peace.";
+
+      logToolUsage("Device Check", "speaker_test_played", "survival");
     } catch {
       speakerStatus.textContent =
         "Could not play the test sound. Your browser may be blocking audio or speaker selection.";
@@ -712,6 +883,8 @@ function initTypingTest() {
     wpm.textContent = "0";
     accuracy.textContent = "0%";
     mistakes.textContent = "0";
+
+    logToolUsage("Typing Test", "typing_test_started", "survival");
   }
 
   function updateStats() {
@@ -785,6 +958,8 @@ function initReactionTest() {
       box.textContent = "Click!";
       result.textContent = "Now. Click now.";
     }, delay);
+
+    logToolUsage("Reaction Test", "reaction_test_started", "survival");
   });
 
   box.addEventListener("click", () => {
@@ -796,6 +971,7 @@ function initReactionTest() {
       box.classList.remove("waiting", "ready");
       box.textContent = "Too soon";
       result.textContent = "Too early. That was not confidence. That was chaos.";
+      logToolUsage("Reaction Test", "clicked_too_soon", "survival");
       return;
     }
 
@@ -806,6 +982,7 @@ function initReactionTest() {
       box.classList.remove("waiting", "ready");
       box.textContent = `${reactionTime} ms`;
       result.textContent = `Reaction time: ${reactionTime} ms. Not bad, human.`;
+      logToolUsage("Reaction Test", `reaction_completed_${reactionTime}ms`, "survival");
       return;
     }
 
@@ -875,13 +1052,17 @@ function initAptitudePractice() {
       button.addEventListener("click", () => {
         if (option === currentQuestion.answer) {
           result.textContent = `Correct. ${currentQuestion.explanation}`;
+          logToolUsage("Aptitude Practice", "answered_correctly", "survival");
         } else {
           result.textContent = `Not quite. Correct answer: ${currentQuestion.answer}. ${currentQuestion.explanation}`;
+          logToolUsage("Aptitude Practice", "answered_incorrectly", "survival");
         }
       });
 
       answers.appendChild(button);
     });
+
+    logToolUsage("Aptitude Practice", "new_question_loaded", "survival");
   }
 
   newButton.addEventListener("click", loadQuestion);
@@ -904,9 +1085,11 @@ function initChartQuiz() {
       if (answer === "D") {
         result.textContent =
           "Correct. D is the highest. The chart has been read responsibly.";
+        logToolUsage("Chart Quiz", "answered_correctly", "survival");
       } else {
         result.textContent =
           "Not quite. D is the highest bar. The chart would like a second chance.";
+        logToolUsage("Chart Quiz", "answered_incorrectly", "survival");
       }
     });
   });
