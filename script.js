@@ -496,67 +496,6 @@ async function populateDeviceSelectors(selectors) {
     setUnavailable(selectors.speaker, "Speaker list unavailable");
   }
 }
-  if (!navigator.mediaDevices?.enumerateDevices) {
-    setUnavailable(selectors.camera, "Device list not supported");
-    setUnavailable(selectors.mic, "Device list not supported");
-    setUnavailable(selectors.speaker, "Speaker list not supported");
-    return;
-  }
-
-  try {
-    let devices = await navigator.mediaDevices.enumerateDevices();
-
-    const hasLabels = devices.some((device) => device.label);
-
-    if (!hasLabels && navigator.mediaDevices.getUserMedia) {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          audio: true,
-          video: true
-        });
-
-        stream.getTracks().forEach((track) => track.stop());
-        devices = await navigator.mediaDevices.enumerateDevices();
-      } catch {
-        // Permission may be denied. Generic device options may still appear.
-      }
-    }
-
-    fillSelect(
-      selectors.camera,
-      devices.filter((device) => device.kind === "videoinput"),
-      "Default camera",
-      "Camera"
-    );
-
-    fillSelect(
-      selectors.mic,
-      devices.filter((device) => device.kind === "audioinput"),
-      "Default microphone",
-      "Microphone"
-    );
-
-    fillSelect(
-      selectors.speaker,
-      devices.filter((device) => device.kind === "audiooutput"),
-      "Default speaker",
-      "Speaker"
-    );
-
-    if (!HTMLMediaElement.prototype.setSinkId && selectors.speaker) {
-      selectors.speaker.innerHTML = "";
-      const option = document.createElement("option");
-      option.value = "";
-      option.textContent = "Speaker selection limited in this browser";
-      selectors.speaker.appendChild(option);
-      selectors.speaker.disabled = true;
-    }
-  } catch {
-    setUnavailable(selectors.camera, "Camera list unavailable");
-    setUnavailable(selectors.mic, "Microphone list unavailable");
-    setUnavailable(selectors.speaker, "Speaker list unavailable");
-  }
-}
 
 function fillSelect(select, devices, defaultText, labelPrefix) {
   if (!select) return;
@@ -815,47 +754,7 @@ function initTypingTest() {
 
     "This typing test is not here to judge you. That would be rude. It is here to quietly measure your speed, accuracy, and ability to survive a paragraph without blaming the keyboard. If mistakes appear, please remember denial is not a valid productivity strategy.",
 
-    "Good reporting is not about adding more slides, more charts, or more words that sound important in a meeting. It is about helping people understand the situation quickly. If your report needs a treasure map, three calls, and a follow-up email to explain it, the report has chosen violence.",
-
-    "Before joining an online meeting, check your camera, microphone, speakers, and internet connection. Future you will appreciate the preparation. Present you may think this is unnecessary, but present you is also the person who once said, can everyone hear me, while clearly muted.",
-
-    "A clean process should survive a busy Monday, a missing team member, and at least three people asking for the same update in different ways. If the process collapses because one person is on leave, that is not a process. That is a group project wearing a business suit.",
-
-    "Your resume should be clear, direct, and easy to scan. It should not look like it was designed during a font emergency. Recruiters do not need a treasure hunt. They need your skills, experience, achievements, and proof that you can use bullet points without starting a graphic design incident.",
-
-    "Not every spreadsheet needs to become a dashboard, but every important decision deserves information that is clean, readable, and slightly less terrifying. If the file has twelve tabs, four colour codes, and no explanation, it is not a report. It is an escape room with formulas.",
-
-    "The best tools are simple enough that people actually use them, useful enough that they save time, and calm enough that nobody needs a training session. If a tool requires three manuals and a motivational speech, congratulations, you have invented another problem.",
-
-    "Typing fast is impressive, but typing accurately is what keeps your email from becoming a screenshot in someone else's group chat. Speed is good. Accuracy is better. Sending dear manger instead of dear manager is how office legends are born for the wrong reasons.",
-
-    "Meetings are not automatically bad. Some meetings are useful, focused, and mercifully short. Others begin with a quick sync and somehow turn into a forty-five-minute documentary about a spreadsheet nobody opened. Type this sentence for everyone who has suffered politely.",
-
-    "A useful update should answer three simple questions: what happened, why it matters, and what needs to happen next. If your update creates more questions than answers, it is not an update. It is a mysterious fog bank with bullet points.",
-
-    "Data cleanup is the part nobody celebrates but everyone needs. Trim the spaces, remove the duplicates, fix the names, and check the dates. Otherwise, your dashboard will confidently display nonsense, and nonsense with a chart is still nonsense, just wearing a tie.",
-
-    "If you are taking this typing test to prove something, wonderful. If you are taking it to avoid doing actual work, also understandable. Either way, the timer does not care about your feelings. It only cares whether your fingers can keep up with your ambition.",
-
-    "A good cover letter should sound like a real person wrote it. Not a robot. Not a motivational poster. Not a corporate brochure that learned to breathe. Keep it simple, relevant, and human. The hiring team already has enough generic enthusiasm to wallpaper a conference room.",
-
-    "Some people say multitasking is a skill. Usually, it means doing five things badly while pretending your browser tabs are a project management system. Focus is underrated. So is closing the seven duplicate files you opened while looking for the right version.",
-
-    "The phrase quick update has done more damage to calendars than anyone wants to admit. A quick update can be useful, but only if it is actually quick and actually an update. Otherwise, it becomes a meeting wearing a fake moustache.",
-
-    "A dashboard should not make people ask what am I looking at. It should guide the eye, explain the priority, and make the next step obvious. If users need a separate dashboard to understand your dashboard, congratulations, you have created a reporting multiverse.",
-
-    "This test may reveal that your typing speed is excellent, average, or powered entirely by panic. All outcomes are valid. The important thing is that you keep going, fix your mistakes, and avoid blaming autocorrect for crimes it clearly did not commit.",
-
-    "Office productivity is mostly the art of making information easier to find, easier to trust, and easier to act on. Everything else is decoration. If the team cannot find the file, understand the metric, or know who owns the action, the process is just vibes in formal clothing.",
-
-    "A well-written email should be polite, clear, and difficult to misunderstand. It should not contain six paragraphs of emotional cushioning before asking one simple question. Respect the reader. Ask the question. Add context. Escape before the email becomes a novel.",
-
-    "When a tracker has too many columns, people stop updating it. When it has too few columns, it becomes useless. The trick is finding the balance between enough information and not making every row feel like a tax declaration with deadlines.",
-
-    "If your internet fails during a meeting, everyone suddenly becomes a technology expert. Someone says switch networks. Someone says restart the browser. Someone says maybe it is your device. Nobody knows. Everyone is guessing. The Wi-Fi, meanwhile, is enjoying the drama.",
-
-    "The goal is not to make work perfect. That would be suspicious and probably require a committee. The goal is to make work clearer, calmer, and less dependent on heroic last-minute effort. If the system needs panic to function, the system needs therapy."
+    "Good reporting is not about adding more slides, more charts, or more words that sound important in a meeting. It is about helping people understand the situation quickly. If your report needs a treasure map, three calls, and a follow-up email to explain it, the report has chosen violence."
   ];
 
   let currentPassage = "";
@@ -1005,36 +904,6 @@ function initAptitudePractice() {
       question: "Find the next number: 3, 6, 12, 24, ?",
       options: ["30", "36", "48", "60"],
       answer: "48",
-      explanation: "Each number doubles."
-    },
-    {
-      question: "If a task takes 5 people 10 days, how many person-days are required?",
-      options: ["15", "25", "50", "100"],
-      answer: "50",
-      explanation: "5 people × 10 days = 50 person-days."
-    },
-    {
-      question: "A target is 200 and current achievement is 150. What percentage is achieved?",
-      options: ["65%", "70%", "75%", "80%"],
-      answer: "75%",
-      explanation: "150 ÷ 200 × 100 = 75%."
-    },
-    {
-      question: "A report has 360 records. If 45 records failed quality checks, what is the failure rate?",
-      options: ["10%", "12.5%", "15%", "18%"],
-      answer: "12.5%",
-      explanation: "45 ÷ 360 × 100 = 12.5%."
-    },
-    {
-      question: "If 18 cases are completed per day, how many days are needed to complete 144 cases?",
-      options: ["6", "7", "8", "9"],
-      answer: "8",
-      explanation: "144 ÷ 18 = 8 days."
-    },
-    {
-      question: "Find the next number: 5, 10, 20, 40, ?",
-      options: ["45", "50", "80", "100"],
-      answer: "80",
       explanation: "Each number doubles."
     }
   ];
